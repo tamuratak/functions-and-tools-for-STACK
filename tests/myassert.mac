@@ -1,0 +1,8 @@
+test_assert(e) := (
+  if e then
+  "ok"
+  else error("
+    test fail
+
+") 
+)$

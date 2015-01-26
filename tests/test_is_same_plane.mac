@@ -1,0 +1,16 @@
+load("myassert.mac");
+load( "../is_same_linear_space.mac"  );
+load( "../is_same_plane.mac" );
+
+v  : t*[1,2,3]+s*[4,5,6]+[1,1,1]$
+v2 : t*[1,2,3]+s*[4,5,6]+[1,1,0]$
+v3 : t*[1,2,3]+s*[4,1,6]+[1,1,1]$
+v4 : t*[1,2,3]+s*[4/2,5/2,6/2]+[1,1,1]$
+
+test_assert( is( setify(basis_of_plane(v)) = {[4, 5, 6], [1, 2, 3]} ) );
+test_assert( is( pos_of_plane(v) = [1,1,1] ) );
+test_assert( is_same_plane(v,v)     );
+test_assert( not is_same_plane(v,v2));
+test_assert( not is_same_plane(v,v3));
+test_assert( is_same_plane(v,v4)    );
+

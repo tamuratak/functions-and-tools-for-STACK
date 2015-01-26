@@ -1,0 +1,11 @@
+load("myassert.mac");
+load("../is_same_linear_space.mac");
+
+test_assert( is_same_linear_space({[1,2], [2,4]}, {[1,2], [0, 0]}) );
+
+test_assert(not is_same_linear_space({[1,2], [2,4]}, {[1,2], [1, 0]}) );
+
+test_assert(not is_same_linear_space({[1,1,0], [1,1,1]}, {[1,1,1], [1, 0, 0]}) );
+
+test_assert( is_same_linear_space({[1,1,0], [1,1,1]}, {[1,1,1], [0, 0, 1], [0, 0, 2]}) );
+
