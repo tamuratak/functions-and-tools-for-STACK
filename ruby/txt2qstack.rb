@@ -116,12 +116,19 @@ ret = ""
 ret << head
 x = ERB.new(tmpl)
 
-ARGF.each_line{|l|
-  next if /\A\s*\Z/ =~ l
-  qname, qstr, ans1 = l.split("**")
-  ret << x.result(binding)
-}
+# ARGF.each_line{|l|
+#   next if /\A\s*\Z/ =~ l
+#   qname, qstr, ans1 = l.split("**")
+#   ret << x.result(binding)
+# }
 
 ret << foot
 
-print ret
+#print ret
+
+
+$LOAD_PATH.push File.dirname(File.expand_path(__FILE__))
+
+require 'stack_q_lib'
+
+puts STACK_Q.txt2xml(ARGF.read)
