@@ -84,7 +84,7 @@ EOS
       </feedbackvariables>
       <node>
         <name>0</name>
-        <answertest><%= stack_mthd %></answertest>
+        <answertest><%=h stack_mthd %></answertest>
         <sans>ans1</sans>
         <tans><%= prt_ans1 %></tans>
         <testoptions></testoptions>
@@ -120,7 +120,7 @@ EOS
     n = 1
     txt.each_line{|l|
       next if /\A\s*\Z/ =~ l
-      qname, qstr, ans1, mthd = l.split(/\s*\*\*\s*/)    
+      qname, qstr, ans1, mthd = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }    
       mthd = mthd || "AlgEquiv"
       mthd = mthd.gsub(/\s*/, "")
       case mthd
@@ -133,7 +133,7 @@ EOS
         stack_mthd = "CasEqual"
         t_ans1 = cdata(ans1)
         prt_ans1 = "a1"
-        feedbk = feedbak(mthd, ans1)
+        feedbk = feedback(mthd, ans1)
       else
         raise "line:#{n} compare method #{mthd} is not appropriate."
       end
@@ -144,7 +144,7 @@ EOS
     ret << FOOT
   end
 
-  def self.feedbak(mthd, ans1)
+  def self.feedback(mthd, ans1)
     case mthd
     when "is_same_interval"
       <<EOS.chop
