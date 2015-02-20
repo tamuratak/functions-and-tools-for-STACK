@@ -60,9 +60,9 @@ EOS
     <variantsselectionseed></variantsselectionseed>
     <input>
       <name>ans1</name>
-      <type>algebraic</type>
+      <type><%= input_type %></type>
       <tans><%= t_ans1 %></tans>
-      <boxsize>55</boxsize>
+      <boxsize><%= input_size %></boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -118,11 +118,12 @@ EOS
     x = ERB.new(TMPL)
     
     n = 1
+    input_size = 55
+    input_type = "algebraic"
     txt.each_line{|l|
       next if /\A\s*\Z/ =~ l
       qname, qstr, ans1, mthd = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }    
       mthd = mthd || "AlgEquiv"
-      mthd = mthd.gsub(/\s*/, "")
       case mthd
       when "AlgEquiv", "CasEqual"
         stack_mthd = mthd
@@ -135,7 +136,11 @@ EOS
         prt_ans1 = "a1"
         feedbk = feedback(mthd, ans1)
       else
-        raise "line:#{n} compare method #{mthd} is not appropriate."
+        raise "error at line: #{n}"
+      end
+      if is_matrix_type(ans1)
+        input_size = 4
+        input_type = "matrix"
       end
       ret << x.result(binding)
       n += 1
@@ -168,6 +173,17 @@ EOS
   
   def self.esq_cdata(s)
     (s || "").gsub("]]>", "]]]]><![CDATA[>")
+  end
+
+  def self.is_matrix_type(a)
+    if /\Amatrix/ =~ a
+      7.times{
+        a = a.gsub(/\([^\(\)]*\)/, "")
+      }
+      "matrix" == a
+    else
+      false
+    end
   end
 
 end

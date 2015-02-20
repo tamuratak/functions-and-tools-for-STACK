@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 require 'test/unit'
 
-$LOAD_PATH.push File.dirname(File.expand_path(__FILE__))
-require '../stack_q_lib'
+$LOAD_PATH.push File.dirname(File.dirname(File.expand_path(__FILE__)))
+require 'stack_q_lib'
 
 class TestStackQ < Test::Unit::TestCase
   Kekka01 = <<EOS.chop
@@ -137,5 +137,18 @@ EOS
                   STACK_Q.feedback('is_same_interval', 'abcd') )
     assert_equal( Func01.gsub("abcd", "]]]]><![CDATA[>"), 
                   STACK_Q.feedback('is_same_interval', ']]>') )
+  end
+
+  def test_m
+    assert_equal( true,
+                  STACK_Q.is_matrix_type("matrix((),() )") )
+    assert_equal( false,
+                  STACK_Q.is_matrix_type("matrix((),() ) + matrix()") )
+
+    assert_equal( Kekka01.gsub("algebraic", "matrix").gsub("55", "4").gsub("abcd03", "matrix([1],[2],[3])"), 
+                  STACK_Q.txt2xml("abcd01**abcd02**matrix([1],[2],[3])") )
+
+    assert_equal( Kekka01.gsub("abcd03", "matrix([1],[2],[3])+matrix([1],[2],[3])"), 
+                  STACK_Q.txt2xml("abcd01**abcd02**matrix([1],[2],[3])+matrix([1],[2],[3])") )
   end
 end

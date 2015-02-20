@@ -9,16 +9,21 @@ require 'stack_q_lib'
 
 cgi = CGI.new
 
-if "POST" == cgi.request_method and cgi['probs'] 
-  values = cgi['probs'] 
-  ret = STACK_Q.txt2xml(values)
-  
-  fname =  "stack_q_" + Time.now.strftime("%Y%m%d%H%M") + ".xml"
-  puts "Content-Type: applications/xml"
-  puts "Content-Disposition: attachment; filename=\"#{fname}\""
-  puts
-  
-  puts ret
+if ("POST" == cgi.request_method and cgi['probs']) or not cgi.request_method
+  begin
+    values = cgi['probs']
+    ret = STACK_Q.txt2xml(values)
+
+    fname =  "stack_q_" + Time.now.strftime("%Y%m%d%H%M") + ".xml"
+    puts "Content-type: application/xml; charset=UTF-8"
+    puts "Content-Disposition: attachment; filename=\"#{fname}\""
+    puts
+    puts ret
+  rescue => evar
+    puts "Content-Type: text/html"
+    puts
+    puts ERB::Util.h(evar)
+  end
 else
   puts "Content-Type: text/html"
   puts 
