@@ -1,0 +1,15 @@
+
+eq_to_param(eq) := block([params, tmp],
+  eq : listify(eq),
+  params : listofvars(eq),
+  tmp : solve(eq, params),
+  subst(tmp[1], params)
+);
+
+is_same_linear_eq(eq1, eq2) := block([pa1, pa2],
+  pa1 : eq_to_param(eq1),
+  pa2 : eq_to_param(eq2),
+  is_same_plane(pa1, pa2)
+  );
+
+

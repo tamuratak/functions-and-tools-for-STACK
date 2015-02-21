@@ -1,0 +1,8 @@
+load("myassert.mac")$
+load("../is_same_linear_eq.mac")$
+load("../is_same_linear_space.mac")$
+load("../is_same_plane.mac")$
+
+test_assert( is_same_linear_eq({x+y+z=0}, {x+y+z=0}) );
+test_assert( is_same_linear_eq({x+y+z=0}, {2*x+2*y+2*z=0}) );
+test_assert( not is_same_linear_eq({x+y+z=0}, {2*x+y+z=0}) );
