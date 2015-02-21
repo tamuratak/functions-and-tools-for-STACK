@@ -155,4 +155,8 @@ EOS
     assert_equal( Kekka01.gsub("abcd03", "matrix([1],[2],[3])+matrix([1],[2],[3])"), 
                   STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])+matrix([1],[2],[3])").txt2xml )
   end
+
+  def test_e
+    assert_raise(ArgumentError){ STACK_Q.new("a**b**\xf1\xf1").txt2xml }
+  end
 end
