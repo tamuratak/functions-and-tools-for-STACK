@@ -114,7 +114,9 @@ EOS
 
   def initialize(s)
     @txt = s
+    @err_msg = ""
   end
+  attr_reader :err_msg
 
   def txt2xml
     ret = ""
@@ -140,7 +142,8 @@ EOS
         prt_ans1 = "a1"
         feedbk = feedback(mthd, ans1)
       else
-        raise "error at line: #{n}"
+        @err_msg = "error at line: #{n}"
+        raise
       end
       if is_matrix_type(ans1)
         input_size = 4
@@ -151,6 +154,7 @@ EOS
     }
     
     ret << FOOT
+
   end
 
   def feedback(mthd, ans1)

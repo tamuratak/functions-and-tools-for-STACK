@@ -12,17 +12,18 @@ cgi = CGI.new
 if ("POST" == cgi.request_method and cgi['probs']) or not cgi.request_method
   begin
     values = cgi['probs']
-    ret = STACK_Q.txt2xml(values)
+    stck = STACK_Q.new(values)
+    ret = stck.txt2xml
 
     fname =  "stack_q_" + Time.now.strftime("%Y%m%d%H%M") + ".xml"
     puts "Content-type: application/xml; charset=UTF-8"
     puts "Content-Disposition: attachment; filename=\"#{fname}\""
     puts
     puts ret
-  rescue => evar
+  rescue
     puts "Content-Type: text/html"
     puts
-    puts ERB::Util.h(evar)
+    puts ERB::Util.h(stck.err_msg)
   end
 else
   puts "Content-Type: text/html"
