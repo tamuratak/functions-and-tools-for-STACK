@@ -120,35 +120,39 @@ a1 : abcd;
 a1 : if is_same_interval(a1, ans1) then ans1 else false;]]>
 EOS
 
+  def setup
+    @stck = STACK_Q.new("")
+  end
+
   def test_s
-    assert_equal( Kekka01, STACK_Q.txt2xml("abcd01**abcd02**abcd03") )
-    assert_equal( Kekka01, STACK_Q.txt2xml(" abcd01 ** abcd02 ** abcd03 ") )
+    assert_equal( Kekka01, STACK_Q.new("abcd01**abcd02**abcd03").txt2xml )
+    assert_equal( Kekka01, STACK_Q.new(" abcd01 ** abcd02 ** abcd03 ").txt2xml )
     assert_equal( Kekka01.gsub("abcd01", "&lt;"),
-                  STACK_Q.txt2xml(" < ** abcd02 ** abcd03 ") )
+                  STACK_Q.new(" < ** abcd02 ** abcd03 ").txt2xml )
     
     assert_equal( Kekka01, 
-                  STACK_Q.txt2xml("abcd01**abcd02**abcd03**AlgEquiv") )
+                  STACK_Q.new("abcd01**abcd02**abcd03**AlgEquiv").txt2xml )
     assert_equal( Kekka01.gsub(/AlgEquiv/, "CasEqual"), 
-                  STACK_Q.txt2xml("abcd01**abcd02**abcd03**CasEqual") )
+                  STACK_Q.new("abcd01**abcd02**abcd03**CasEqual").txt2xml )
   end
 
   def test_f
     assert_equal( Func01, 
-                  STACK_Q.feedback('is_same_interval', 'abcd') )
+                  @stck.feedback('is_same_interval', 'abcd') )
     assert_equal( Func01.gsub("abcd", "]]]]><![CDATA[>"), 
-                  STACK_Q.feedback('is_same_interval', ']]>') )
+                  @stck.feedback('is_same_interval', ']]>') )
   end
 
   def test_m
     assert_equal( true,
-                  STACK_Q.is_matrix_type("matrix((),() )") )
+                  @stck.is_matrix_type("matrix((),() )") )
     assert_equal( false,
-                  STACK_Q.is_matrix_type("matrix((),() ) + matrix()") )
+                  @stck.is_matrix_type("matrix((),() ) + matrix()") )
 
     assert_equal( Kekka01.gsub("algebraic", "matrix").gsub("55", "4").gsub("abcd03", "matrix([1],[2],[3])"), 
-                  STACK_Q.txt2xml("abcd01**abcd02**matrix([1],[2],[3])") )
+                  STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])").txt2xml )
 
     assert_equal( Kekka01.gsub("abcd03", "matrix([1],[2],[3])+matrix([1],[2],[3])"), 
-                  STACK_Q.txt2xml("abcd01**abcd02**matrix([1],[2],[3])+matrix([1],[2],[3])") )
+                  STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])+matrix([1],[2],[3])").txt2xml )
   end
 end

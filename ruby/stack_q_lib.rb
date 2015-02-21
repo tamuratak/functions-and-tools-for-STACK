@@ -2,8 +2,8 @@
 
 require 'erb'
 
-module STACK_Q
-  extend ERB::Util
+class STACK_Q
+  include ERB::Util
   HEAD = <<"EOS" 
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
@@ -112,7 +112,11 @@ EOS
 
   FOOT = "</quiz>"
 
-  def self.txt2xml(txt)    
+  def initialize(s)
+    @txt = s
+  end
+
+  def txt2xml
     ret = ""
     ret << HEAD
     x = ERB.new(TMPL)
@@ -120,7 +124,7 @@ EOS
     n = 1
     input_size = 55
     input_type = "algebraic"
-    txt.each_line{|l|
+    @txt.each_line{|l|
       next if /\A\s*\Z/ =~ l
       qname, qstr, ans1, mthd = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }    
       mthd = mthd || "AlgEquiv"
@@ -149,7 +153,7 @@ EOS
     ret << FOOT
   end
 
-  def self.feedback(mthd, ans1)
+  def feedback(mthd, ans1)
     case mthd
     when "is_same_interval"
       <<EOS.chop
@@ -167,15 +171,15 @@ EOS
     end
   end
 
-  def self.cdata(s)
+  def cdata(s)
     "<![CDATA[" + esq_cdata(s) + "]]>"
   end
   
-  def self.esq_cdata(s)
+  def esq_cdata(s)
     (s || "").gsub("]]>", "]]]]><![CDATA[>")
   end
 
-  def self.is_matrix_type(a)
+  def is_matrix_type(a)
     if /\Amatrix/ =~ a
       7.times{
         a = a.gsub(/\([^\(\)]*\)/, "")
