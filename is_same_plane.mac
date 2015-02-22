@@ -1,6 +1,6 @@
 basis_of_plane(v) := block([params],
   params : listofvars(v),
-  map(lambda([var], diff(v, var)), params)
+  map(lambda([v1], diff(v, v1)), params)
   );
 
 pos_of_plane(v) := block([v0 : v, params, i],
