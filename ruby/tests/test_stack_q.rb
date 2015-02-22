@@ -11,7 +11,7 @@ class TestStackQ < Test::Unit::TestCase
 <!-- question: 0  -->
   <question type="category">
     <category>
-        <text>$course$/myqb</text>
+        <text>$course$/stack_q</text>
 
     </category>
   </question>
