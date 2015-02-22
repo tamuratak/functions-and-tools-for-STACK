@@ -143,7 +143,7 @@ EOS
         feedbk = feedback(mthd, ans1)
       else
         @err_msg = "error at line: #{n}"
-        raise
+        raise "invalid grading method"
       end
       if is_matrix_type(ans1)
         input_size = 4
