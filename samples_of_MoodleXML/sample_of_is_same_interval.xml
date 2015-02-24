@@ -54,7 +54,7 @@
     <input>
       <name>ans1</name>
       <type>algebraic</type>
-      <tans><![CDATA[x > 1 or x < -1]]></tans>
+      <tans><![CDATA[x < -1 or x > 1]]></tans>
       <boxsize>55</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
