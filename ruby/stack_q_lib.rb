@@ -197,6 +197,7 @@ EOS
 
   def is_matrix_type(a)
     if /\Amatrix/ =~ a
+      a = a.gsub(/\s+/, "")
       7.times{
         a = a.gsub(/\([^\(\)]*\)/, "")
       }

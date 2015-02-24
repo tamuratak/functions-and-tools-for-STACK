@@ -146,6 +146,8 @@ EOS
   def test_m
     assert_equal( true,
                   @stck.is_matrix_type("matrix((),() )") )
+     assert_equal( true,
+                  @stck.is_matrix_type("matrix ((),() )") )
     assert_equal( false,
                   @stck.is_matrix_type("matrix((),() ) + matrix()") )
 
