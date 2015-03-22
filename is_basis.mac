@@ -1,0 +1,12 @@
+is_basis(x) := block([ret, x0, xm, i, n],
+  ret : true,
+  x0 : x,
+  xm : apply(matrix, x0),
+  ret: true,
+  n : -(length(x0)+1),
+  for i:1 thru length(x0) do (
+    m : apply(matrix, append(rest(x0,i), rest(x0,n+i))),
+    ret : ret and is(rank(m) + 1 = rank(xm))
+    ),
+  ret) ;
+

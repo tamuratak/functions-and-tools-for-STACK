@@ -1,0 +1,12 @@
+load("myassert.mac");
+load("../is_basis.mac");
+
+test_assert( is_basis([[1,2], [1,0]]) );
+
+test_assert(not is_basis([[1,2], [1,2]]) );
+
+test_assert(not is_basis([[1,2], [0,0]]) );
+
+test_assert( is_basis([[1]]) );
+
+test_assert( is_basis([[1,2,1], [0,0,1]]) );
