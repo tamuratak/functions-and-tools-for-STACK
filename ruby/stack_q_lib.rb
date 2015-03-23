@@ -178,7 +178,7 @@ EOS
     ret << HEAD
     x = ERB.new(TMPL)
     
-    n = 1
+    line_num = 1
     input_size = 55
     input_type = "algebraic"
     @txt.each_line{|l|
@@ -209,7 +209,7 @@ EOS
         feedbk = feedback(mthd, ans1)
         input_size = 15
         input_type = "matrix"
-      when "is_same_linear_space"
+      when "is_basis_of_same_linear_space"
         x = ERB.new(TMPL2)
         dim = matrix_dim(ans1)
         inputs = matrix_ans(dim, dim)
@@ -218,16 +218,16 @@ EOS
         matrix_ans_form0 = matrix_ans_form(dim)
         matrix_validation_form0 = matrix_validation_form(dim)
       else
-        @err_msg = "error at line: #{n}"
+        @err_msg = "error at line: #{line_num}"
         raise "invalid grading method"
       end
 
       ret << x.result(binding)
-      n += 1
+      line_num  += 1
     }
     
     ret << FOOT
-
+    
   end
 
   def feedback(mthd, ans1)
@@ -243,7 +243,9 @@ is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 :
 a1 : #{esq_cdata(ans1)};
 a1 : if is_same_interval(a1, ans1) then ans1 else false;]]>
 EOS
-    when "is_same_linear_eq"
+    when "is_same_linear_eq", "is_same_plane"
+      ret = ""
+      ret <<
 <<EOS.chop
 <![CDATA[is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(a),x0 : listify(x),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret); 
 basis_of_plane(v) := block([params],params : listofvars(v),map(lambda([v1], diff(v, v1)), params));
@@ -251,26 +253,28 @@ pos_of_plane(v) := block([v0 : v, params, i],params : listofvars(v),for i:1 thru
 is_same_plane(v1, v2) := block([b1, b2, p1, p2, ret : true],b1 : basis_of_plane(v1),b2 : basis_of_plane(v2),ret : ret and is_same_linear_space(b1, b2),p1 : pos_of_plane(v1),p2 : pos_of_plane(v2),ret : ret and is(p1 = p2)); 
 eq_to_param(eq) := block([params, tmp],eq : listify(eq),params : listofvars(eq),tmp : solve(eq, params),subst(tmp[1], params));
 is_same_linear_eq(eq1, eq2) := block([pa1, pa2],pa1 : eq_to_param(eq1),pa2 : eq_to_param(eq2),is_same_plane(pa1, pa2));
-
-a1 : #{esq_cdata(ans1)};
-a1 : if #{mthd}(a1, ans1) then ans1 else false;]]>
 EOS
-    when "is_same_plane"
+      case mthd
+      when "is_same_linear_eq"
+ret <<
 <<EOS.chop
-<![CDATA[is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(a),x0 : listify(x),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret); 
-basis_of_plane(v) := block([params],params : listofvars(v),map(lambda([v1], diff(v, v1)), params));
-pos_of_plane(v) := block([v0 : v, params, i],params : listofvars(v),for i:1 thru length(params) do v0 : subst(0, params[i], v0),v0);
-is_same_plane(v1, v2) := block([b1, b2, p1, p2, ret : true],b1 : basis_of_plane(v1),b2 : basis_of_plane(v2),ret : ret and is_same_linear_space(b1, b2),p1 : pos_of_plane(v1),p2 : pos_of_plane(v2),ret : ret and is(p1 = p2)); 
-
+a1 : #{esq_cdata(ans1)};
+a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;]]>
+EOS
+      when "is_same_plane"
+ret <<
+<<EOS.chop
 a1 : #{esq_cdata(ans1)};
 ans1 : list_matrix_entries(ans1);
-a1 : if #{mthd}(a1, ans1) then ans1 else false;]]>
+a1 : if is_same_plane(a1, ans1) then ans1 else false;]]>
 EOS
+      end
+      ret
     else
       ""
     end
   end
-
+  
   def cdata(s)
     "<![CDATA[" + esq_cdata(s) + "]]>"
   end
