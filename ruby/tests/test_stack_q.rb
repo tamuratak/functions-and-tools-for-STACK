@@ -165,7 +165,7 @@ EOS
   def test_matrix_x
     @stck.matrix_ans(3,2)
     @stck.matrix_prt(2)
-    print STACK_Q.new("abcd01**abcd02**{[1,0,0],[1,1,0]}**is_same_linear_space").txt2xml
+    STACK_Q.new("abcd01**abcd02**{[1,0,0],[1,1,0]}**is_basis_of_same_linear_space").txt2xml
   end
   
 end 
