@@ -117,8 +117,8 @@ EOS
     </name>
     <questiontext format="html">
       <text><![CDATA[<p><%=h qname  %></p>
-<p><%=h qstr  %> <p> <%=h matrix_ans_form0 %></p>
-<div><%= matrix_validation_form0 %></div>]]></text>
+<p><%=h qstr  %> <p> <%=h basis_ans_form0 %></p>
+<div><%= basis_validation_form0 %></div>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -211,12 +211,12 @@ EOS
         input_type = "matrix"
       when "is_basis_of_same_linear_space"
         x = ERB.new(TMPL2)
-        dim = matrix_dim(ans1)
-        inputs = matrix_ans(dim, dim)
-        prt = matrix_prt(dim)
-        feedbk = matrix_feedback(dim)
-        matrix_ans_form0 = matrix_ans_form(dim)
-        matrix_validation_form0 = matrix_validation_form(dim)
+        dim = basis_dim(ans1)
+        inputs = basis_ans(dim, dim)
+        prt = basis_prt(dim)
+        feedbk = basis_feedback(dim)
+        basis_ans_form0 = basis_ans_form(dim)
+        basis_validation_form0 = basis_validation_form(dim)
       else
         @err_msg = "error at line: #{line_num}"
         raise "invalid grading method"
@@ -295,21 +295,21 @@ EOS
     end
   end
 
-  def matrix_dim(s)
-    if m = s.match(/\[(.*?)\]/)
+  def basis_dim(s)
+    if m = s.match(/\[([^\[\]]*?)\]/)
       $1.split(",").size
     end
   end
 
-  def matrix_ans_form(dim)
+  def basis_ans_form(dim)
     (1..dim).map{|i| "[[input:ans#{i}]]"}.join(" ") 
   end
 
-  def matrix_validation_form(dim)
+  def basis_validation_form(dim)
     (1..dim).map{|i| "[[validation:ans#{i}]]"}.join(" ") 
   end
 
-  def matrix_ans(n, dim)
+  def basis_ans(n, dim)
     ERB.new(<<HERE, nil, '-').result(binding)
 <%- (1..n).each do |i| -%>
     <input>
@@ -333,7 +333,7 @@ EOS
 HERE
   end
 
-  def matrix_prt(n)
+  def basis_prt(n)
     n1 = n-1
     ERB.new(<<HERE, nil, '-').result(binding)
 <%- (0..(n1)).each do |i| -%>
@@ -365,7 +365,7 @@ HERE
 HERE
   end
   
-  def matrix_feedback(dim)
+  def basis_feedback(dim)
     b1 = (1..dim).map{|i| "list_matrix_entries(ans#{i})"}.join(", ")
     alhs = (1..dim).map{|i| "a#{i}" }.join(", ")
     arhs = (1..dim).map{|i| "ans#{i}" }.join(", ")
