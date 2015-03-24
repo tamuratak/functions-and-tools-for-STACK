@@ -191,6 +191,8 @@ EOS
         input_type = "matrix"
       end
 
+      qstr = inline_tex(qstr)
+
       case mthd
       when "AlgEquiv", "CasEqual"
         stack_mthd = mthd
@@ -234,6 +236,10 @@ EOS
     
     ret << FOOT
     
+  end
+
+  def inline_tex(s)
+    s.gsub(/([^\\]|\A)\$((\\\$|[^\$])*)\$/) { $1 + '\\(' + $2 + '\\)' }
   end
 
   def feedback(mthd, ans1)

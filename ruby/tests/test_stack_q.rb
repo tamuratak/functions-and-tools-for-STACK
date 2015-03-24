@@ -392,4 +392,14 @@ EOS
       @stck.eq_type_check("[x,y]", 1)
     }
   end
+
+  def test_inline_tex
+    assert_equal('\\(abc\\)', @stck.inline_tex('$abc$'))
+    assert_not_equal('\\(abc\\)', @stck.inline_tex('$abc'))
+    assert_equal('\(\sin\)', @stck.inline_tex('$\sin$'))
+    assert_equal(' \(\$\)', @stck.inline_tex(' $\$$'))
+    assert_equal('\$\$$', @stck.inline_tex('\$\$$'))
+
+    assert_equal('\(abc\) \(xyz\)', @stck.inline_tex('$abc$ $xyz$'))
+  end
 end 
