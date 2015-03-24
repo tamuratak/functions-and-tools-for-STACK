@@ -198,6 +198,10 @@ EOS
         prt_ans1 = cdata(ans1)
         feedbk = ""
       when "is_same_interval",  "is_same_linear_eq"
+        case mthd
+        when "is_same_linear_eq"
+          eq_type_check(ans1, line_num)
+        end
         stack_mthd = "CasEqual"
         t_ans1 = cdata(ans1)
         prt_ans1 = "a1"
@@ -381,11 +385,11 @@ HERE
   end
 
   def basis_type_check(s, line_num)
-    unless /\A\[(\[[^\[\]].*?\],?\s*)*\]\Z/ =~ s
+    unless /\A\[(\[[^\[\]]*?\],?\s*)*\]\Z/ =~ s
       @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
       raise "invalid answer type"
     end
-    arry = s.scan(/\[[^\[\]].*?\]/)    
+    arry = s.scan(/\[[^\[\]]*?\]/)    
     siz = arry[0].split(",").size
     arry.each{|e|
       unless siz == e.split(",").size
@@ -396,7 +400,14 @@ HERE
   end
   
   def plane_type_check(s, line_num)
-    unless /\A\[[^\[\]].*?\]\z/ =~ s
+    unless /\A\[[^\[\]]*?\]\z/ =~ s
+      @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
+      raise "invalid answer type"
+    end
+  end
+
+  def eq_type_check(s, line_num)
+    unless /\A\{[^\{\}]*?\}\z/ =~ s
       @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
       raise "invalid answer type"
     end

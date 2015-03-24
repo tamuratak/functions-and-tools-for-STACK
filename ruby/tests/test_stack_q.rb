@@ -383,4 +383,13 @@ EOS
       @stck.plane_type_check("{1,1}", 1)
     }
   end
+
+  def test_eq_type_check
+    assert_nothing_raised{
+      @stck.eq_type_check("{x,y,z}", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.eq_type_check("[x,y]", 1)
+    }
+  end
 end 
