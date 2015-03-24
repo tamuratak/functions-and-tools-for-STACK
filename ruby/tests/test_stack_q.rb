@@ -362,4 +362,25 @@ EOS
                   STACK_Q.new("abs ** xyz ** [[1,1,0], [1,0,0]] ** is_basis_of_same_linear_space").txt2xml )
   end
   
+  def test_basis_type_check
+    assert_nothing_raised{ 
+      @stck.basis_type_check("[[1,1]]", 1)
+      @stck.basis_type_check("[[1,1],[1,2]]", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.basis_type_check("[[1,1],[1]]", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.basis_type_check("{[1,1],[1,0]}", 1)
+    }
+  end
+
+  def test_plane_type_check
+    assert_nothing_raised{
+      @stck.plane_type_check("[t,s,0]", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.plane_type_check("{1,1}", 1)
+    }
+  end
 end 

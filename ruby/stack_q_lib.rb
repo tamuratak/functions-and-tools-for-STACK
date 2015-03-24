@@ -203,6 +203,7 @@ EOS
         prt_ans1 = "a1"
         feedbk = feedback(mthd, ans1)
       when "is_same_plane"
+        plane_check_type(ans1, line_num)
         stack_mthd = "CasEqual"
         t_ans1 = cdata("transpose(matrix(" + ans1 + "))")
         prt_ans1 = "a1"
@@ -211,6 +212,7 @@ EOS
         input_type = "matrix"
       when "is_basis_of_same_linear_space"
         x = ERB.new(TMPL2)
+        basis_type_check(ans1, line_num)
         dim = basis_dim(ans1)
         inputs = basis_ans(dim, dim)
         prt = basis_prt(dim)
@@ -376,6 +378,28 @@ is_basis(x) := block([ret, x0, xm, i, n], ret : true, x0 : x, xm : apply(matrix,
 b1 : delete([#{zeros}], [#{b1}]);
 x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([#{alhs}] : [#{arhs}]) else false;]]>
 HERE
+  end
+
+  def basis_type_check(s, line_num)
+    unless /\A\[(\[[^\[\]].*?\],?\s*)*\]\Z/ =~ s
+      @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
+      raise "invalid answer type"
+    end
+    arry = s.scan(/\[[^\[\]].*?\]/)    
+    siz = arry[0].split(",").size
+    arry.each{|e|
+      unless siz == e.split(",").size
+        @err_msg = "error at line: #{line_num}" + "\n" + "dimensions of basis are different"
+        raise "invalid answer type"
+      end
+    }
+  end
+  
+  def plane_type_check(s, line_num)
+    unless /\A\[[^\[\]].*?\]\z/ =~ s
+      @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
+      raise "invalid answer type"
+    end
   end
 end
 
