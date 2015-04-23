@@ -9,12 +9,16 @@ pos_of_plane(v) := block([v0 : v, params, i],
   v0
   );
 
+is_on_plane(p, v) := block([eq],
+  eq : map("=", makelist(0, length(v)), v-p),
+  is(not ([] = solve(eq, listofvars(v))))
+  );
+
 is_same_plane(v1, v2) := block([b1, b2, p1, p2, ret : true],
   b1 : basis_of_plane(v1),
   b2 : basis_of_plane(v2),
   ret : ret and is_same_linear_space(b1, b2),
-  p1 : pos_of_plane(v1),
-  p2 : pos_of_plane(v2),
-  ret : ret and is(p1 = p2)
+  ret : ret and is_on_plane(pos_of_plane(v1), v2),
+  ret : ret and is_on_plane(pos_of_plane(v2), v1)
   );
 
