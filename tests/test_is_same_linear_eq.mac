@@ -6,3 +6,7 @@ load("../is_same_plane.mac")$
 test_assert( is_same_linear_eq({x+y+z=0}, {x+y+z=0}) );
 test_assert( is_same_linear_eq({x+y+z=0}, {2*x+2*y+2*z=0}) );
 test_assert( not is_same_linear_eq({x+y+z=0}, {2*x+y+z=0}) );
+
+test_assert( is_same_linear_eq({x+y+z=0}, {x+z=-y}) );
+
+test_assert( is_same_linear_eq({-1 - 3*y + 8*z = 2*x}, {-1 + 8*z = 2*x + 3*y}) );
