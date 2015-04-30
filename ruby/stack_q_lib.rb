@@ -186,7 +186,7 @@ EOS
       input_size = 55
       input_type = "algebraic"
 
-      qname, qstr, ans1, mthd = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }    
+      qname, qstr, ans1, mthd, ext = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }
       mthd = mthd || "AlgEquiv"
       forbidwords = ""
 
@@ -207,6 +207,9 @@ EOS
           stack_mthd = "CasEqual"
           forbidwords = ",asin,acos,atan"
         end
+      when "does_satisfy"
+        prt_ans1 = "a1"
+        feedbk = feedback(mthd, ans1, ext)
       when "is_same_interval",  "is_same_linear_eq"
         case mthd
         when "is_same_linear_eq"
@@ -250,8 +253,13 @@ EOS
     s.gsub(/([^\\]|\A)\$((\\\$|[^\$])*)\$/) { $1 + '\\(' + $2 + '\\)' }
   end
 
-  def feedback(mthd, ans1)
+  def feedback(mthd, ans1, ext="")
     case mthd
+    when "does_satisfy"
+      <<EOS.chop
+a1 : #{esq_cdata(ans1)};
+a1 : if is(#{esq_cdata(ext)}) then ans1 else false;
+EOS
     when "is_same_interval"
       <<EOS.chop
 <![CDATA[myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
