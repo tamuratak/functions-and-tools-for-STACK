@@ -1,0 +1,24 @@
+echelon_1(m) := block([arry, m0, len, k, i, j],
+  m0 : echelon(m),
+  len : length(m),
+  (for i: 2 while i <= len do (
+      arry : sublist_indices(m0[i], lambda([x], x = 1)),
+      (if not is(arry = []) then (
+          k : arry[1],
+          (for j: 1 while j < i do (
+              (m0[j] : m0[j] - m0[j][k] * m0[i]))
+            )
+          )
+        )
+      )
+    ),
+  m0
+  );
+
+is_same_triangle(a, x) := block([],
+  a0 : echelon_1(a),
+  x0 : echelon_1(x),
+  x1 : triangularize(x),
+  is((x = x1) and (a0 = x0))
+  );
+

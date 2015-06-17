@@ -1,0 +1,10 @@
+load("myassert.mac");
+load("../is_same_tri.mac");
+
+test_assert( is_same_triangle(matrix([1,2], [1,1]), matrix([1,2], [0, 1])) );
+
+a : matrix([1,2,3,5,1],[4,5,6,5,1],[7,8,9,1,1],[7,8,9,2,2]) $
+m : echelon(a)$
+test_assert( is_same_triangle(a, m) ) ;
+m : matrix([1,2,3,5,1],[1,5,6,5,1],[1,8,9,1,1],[7,8,9,2,2]) $
+test_assert( not is_same_triangle(a, m) ) ;

@@ -209,6 +209,8 @@ EOS
         end
       when "does_satisfy"
         prt_ans1 = "a1"
+        stack_mthd = "CasEqual"
+        t_ans1 = cdata(ans1)
         feedbk = feedback(mthd, ans1, ext)
       when "is_same_interval",  "is_same_linear_eq"
         case mthd
@@ -257,8 +259,8 @@ EOS
     case mthd
     when "does_satisfy"
       <<EOS.chop
-a1 : #{esq_cdata(ans1)};
-a1 : if is(#{esq_cdata(ext)}) then ans1 else false;
+<![CDATA[a1 : #{esq_cdata(ans1)};
+a1 : if is(#{esq_cdata(ext)}) then ans1 else false;]]>
 EOS
     when "is_same_interval"
       <<EOS.chop
