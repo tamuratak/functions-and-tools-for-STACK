@@ -28,7 +28,7 @@ class STACK_Q
       forbidwords = ""
 
       if is_matrix_type(ans1)
-        input_size = 4
+        input_size = 10
         input_type = "matrix"
       end
 
@@ -49,7 +49,7 @@ class STACK_Q
         stack_mthd = "CasEqual"
         t_ans1 = cdata(ans1)
         feedbk = feedback(mthd, ans1, ext)
-      when "is_same_interval",  "is_same_linear_eq"
+      when "is_same_interval",  "is_same_linear_eq", "is_same_tri"
         case mthd
         when "is_same_linear_eq"
           eq_type_check(ans1, line_num)
@@ -94,6 +94,14 @@ class STACK_Q
 
   def feedback(mthd, ans1, ext="")
     case mthd
+    when "is_same_tri"
+      <<EOS.chop
+<![CDATA[echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(for i: 2 while i <= len do (arry : sublist_indices(m0[i], lambda([x], x = 1)),(if not is(arry = []) then (k : arry[1],(for j: 1 while j < i do ((m0[j] : m0[j] - m0[j][k] * m0[i]))))))),m0);
+is_triangle(m) := block([len,i,k0,k,arry, ret],ret : true,len : length(m),len0 : length(m[1]) + 1,arry : sublist_indices(m[1], lambda([x], not (x = 0)) ),(if is(arry = []) then (k0 : length(m[1]) + 1) else (k0 : arry[1])),(for i: 2 while i <= len do (arry : sublist_indices(m[i], lambda([x], not (x = 0)) ),k : (if is(arry = []) then (length(m[1]) + 1) else (arry[1])),(if not is( (k > k0) or (len0 = k and len0 = k0) ) then (ret : ret and false)),k0 : k)),ret);
+is_same_triangle(a, x) := block([],a0 : echelon_1(a),x0 : echelon_1(x),x1 : triangularize(x),is(is_triangle(x) and (a0 = x0)));
+a1 : #{esq_cdata(ans1)};
+a1 : if is_same_triangle(a1, ans1) then ans1 else false;]]>
+EOS
     when "does_satisfy"
       <<EOS.chop
 <![CDATA[a1 : #{esq_cdata(ans1)};
