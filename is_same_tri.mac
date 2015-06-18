@@ -1,3 +1,26 @@
+is_triangle(m) := block([len,i,k0,k,arry, ret],
+  ret : true,
+  len : length(m),
+  len0 : length(m[1]) + 1,
+  arry : sublist_indices(m[1], lambda([x], not (x = 0)) ),
+  (if is(arry = []) then (
+      k0 : length(m[1]) + 1
+      ) else (
+      k0 : arry[1]
+      )),
+  (for i: 2 while i <= len do (
+      arry : sublist_indices(m[i], lambda([x], not (x = 0)) ),
+      k : (if is(arry = []) then (
+          length(m[1]) + 1
+          ) else (
+          arry[1]
+          )),
+      (if not is( (k > k0) or (len0 = k and len0 = k0) ) then (ret : ret and false)),
+      k0 : k
+      )),
+  ret
+  );
+
 echelon_1(m) := block([arry, m0, len, k, i, j],
   m0 : echelon(m),
   len : length(m),
@@ -19,6 +42,6 @@ is_same_triangle(a, x) := block([],
   a0 : echelon_1(a),
   x0 : echelon_1(x),
   x1 : triangularize(x),
-  is((x = x1) and (a0 = x0))
+  is(is_triangle(x) and (a0 = x0))
   );
 
