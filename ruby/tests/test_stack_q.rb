@@ -103,6 +103,26 @@ class TestStackQ < Test::Unit::TestCase
 
     assert_equal('\(abc\) \(xyz\)', @stck.inline_tex('$abc$ $xyz$'))
   end
+
+  def test_validate_maxima_exp
+    assert_nothing_raised { @stck.validate_maxima_exp("a") }
+    assert_nothing_raised { @stck.validate_maxima_exp("a*b") }
+    assert_nothing_raised { @stck.validate_maxima_exp("2*a*b") }
+    assert_nothing_raised { @stck.validate_maxima_exp("2*a*b + c") }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("a b") }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("2a")  }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("sin x")  }
+
+    assert_nothing_raised { @stck.validate_maxima_exp("2 * (a + sin(x))") }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 * (a + sin(x)) (b + c)") }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 * (a + 2sin(x))") }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 (a + sin(x))") }
+
+    assert_nothing_raised { @stck.validate_maxima_exp("(a + sin(x)) / (b + c)") }
+    
+    assert_nothing_raised { @stck.validate_maxima_exp("matrix([1,2], [3,4])") }
+    assert_nothing_raised { @stck.validate_maxima_exp("sqrt(2)*atan(x/sqrt(2)) + 1/2*log(2 + x^2)") }
+  end
 end 
 
 

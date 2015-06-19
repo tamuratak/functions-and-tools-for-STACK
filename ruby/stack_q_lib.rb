@@ -49,7 +49,7 @@ class STACK_Q
         stack_mthd = "CasEqual"
         t_ans1 = cdata(ans1)
         feedbk = feedback(mthd, ans1, ext)
-      when "is_same_interval",  "is_same_linear_eq", "is_same_tri"
+      when "is_same_interval",  "is_same_linear_eq", "is_same_tri", "has_same_deriv"
         case mthd
         when "is_same_linear_eq"
           eq_type_check(ans1, line_num)
@@ -94,6 +94,13 @@ class STACK_Q
 
   def feedback(mthd, ans1, ext="")
     case mthd
+    when "has_same_deriv"
+      <<EOS.chop
+<![CDATA[
+a1 : #{esq_cdata(ans1)};
+a1 : if is(diff(a1,x) = diff(ans1, x)) then ans1 else false;
+]]>
+EOS
     when "is_same_tri"
       <<EOS.chop
 <![CDATA[echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(for i: 2 while i <= len do (arry : sublist_indices(m0[i], lambda([x], x = 1)),(if not is(arry = []) then (k : arry[1],(for j: 1 while j < i do ((m0[j] : m0[j] - m0[j][k] * m0[i]))))))),m0);
@@ -151,6 +158,27 @@ EOS
     end
   end
   
+  def validate_maxima_exp(s)
+    case s
+    when /\(/
+      tmp = s
+      tmp = tmp.gsub(/matrix\(([^\(\)]+)\)/){|s0|
+        " XXX "
+      }
+      tmp = tmp.gsub(/([a-z]{3,})?\s*\(([^\(\)]+)\)/){|s0|
+        validate_maxima_exp($2)
+        " XXX "
+      }
+      validate_maxima_exp(tmp)
+    when /\A-?\s*([a-zA-Z]\w*|\d+)\s*\z/ 
+      true
+    when /\A-?(\s*([a-zA-Z]\w*|\d+)\s*[\*\+\-\^\/])+\s*([a-zA-Z]\w*|\d+)\s*\z/ 
+      true
+    else
+      raise
+    end
+  end
+
   def cdata(s)
     "<![CDATA[" + esq_cdata(s) + "]]>"
   end
