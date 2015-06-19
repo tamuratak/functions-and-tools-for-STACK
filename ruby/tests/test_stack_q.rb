@@ -121,7 +121,7 @@ class TestStackQ < Test::Unit::TestCase
     assert_nothing_raised { @stck.validate_maxima_exp("(a + sin(x)) / (b + c)") }
     
     assert_nothing_raised { @stck.validate_maxima_exp("matrix([1,2], [3,4])") }
-    assert_nothing_raised { @stck.validate_maxima_exp("sqrt(2)*atan(x/sqrt(2)) + 1/2*log(2 + x^2)") }
+    assert_nothing_raised { @stck.validate_maxima_exp("sqrt(23)*atan(2*x/sqrt(12)) + 21/2*log(12 + x^12)") }
   end
 end 
 
