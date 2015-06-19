@@ -5,6 +5,108 @@ $LOAD_PATH.push File.dirname(File.dirname(File.expand_path(__FILE__)))
 require 'stack_q_lib'
 
 class TestStackQ < Test::Unit::TestCase
+
+  def setup
+    @stck = STACK_Q.new("")
+  end
+
+  def test_whole_xml
+    dir = File.dirname( File.expand_path(__FILE__) )
+    e_stk = File.read( File.join(dir, "e.stk") )
+    e_xml = File.read( File.join(dir, "e.xml") ).chop
+    assert_equal(e_xml, STACK_Q.new(e_stk).txt2xml)
+  end
+
+  def test_s
+    assert_equal( Kekka01, STACK_Q.new("abcd01**abcd02**abcd03").txt2xml )
+    assert_equal( Kekka01, STACK_Q.new(" abcd01 ** abcd02 ** abcd03 ").txt2xml )
+    assert_equal( Kekka01.gsub("abcd01", "&lt;"),
+                  STACK_Q.new(" < ** abcd02 ** abcd03 ").txt2xml )
+    
+    assert_equal( Kekka01, 
+                  STACK_Q.new("abcd01**abcd02**abcd03**AlgEquiv").txt2xml )
+    assert_equal( Kekka01.gsub(/AlgEquiv/, "CasEqual"), 
+                  STACK_Q.new("abcd01**abcd02**abcd03**CasEqual").txt2xml )
+  end
+
+  def test_f
+    assert_equal( Func01, 
+                  @stck.feedback('is_same_interval', 'abcd') )
+    assert_equal( Func01.gsub("abcd", "]]]]><![CDATA[>"), 
+                  @stck.feedback('is_same_interval', ']]>') )
+  end
+
+  def test_m
+    assert_equal( true,
+                  @stck.is_matrix_type("matrix((),() )") )
+     assert_equal( true,
+                  @stck.is_matrix_type("matrix ((),() )") )
+    assert_equal( false,
+                  @stck.is_matrix_type("matrix((),() ) + matrix()") )
+
+    assert_equal( Kekka01.gsub("algebraic", "matrix").gsub("55", "10").gsub("abcd03", "matrix([1],[2],[3])"), 
+                  STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])").txt2xml )
+
+    assert_equal( Kekka01.gsub("abcd03", "matrix([1],[2],[3])+matrix([1],[2],[3])"), 
+                  STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])+matrix([1],[2],[3])").txt2xml )
+  end
+
+  def test_e
+    assert_raise(ArgumentError){ STACK_Q.new("a**b**\xf1\xf1").txt2xml }
+  end
+
+  def test_matrix_x
+    assert_equal(3, @stck.basis_dim("[[1,1,1], [2,1,1], [3,1,1]]"))
+    assert_equal(3, @stck.basis_dim("[[1,1,1], [2,1,1]]"))
+    assert_equal(2, @stck.basis_dim("[[1,1], [2,1]]"))
+    assert_equal( Kekka02,
+                  STACK_Q.new("abs ** xyz ** [[1,1,0], [1,0,0]] ** is_basis_of_same_linear_space").txt2xml )
+  end
+  
+  def test_basis_type_check
+    assert_nothing_raised{ 
+      @stck.basis_type_check("[[1,1]]", 1)
+      @stck.basis_type_check("[[1,1],[1,2]]", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.basis_type_check("[[1,1],[1]]", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.basis_type_check("{[1,1],[1,0]}", 1)
+    }
+  end
+
+  def test_plane_type_check
+    assert_nothing_raised{
+      @stck.plane_type_check("[t,s,0]", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.plane_type_check("{1,1}", 1)
+    }
+  end
+
+  def test_eq_type_check
+    assert_nothing_raised{
+      @stck.eq_type_check("{x,y,z}", 1)
+    }
+    assert_raise(RuntimeError) {
+      @stck.eq_type_check("[x,y]", 1)
+    }
+  end
+
+  def test_inline_tex
+    assert_equal('\\(abc\\)', @stck.inline_tex('$abc$'))
+    assert_not_equal('\\(abc\\)', @stck.inline_tex('$abc'))
+    assert_equal('\(\sin\)', @stck.inline_tex('$\sin$'))
+    assert_equal(' \(\$\)', @stck.inline_tex(' $\$$'))
+    assert_equal('\$\$$', @stck.inline_tex('\$\$$'))
+
+    assert_equal('\(abc\) \(xyz\)', @stck.inline_tex('$abc$ $xyz$'))
+  end
+end 
+
+
+class TestStackQ  < Test::Unit::TestCase
   Kekka01 = <<EOS.chop
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
@@ -311,95 +413,4 @@ is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 :
 a1 : abcd;
 a1 : if is_same_interval(a1, ans1) then ans1 else false;]]>
 EOS
-
-  def setup
-    @stck = STACK_Q.new("")
-  end
-
-  def test_s
-    assert_equal( Kekka01, STACK_Q.new("abcd01**abcd02**abcd03").txt2xml )
-    assert_equal( Kekka01, STACK_Q.new(" abcd01 ** abcd02 ** abcd03 ").txt2xml )
-    assert_equal( Kekka01.gsub("abcd01", "&lt;"),
-                  STACK_Q.new(" < ** abcd02 ** abcd03 ").txt2xml )
-    
-    assert_equal( Kekka01, 
-                  STACK_Q.new("abcd01**abcd02**abcd03**AlgEquiv").txt2xml )
-    assert_equal( Kekka01.gsub(/AlgEquiv/, "CasEqual"), 
-                  STACK_Q.new("abcd01**abcd02**abcd03**CasEqual").txt2xml )
-  end
-
-  def test_f
-    assert_equal( Func01, 
-                  @stck.feedback('is_same_interval', 'abcd') )
-    assert_equal( Func01.gsub("abcd", "]]]]><![CDATA[>"), 
-                  @stck.feedback('is_same_interval', ']]>') )
-  end
-
-  def test_m
-    assert_equal( true,
-                  @stck.is_matrix_type("matrix((),() )") )
-     assert_equal( true,
-                  @stck.is_matrix_type("matrix ((),() )") )
-    assert_equal( false,
-                  @stck.is_matrix_type("matrix((),() ) + matrix()") )
-
-    assert_equal( Kekka01.gsub("algebraic", "matrix").gsub("55", "4").gsub("abcd03", "matrix([1],[2],[3])"), 
-                  STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])").txt2xml )
-
-    assert_equal( Kekka01.gsub("abcd03", "matrix([1],[2],[3])+matrix([1],[2],[3])"), 
-                  STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])+matrix([1],[2],[3])").txt2xml )
-  end
-
-  def test_e
-    assert_raise(ArgumentError){ STACK_Q.new("a**b**\xf1\xf1").txt2xml }
-  end
-
-  def test_matrix_x
-    assert_equal(3, @stck.basis_dim("[[1,1,1], [2,1,1], [3,1,1]]"))
-    assert_equal(3, @stck.basis_dim("[[1,1,1], [2,1,1]]"))
-    assert_equal(2, @stck.basis_dim("[[1,1], [2,1]]"))
-    assert_equal( Kekka02,
-                  STACK_Q.new("abs ** xyz ** [[1,1,0], [1,0,0]] ** is_basis_of_same_linear_space").txt2xml )
-  end
-  
-  def test_basis_type_check
-    assert_nothing_raised{ 
-      @stck.basis_type_check("[[1,1]]", 1)
-      @stck.basis_type_check("[[1,1],[1,2]]", 1)
-    }
-    assert_raise(RuntimeError) {
-      @stck.basis_type_check("[[1,1],[1]]", 1)
-    }
-    assert_raise(RuntimeError) {
-      @stck.basis_type_check("{[1,1],[1,0]}", 1)
-    }
-  end
-
-  def test_plane_type_check
-    assert_nothing_raised{
-      @stck.plane_type_check("[t,s,0]", 1)
-    }
-    assert_raise(RuntimeError) {
-      @stck.plane_type_check("{1,1}", 1)
-    }
-  end
-
-  def test_eq_type_check
-    assert_nothing_raised{
-      @stck.eq_type_check("{x,y,z}", 1)
-    }
-    assert_raise(RuntimeError) {
-      @stck.eq_type_check("[x,y]", 1)
-    }
-  end
-
-  def test_inline_tex
-    assert_equal('\\(abc\\)', @stck.inline_tex('$abc$'))
-    assert_not_equal('\\(abc\\)', @stck.inline_tex('$abc'))
-    assert_equal('\(\sin\)', @stck.inline_tex('$\sin$'))
-    assert_equal(' \(\$\)', @stck.inline_tex(' $\$$'))
-    assert_equal('\$\$$', @stck.inline_tex('\$\$$'))
-
-    assert_equal('\(abc\) \(xyz\)', @stck.inline_tex('$abc$ $xyz$'))
-  end
-end 
+end
