@@ -27,6 +27,8 @@ class STACK_Q
       mthd = mthd || "AlgEquiv"
       forbidwords = ""
 
+      validate_maxima_exp(ans1)
+
       if is_matrix_type(ans1)
         input_size = 10
         input_type = "matrix"
@@ -159,24 +161,22 @@ EOS
   end
   
   def validate_maxima_exp(s)
-    case s
-    when /\(/
-      tmp = s
-      tmp = tmp.gsub(/matrix\(([^\(\)]+)\)/){|s0|
-        " XXX "
-      }
-      tmp = tmp.gsub(/([a-z]{3,})?\s*\(([^\(\)]+)\)/){|s0|
-        validate_maxima_exp($2)
-        " XXX "
-      }
-      validate_maxima_exp(tmp)
-    when /\A-?\s*([a-zA-Z]\w*|\d+)\s*\z/ 
-      true
-    when /\A-?(\s*([a-zA-Z]\w*|\d+)\s*[\*\+\-\^\/])+\s*([a-zA-Z]\w*|\d+)\s*\z/ 
-      true
-    else
-      raise
+    tmp = s
+    until tmp == " XXX "
+      prev = tmp
+      tmp = tmp.gsub(/-?\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[^\(\w\s\*\+\-\^\/=])/, " XXX ")
+      tmp = tmp.gsub(/-?(\s*([a-zA-Z]\w*|\d+)\s*[\*\+\-\^\/=])+\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[^\(\w\s\*\+\-\^\/=])/, " XXX ")
+      tmp = tmp.gsub(/([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
+      tmp = tmp.gsub(/(?<=\A|[\*\+\-\^\/=])\s*\(\s*(XXX\s*,)*XXX\s*\)/, " XXX ")
+      tmp = tmp.gsub(/\[( XXX ,)* XXX \]/, " XXX ")
+      tmp = tmp.gsub(/\{( XXX ,)* XXX \}/, " XXX ")
+      if tmp == prev
+        raise 
+      end
     end
+
+    return true
+
   end
 
   def cdata(s)
