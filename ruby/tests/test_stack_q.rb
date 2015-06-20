@@ -113,16 +113,22 @@ class TestStackQ < Test::Unit::TestCase
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("2a")  }
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("sin x")  }
 
+    assert_nothing_raised { @stck.validate_maxima_exp("sin(x)") }
     assert_nothing_raised { @stck.validate_maxima_exp("2 * (a + sin(x))") }
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 * (a + sin(x)) (b + c)") }
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 * (a + 2sin(x))") }
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 (a + sin(x))") }
 
     assert_nothing_raised { @stck.validate_maxima_exp("(a + sin(x)) / (b + c)") }
-    
+
+    assert_nothing_raised { @stck.validate_maxima_exp("[1, 2, 3]") }
     assert_nothing_raised { @stck.validate_maxima_exp("matrix([1,2], [3,4])") }
     assert_nothing_raised { @stck.validate_maxima_exp("sqrt(23)*atan(2*x/sqrt(12)) + 21/2*log(12 + x^12)") }
+    assert_nothing_raised { @stck.validate_maxima_exp("-1 - 3*y + z") }
+    assert_nothing_raised { @stck.validate_maxima_exp("-1 - 3*y + z = 2*x") }
+    assert_nothing_raised { @stck.validate_maxima_exp("{-1 - 3*y + z = 2*x}") }
   end
+
 end 
 
 
