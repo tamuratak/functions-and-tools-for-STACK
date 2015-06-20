@@ -36,6 +36,8 @@ class STACK_Q
 
       qstr = inline_tex(qstr)
 
+      # teacher's answer == ans1 == t_ans1
+      # student's answer == a1
       case mthd
       when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
         stack_mthd = mthd
@@ -46,12 +48,7 @@ class STACK_Q
           stack_mthd = "CasEqual"
           forbidwords = ",asin,acos,atan"
         end
-      when "does_satisfy"
-        prt_ans1 = "a1"
-        stack_mthd = "CasEqual"
-        t_ans1 = cdata(ans1)
-        feedbk = feedback(mthd, ans1, ext)
-      when "is_same_interval",  "is_same_linear_eq", "is_same_tri", "has_same_deriv"
+      when "is_same_interval",  "is_same_linear_eq", "is_same_tri", "has_same_deriv", "does_satisfy"
         case mthd
         when "is_same_linear_eq"
           eq_type_check(ans1, line_num)
@@ -59,9 +56,9 @@ class STACK_Q
         stack_mthd = "CasEqual"
         t_ans1 = cdata(ans1)
         prt_ans1 = "a1"
-        feedbk = feedback(mthd, ans1)
+        feedbk = feedback(mthd, ans1, ext)
       when "is_same_plane"
-#        plane_check_type(ans1, line_num)
+#        plane_type_check(ans1, line_num)
         stack_mthd = "CasEqual"
         t_ans1 = cdata("transpose(matrix(" + ans1 + "))")
         prt_ans1 = "a1"
