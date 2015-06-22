@@ -49,14 +49,16 @@ class STACK_Q
           forbidwords = ",asin,acos,atan"
         end
       when "is_same_interval",  "is_same_linear_eq", "is_same_tri", "has_same_deriv", "does_satisfy"
+        t_ans1 = cdata(ans1)
+        stack_mthd = "CasEqual"
+        prt_ans1 = "a1"
+        feedbk = feedback(mthd, ans1, ext)
         case mthd
         when "is_same_linear_eq"
           eq_type_check(ans1, line_num)
+        when "has_same_deriv"
+          stack_mthd = "AlgEquiv"
         end
-        stack_mthd = "CasEqual"
-        t_ans1 = cdata(ans1)
-        prt_ans1 = "a1"
-        feedbk = feedback(mthd, ans1, ext)
       when "is_same_plane"
 #        plane_type_check(ans1, line_num)
         stack_mthd = "CasEqual"
@@ -97,7 +99,8 @@ class STACK_Q
       <<EOS.chop
 <![CDATA[
 a1 : #{esq_cdata(ans1)};
-a1 : if is(diff(a1,x) = diff(ans1, x)) then ans1 else false;
+a1 : diff(a1,x);
+ans1 : diff(ans1, x);
 ]]>
 EOS
     when "is_same_tri"
