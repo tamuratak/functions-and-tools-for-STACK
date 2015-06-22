@@ -22,54 +22,54 @@ class STACK_Q
       input_size = 55
       input_type = "algebraic"
 
-      qname, qstr, ans1, mthd, ext = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }
+      qname, qstr, a1, mthd, ext = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }
       mthd = mthd || "AlgEquiv"
       forbidwords = ""
 
-      validate_maxima_exp(ans1)
+      validate_maxima_exp(a1)
 
-      if is_matrix_type(ans1)
+      if is_matrix_type(a1)
         input_size = 10
         input_type = "matrix"
       end
 
       qstr = inline_tex(qstr)
 
-      # teacher's answer == ans1 == t_ans1
-      # student's answer == a1
+      # teacher's answer == a1 == t_ans1
+      # student's answer == ans1
       case mthd
       when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
         stack_mthd = mthd
-        t_ans1 = cdata(ans1)
-        prt_ans1 = cdata(ans1)
+        t_ans1 = cdata(a1)
+        prt_ans1 = cdata(a1)
         feedbk = ""
         if mthd == "CasEqualNotAsin"
           stack_mthd = "CasEqual"
           forbidwords = ",asin,acos,atan"
         end
       when "is_same_interval",  "is_same_linear_eq", "is_same_tri", "has_same_deriv", "does_satisfy"
-        t_ans1 = cdata(ans1)
+        t_ans1 = cdata(a1)
         stack_mthd = "CasEqual"
         prt_ans1 = "a1"
-        feedbk = feedback(mthd, ans1, ext)
+        feedbk = feedback(mthd, a1, ext)
         case mthd
         when "is_same_linear_eq"
-          eq_type_check(ans1, line_num)
+          eq_type_check(a1, line_num)
         when "has_same_deriv"
           stack_mthd = "AlgEquiv"
         end
       when "is_same_plane"
-#        plane_type_check(ans1, line_num)
+#        plane_type_check(a1, line_num)
         stack_mthd = "CasEqual"
-        t_ans1 = cdata("transpose(matrix(" + ans1 + "))")
+        t_ans1 = cdata("transpose(matrix(" + a1 + "))")
         prt_ans1 = "a1"
-        feedbk = feedback(mthd, ans1)
+        feedbk = feedback(mthd, a1)
         input_size = 15
         input_type = "matrix"
       when "is_basis_of_same_linear_space"
         x = ERB.new(TMPL2)
-        basis_type_check(ans1, line_num)
-        dim = basis_dim(ans1)
+        basis_type_check(a1, line_num)
+        dim = basis_dim(a1)
         inputs = basis_ans(dim, dim)
         prt = basis_prt(dim)
         feedbk = basis_feedback(dim)
@@ -92,12 +92,12 @@ class STACK_Q
     s.gsub(/([^\\]|\A)\$((\\\$|[^\$])*)\$/) { $1 + '\\(' + $2 + '\\)' }
   end
 
-  def feedback(mthd, ans1, ext="")
+  def feedback(mthd, a1, ext="")
     case mthd
     when "has_same_deriv"
       <<EOS.chop
 <![CDATA[
-a1 : #{esq_cdata(ans1)};
+a1 : #{esq_cdata(a1)};
 a1 : diff(a1,x);
 ans1 : diff(ans1, x);
 ]]>
@@ -108,14 +108,14 @@ EOS
 echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(for i: 2 while i <= len do (arry : sublist_indices(m0[i], lambda([x], x = 1)),(if not is(arry = []) then (k : arry[1],(for j: 1 while j < i do ((m0[j] : m0[j] - m0[j][k] * m0[i]))))))),m0);
 is_triangle(m) := block([len,i,k0,k,arry, ret],ret : true,len : length(m),len0 : length(m[1]) + 1,arry : sublist_indices(m[1], lambda([x], not (x = 0)) ),(if is(arry = []) then (k0 : length(m[1]) + 1) else (k0 : arry[1])),(for i: 2 while i <= len do (arry : sublist_indices(m[i], lambda([x], not (x = 0)) ),k : (if is(arry = []) then (length(m[1]) + 1) else (arry[1])),(if not is( (k > k0) or (len0 = k and len0 = k0) ) then (ret : ret and false)),k0 : k)),ret);
 is_same_triangle(a, x) := block([],a0 : echelon_1(a),x0 : echelon_1(x),x1 : triangularize(x),is(is_triangle(x) and (a0 = x0)));
-a1 : #{esq_cdata(ans1)};
+a1 : #{esq_cdata(a1)};
 a1 : if is_same_triangle(a1, ans1) then ans1 else false;
 ]]>
 EOS
     when "does_satisfy"
       <<EOS.chop
 <![CDATA[
-a1 : #{esq_cdata(ans1)};
+a1 : #{esq_cdata(a1)};
 a1 : if is(#{esq_cdata(ext)}) then ans1 else false;
 ]]>
 EOS
@@ -128,7 +128,7 @@ edges(xs) := block([x],delete(x, flatten( scanmap(myargs, xs))));
 xs_in_interval(xs, cond) := block(map(lambda([x], charfun(cond)), xs));
 is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 : edges(c1),xs2 : edges(c2),m : lmax( map(abs, append(xs1, xs2)) ),m : 2*min(max(m, 1), 100),ret : ret and is(xs_in_interval(xs1, c1) = xs_in_interval(xs1, c2)),ret : ret and is(xs_in_interval(xs2, c1) = xs_in_interval(xs2, c2)),if ret then (v1 : quad_qags(charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],v2 : quad_qags(charfun(c2)*charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],ret : ret and is(v1 = v2)),ret);
 
-a1 : #{esq_cdata(ans1)};
+a1 : #{esq_cdata(a1)};
 a1 : if is_same_interval(a1, ans1) then ans1 else false;
 ]]>
 EOS
@@ -151,14 +151,14 @@ EOS
       when "is_same_linear_eq"
 ret <<
 <<EOS.chop
-a1 : #{esq_cdata(ans1)};
+a1 : #{esq_cdata(a1)};
 a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
 ]]>
 EOS
       when "is_same_plane"
 ret <<
 <<EOS.chop
-a1 : #{esq_cdata(ans1)};
+a1 : #{esq_cdata(a1)};
 ans1 : list_matrix_entries(ans1);
 a1 : if is_same_plane(a1, ans1) then ans1 else false;
 ]]>
@@ -448,7 +448,7 @@ EOS
     <penalty>0.0000000</penalty>
     <hidden>0</hidden>
     <questionvariables>
-      <text>k1 : <%=esq_cdata ans1 %>;</text>
+      <text>k1 : <%=esq_cdata a1 %>;</text>
     </questionvariables>
     <specificfeedback format="html">
       <text><![CDATA[<p>[[feedback:prt1]]</p>]]></text>
