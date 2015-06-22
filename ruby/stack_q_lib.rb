@@ -13,13 +13,14 @@ class STACK_Q
   def txt2xml
     ret = ""
     ret << HEAD
-    x = ERB.new(TMPL)
+
     
     line_num = 1
 
     @txt.each_line{|l|
       next if /\A\s*\Z/ =~ l
 
+      x = ERB.new(TMPL)
       input_size = 55
       input_type = "algebraic"
 
