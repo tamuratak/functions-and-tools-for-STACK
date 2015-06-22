@@ -13,8 +13,6 @@ class STACK_Q
   def txt2xml
     ret = ""
     ret << HEAD
-
-    
     line_num = 1
 
     @txt.each_line{|l|
