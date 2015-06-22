@@ -104,53 +104,64 @@ ans1 : diff(ans1, x);
 EOS
     when "is_same_tri"
       <<EOS.chop
-<![CDATA[echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(for i: 2 while i <= len do (arry : sublist_indices(m0[i], lambda([x], x = 1)),(if not is(arry = []) then (k : arry[1],(for j: 1 while j < i do ((m0[j] : m0[j] - m0[j][k] * m0[i]))))))),m0);
+<![CDATA[
+echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(for i: 2 while i <= len do (arry : sublist_indices(m0[i], lambda([x], x = 1)),(if not is(arry = []) then (k : arry[1],(for j: 1 while j < i do ((m0[j] : m0[j] - m0[j][k] * m0[i]))))))),m0);
 is_triangle(m) := block([len,i,k0,k,arry, ret],ret : true,len : length(m),len0 : length(m[1]) + 1,arry : sublist_indices(m[1], lambda([x], not (x = 0)) ),(if is(arry = []) then (k0 : length(m[1]) + 1) else (k0 : arry[1])),(for i: 2 while i <= len do (arry : sublist_indices(m[i], lambda([x], not (x = 0)) ),k : (if is(arry = []) then (length(m[1]) + 1) else (arry[1])),(if not is( (k > k0) or (len0 = k and len0 = k0) ) then (ret : ret and false)),k0 : k)),ret);
 is_same_triangle(a, x) := block([],a0 : echelon_1(a),x0 : echelon_1(x),x1 : triangularize(x),is(is_triangle(x) and (a0 = x0)));
 a1 : #{esq_cdata(ans1)};
-a1 : if is_same_triangle(a1, ans1) then ans1 else false;]]>
+a1 : if is_same_triangle(a1, ans1) then ans1 else false;
+]]>
 EOS
     when "does_satisfy"
       <<EOS.chop
-<![CDATA[a1 : #{esq_cdata(ans1)};
-a1 : if is(#{esq_cdata(ext)}) then ans1 else false;]]>
+<![CDATA[
+a1 : #{esq_cdata(ans1)};
+a1 : if is(#{esq_cdata(ext)}) then ans1 else false;
+]]>
 EOS
     when "is_same_interval"
       <<EOS.chop
-<![CDATA[myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
+<![CDATA[
+myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
 chk_op(as, xs) := block([op1, x],if not( atom(as) ) and not( atom(xs) ) then (if member(x, as) then (op1 : op(xs),return( member(op1, ["and", "or", "<", ">", ">=", "<="]) ))),true);
 edges(xs) := block([x],delete(x, flatten( scanmap(myargs, xs))));
 xs_in_interval(xs, cond) := block(map(lambda([x], charfun(cond)), xs));
 is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 : edges(c1),xs2 : edges(c2),m : lmax( map(abs, append(xs1, xs2)) ),m : 2*min(max(m, 1), 100),ret : ret and is(xs_in_interval(xs1, c1) = xs_in_interval(xs1, c2)),ret : ret and is(xs_in_interval(xs2, c1) = xs_in_interval(xs2, c2)),if ret then (v1 : quad_qags(charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],v2 : quad_qags(charfun(c2)*charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],ret : ret and is(v1 = v2)),ret);
 
 a1 : #{esq_cdata(ans1)};
-a1 : if is_same_interval(a1, ans1) then ans1 else false;]]>
+a1 : if is_same_interval(a1, ans1) then ans1 else false;
+]]>
 EOS
     when "is_same_linear_eq", "is_same_plane"
       ret = ""
       ret <<
-<<EOS.chop
-<![CDATA[is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(a),x0 : listify(x),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret); 
+<<EOS
+<![CDATA[
+is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(a),x0 : listify(x),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret); 
 basis_of_plane(v) := block([params],params : listofvars(v),map(lambda([v1], diff(v, v1)), params));
 pos_of_plane(v) := block([v0 : v, params, i],params : listofvars(v),for i:1 thru length(params) do v0 : subst(0, params[i], v0),v0);
 is_on_plane(p, v) := block([eq],eq : map("=", makelist(0, length(v)), v-p),is(not ([] = solve(eq, listofvars(v)))));
 is_same_plane(v1, v2) := block([b1, b2, p1, p2, ret : true],b1 : basis_of_plane(v1),b2 : basis_of_plane(v2),ret : ret and is_same_linear_space(b1, b2),ret : ret and is_on_plane(pos_of_plane(v1), v2),ret : ret and is_on_plane(pos_of_plane(v2), v1));
 eq_to_param(eq) := block([params, tmp],eq : listify(eq),params : sort(listofvars(eq)),tmp : solve(eq, params),subst(tmp[1], params));
 is_same_linear_eq(eq1, eq2) := block([pa1, pa2],pa1 : eq_to_param(eq1),pa2 : eq_to_param(eq2),is_same_plane(pa1, pa2));
+
 EOS
+      # ]]> should be added in the following.
       case mthd
       when "is_same_linear_eq"
 ret <<
 <<EOS.chop
 a1 : #{esq_cdata(ans1)};
-a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;]]>
+a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
+]]>
 EOS
       when "is_same_plane"
 ret <<
 <<EOS.chop
 a1 : #{esq_cdata(ans1)};
 ans1 : list_matrix_entries(ans1);
-a1 : if is_same_plane(a1, ans1) then ans1 else false;]]>
+a1 : if is_same_plane(a1, ans1) then ans1 else false;
+]]>
 EOS
       end
       ret
