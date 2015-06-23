@@ -1,0 +1,4 @@
+load("myassert.mac");
+load("../is_same_diag.mac");
+
+test_assert( is_diagonal(matrix([1,0],[0,1])) );

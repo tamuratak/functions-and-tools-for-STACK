@@ -1,0 +1,14 @@
+is_diagonal(m) := block([],
+  ret : true,
+  col_size : length(m),
+  row_size : length(m[1]),
+  (if is(col_size = row_size)
+    then (
+      (if is( not m = m * diagmatrix(col_size, 1))  then (
+          ret : ret and false
+          )))
+    else (
+      ret : ret and false
+      )),
+  ret
+  );
