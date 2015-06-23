@@ -35,7 +35,7 @@ class STACK_Q
 
       qstr = inline_tex(qstr)
 
-      # teacher's answer == a1 == t_ans1
+      # teacher's answer == a1 == t_ans1 == prt_ans1, (prt stands for potential response tree)
       # student's answer == ans1
       case mthd
       when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
@@ -48,8 +48,8 @@ class STACK_Q
           forbidwords = ",asin,acos,atan"
         end
       when "is_same_interval",  "is_same_linear_eq", "is_same_tri", "has_same_deriv", "does_satisfy"
-        t_ans1 = cdata(a1)
         stack_mthd = "CasEqual"
+        t_ans1 = cdata(a1)
         prt_ans1 = "a1"
         feedbk = feedback(mthd, a1, ext)
         case mthd
