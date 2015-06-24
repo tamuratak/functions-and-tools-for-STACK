@@ -1,4 +1,4 @@
-is_diagonal(m) := block([],
+is_diagonal(m) := block([ret, col_size, row_size],
   ret : true,
   col_size : length(m),
   row_size : length(m[1]),
@@ -9,6 +9,24 @@ is_diagonal(m) := block([],
           )))
     else (
       ret : ret and false
+      )),
+  ret
+  );
+
+get_diag_element(m) := block([ret, len],
+  ret : [],
+  len : length(m),
+  (for i: 1 while i <= len do (
+      push(m[i,i], ret)
+      )),
+  ret
+  );
+
+is_same_diag(a, x) := block([ret, len],
+  ret : true,
+  ret : ret and is_diagonal(x),
+  (if ret then (
+      ret : ret and is( sort(get_diag_element(a)) = sort(get_diag_element(x)) )
       )),
   ret
   );
