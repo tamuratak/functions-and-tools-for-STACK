@@ -26,7 +26,11 @@ class STACK_Q
       mthd = mthd || "AlgEquiv"
       forbidwords = ""
 
-      validate_maxima_exp(a1)
+      begin
+        validate_maxima_exp(a1)
+      rescue RuntimeError
+        raise "error at #{line_num}"
+      end
 
       if is_matrix_type(a1)
         input_size = 10
@@ -174,10 +178,11 @@ EOS
     tmp = s
     until tmp == " XXX "
       prev = tmp
-      tmp = tmp.gsub(/-?\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[^\(\w\s\*\+\-\^\/=])/, " XXX ")
-      tmp = tmp.gsub(/-?(\s*([a-zA-Z]\w*|\d+)\s*[\*\+\-\^\/=])+\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[^\(\w\s\*\+\-\^\/=])/, " XXX ")
+      tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[\)\]\},])/, " XXX ")
+      tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?(\s*([a-zA-Z]\w*|\d+)\s*[\*\+\-\^\/=])+\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[^\(\w\s\*\+\-\^\/=])/, " XXX ")
       tmp = tmp.gsub(/([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
       tmp = tmp.gsub(/(?<=\A|[\*\+\-\^\/=])\s*\(\s*(XXX\s*,)*XXX\s*\)/, " XXX ")
+      tmp = tmp.gsub(/\(\s*XXX\s*\)/, " XXX ")
       tmp = tmp.gsub(/\[( XXX ,)* XXX \]/, " XXX ")
       tmp = tmp.gsub(/\{( XXX ,)* XXX \}/, " XXX ")
       if tmp == prev
