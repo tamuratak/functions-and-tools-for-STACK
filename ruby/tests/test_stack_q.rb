@@ -106,6 +106,7 @@ class TestStackQ < Test::Unit::TestCase
 
   def test_validate_maxima_exp
     assert_nothing_raised { @stck.validate_maxima_exp("a") }
+    assert_nothing_raised { @stck.validate_maxima_exp("-a") }
     assert_nothing_raised { @stck.validate_maxima_exp("a*b") }
     assert_nothing_raised { @stck.validate_maxima_exp("2*a*b") }
     assert_nothing_raised { @stck.validate_maxima_exp("2*a*b + c") }
