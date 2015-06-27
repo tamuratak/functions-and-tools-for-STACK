@@ -120,6 +120,8 @@ class TestStackQ < Test::Unit::TestCase
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 (a + sin(x))") }
     assert_nothing_raised { @stck.validate_maxima_exp("log(1 - x)") }
     assert_nothing_raised { @stck.validate_maxima_exp("(a + sin(x)) / (b + c)") }
+    assert_nothing_raised { @stck.validate_maxima_exp("sin(x) - a*b") }
+    assert_nothing_raised { @stck.validate_maxima_exp("(sin(-x) - (-a*b))") }
 
     assert_nothing_raised { @stck.validate_maxima_exp("[1, 2, 3]") }
     assert_nothing_raised { @stck.validate_maxima_exp("matrix([1,2], [3,4])") }
