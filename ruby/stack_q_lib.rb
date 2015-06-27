@@ -179,19 +179,17 @@ EOS
     until tmp == " XXX "
       prev = tmp
       tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[\)\]\},])/, " XXX ")
-      tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?(\s*([a-zA-Z]\w*|\d+)\s*[\*\+\-\^\/=])+\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[^\(\w\s\*\+\-\^\/=])/, " XXX ")
+      tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?(\s*([a-zA-Z]\w*|\d+)\s*[\*\+\-\^\/=])+\s*([a-zA-Z]\w*|\d+)\s*(?=\z|[\)\]\},])/, " XXX ")
       tmp = tmp.gsub(/([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
-      tmp = tmp.gsub(/(?<=\A|[\*\+\-\^\/=])\s*\(\s*(XXX\s*,)*XXX\s*\)/, " XXX ")
-      tmp = tmp.gsub(/\(\s*XXX\s*\)/, " XXX ")
+      tmp = tmp.gsub(/\( XXX \)/, " XXX ")
       tmp = tmp.gsub(/\[( XXX ,)* XXX \]/, " XXX ")
       tmp = tmp.gsub(/\{( XXX ,)* XXX \}/, " XXX ")
       if tmp == prev
-        raise 
+        raise "s"
       end
     end
 
     return true
-
   end
 
   def cdata(s)
