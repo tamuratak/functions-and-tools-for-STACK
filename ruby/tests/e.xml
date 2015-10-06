@@ -13,7 +13,7 @@
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 1 (1)</p>
-<p>\(\frac{12}{13}\)  を入力する。 [[input:ans1]]</p>
+<p>\(\,\)  \(\frac{12}{13}\)  を入力する。 [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -104,7 +104,7 @@
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 2 (1)</p>
-<p> [[input:ans1]]</p>
+<p>\(\,\)   [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -195,7 +195,7 @@
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 3 (1)</p>
-<p>\(f&#39;(x)=\) [[input:ans1]]</p>
+<p>\(\,\)  \(f&#39;(x)=\) [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -286,7 +286,7 @@
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 4 (1)</p>
-<p> [[input:ans1]]</p>
+<p>\(\,\)   [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -389,7 +389,7 @@ a1 : if is_same_plane(a1, ans1) then ans1 else false;
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 5 (1)</p>
-<p> [[input:ans1]]</p>
+<p>\(\,\)   [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -491,7 +491,7 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 6 (1)</p>
-<p>\(A {}^tA = \) [[input:ans1]]</p>
+<p>\(\,\)  \(A {}^tA = \) [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -582,7 +582,7 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 7</p>
-<p> [[input:ans1]]</p>
+<p>\(\,\)   [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -676,7 +676,7 @@ a1 : if is(ans1 = a1 or ans1 = - a1) then ans1 else false;
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 8 (1)</p>
-<p> [[input:ans1]]</p>
+<p>\(\,\)   [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -773,7 +773,7 @@ a1 : if is_same_triangle(a1, ans1) then ans1 else false;
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 9 (1)</p>
-<p> <p> [[input:ans1]] [[input:ans2]] [[input:ans3]]</p>
+<p>\(\,\)   <p> [[input:ans1]] [[input:ans2]] [[input:ans3]]</p>
 <div>[[validation:ans1]] [[validation:ans2]] [[validation:ans3]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -952,7 +952,7 @@ x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([a1, a2, a3] : [ans1,
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 11 (1)</p>
-<p> [[input:ans1]]</p>
+<p>\(\,\)   [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">

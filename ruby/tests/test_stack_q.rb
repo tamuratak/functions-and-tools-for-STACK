@@ -156,7 +156,7 @@ class TestStackQ  < Test::Unit::TestCase
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>abcd01</p>
-<p>abcd02 [[input:ans1]]</p>
+<p>\\(\\,\\)  abcd02 [[input:ans1]]</p>
 <div>[[validation:ans1]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -260,7 +260,7 @@ EOS
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>abs</p>
-<p>xyz <p> [[input:ans1]] [[input:ans2]] [[input:ans3]]</p>
+<p>\\(\\,\\)  xyz <p> [[input:ans1]] [[input:ans2]] [[input:ans3]]</p>
 <div>[[validation:ans1]] [[validation:ans2]] [[validation:ans3]]</div>]]></text>
     </questiontext>
     <generalfeedback format="html">
