@@ -37,7 +37,7 @@ class STACK_Q
         input_type = "matrix"
       end
 
-      qstr = inline_tex(qstr)
+      qstr = '\(\,\)  ' + inline_tex(qstr)
 
       # teacher's answer == a1 == t_ans1 == prt_ans1, (prt stands for potential response tree)
       # student's answer == ans1
