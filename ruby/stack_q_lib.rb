@@ -178,7 +178,7 @@ EOS
     tmp = s
     until tmp == " XXX "
       prev = tmp
-      tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?(\s*([a-zA-Z]\w*|\d+|%e|%pi)\s*[\*\+\-\^\/=])*\s*([a-zA-Z]\w*|\d+|%e|%pi)\s*(?=\z|[\)\]\},])/, " XXX ")
+      tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?(\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*[\*\+\-\^\/=])*\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*(?=\z|[\)\]\},])/, " XXX ")
       tmp = tmp.gsub(/([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
       tmp = tmp.gsub(/\( XXX \)/, " XXX ")
       tmp = tmp.gsub(/\[( XXX ,)* XXX \]/, " XXX ")
