@@ -178,11 +178,13 @@ EOS
     tmp = s
     until tmp == " XXX "
       prev = tmp
-      tmp = tmp.gsub(/(?<=\A|[\(\[\{,])\s*-?(\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*[\*\+\-\^\/=])*\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*(?=\z|[\)\]\},])/, " XXX ")
-      tmp = tmp.gsub(/([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
+      tmp = tmp.gsub(/(?<=\A|[\(\[\{,]|and|or|not)\s*-?(\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*[\*\+\-\^\/\=\>\<])*\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*(?=\z|[\)\]\},]|and|or)/, " XXX ")
+      tmp = tmp.gsub(/(?!(and|or|not)\s*\()([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
       tmp = tmp.gsub(/\( XXX \)/, " XXX ")
       tmp = tmp.gsub(/\[( XXX ,)* XXX \]/, " XXX ")
       tmp = tmp.gsub(/\{( XXX ,)* XXX \}/, " XXX ")
+      tmp = tmp.gsub(/ XXX (and|or) XXX /, " XXX ")
+      tmp = tmp.gsub(/not XXX/, " XXX ")
       if tmp == prev
         raise s
       end

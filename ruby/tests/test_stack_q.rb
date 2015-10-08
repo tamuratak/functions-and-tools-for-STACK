@@ -134,6 +134,12 @@ class TestStackQ < Test::Unit::TestCase
     assert_nothing_raised { @stck.validate_maxima_exp("-1 - 3*y + z = 2*x") }
     assert_nothing_raised { @stck.validate_maxima_exp("{-1 - 3*y + z = 2*x}") }
 
+    assert_nothing_raised { @stck.validate_maxima_exp("1 < 2 and 2 < 3") }
+    assert_nothing_raised { @stck.validate_maxima_exp("1 < 2 and not 2 < 3") }
+    assert_nothing_raised { @stck.validate_maxima_exp("1 < 2 and (2 < 3 or 1 = 1)") }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("1 not (1)") }
+    assert_raise(RuntimeError) { @stck.validate_maxima_exp("1 not and 1") }
+
     assert_nothing_raised { @stck.validate_maxima_exp("(-((2*x)/(-3 + x^3)) - log(2 - 3*x) + log(2 + 4*x))") }
   end
 
