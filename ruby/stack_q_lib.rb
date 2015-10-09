@@ -120,7 +120,7 @@ EOS
       <<EOS.chop
 <![CDATA[
 a1 : #{esq_cdata(a1)};
-a1 : if is(#{esq_cdata(ext)}) then ans1 else false;
+a1 : if is(ratsimp(#{esq_cdata(ext)})) then ans1 else false;
 ]]>
 EOS
     when "is_same_interval"
