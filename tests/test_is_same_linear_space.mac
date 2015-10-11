@@ -11,3 +11,8 @@ test_assert( is_same_linear_space([[1,1,0], [1,1,1]], [[1,1,1], [0, 0, 1], [0, 0
 
 test_assert( is_same_linear_space([[1,1,0], [1,1,1]], [[1,1,1], [0, 0, 1], [0, 0, 1]]) );
 
+test_assert( is_same_linear_space([[1+%i,2], [0,1]], [[%i-1,2*%i], [0, %i]]) );
+
+test_assert( is_same_linear_space([[1+%i,2], [0,1]], [[%i-1,2*%i], [1+%i, 2+%i]]) );
+
+test_assert( is_same_linear_space([[1+%i,2], [2,2*(1-%i)]], [[%i-1,2*%i], [0, 0]]) );
