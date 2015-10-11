@@ -287,11 +287,11 @@ HERE
     b1 = (1..dim).map{|i| "list_matrix_entries(ans#{i})"}.join(", ")
     alhs = (1..dim).map{|i| "a#{i}" }.join(", ")
     arhs = (1..dim).map{|i| "ans#{i}" }.join(", ")
-    zeros = (1..dim).map{|i| "0" }.join(", ")
+    large_Ns = (1..dim).map{|i| "N" }.join(", ")
 <<"HERE"
 <![CDATA[is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(a),x0 : listify(x),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([ret, x0, xm, i, n], ret : true, x0 : x, xm : apply(matrix, x0), ret: true, n : -(length(x0)+1), for i:1 thru length(x0) do (m : apply(matrix, append(rest(x0,i), rest(x0,n+i))), ret : ret and is(rank(m) + 1 = rank(xm))), ret) ;
-b1 : delete([#{zeros}], [#{b1}]);
+b1 : delete([#{large_Ns}], [#{b1}]);
 x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([#{alhs}] : [#{arhs}]) else false;]]>
 HERE
   end
