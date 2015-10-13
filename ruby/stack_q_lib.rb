@@ -29,7 +29,8 @@ class STACK_Q
       begin
         validate_maxima_exp(a1)
       rescue RuntimeError
-        raise "\n\n" + "validation error of maxima expression at line #{line_num}" + "\n" + l + "\n\n"
+        @err_msg = "validation error of maxima expression at line #{line_num}" + "\n"
+        raise "\n\n" + @err_msg + l + "\n\n"
       end
 
       if is_matrix_type(a1)
