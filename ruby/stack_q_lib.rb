@@ -53,7 +53,7 @@ class STACK_Q
           stack_mthd = "CasEqual"
           forbidwords = ",asin,acos,atan"
         end
-      when "is_same_interval",  "is_same_linear_eq", "is_same_tri", "has_same_deriv", "does_satisfy"
+      when "is_same_interval",  "is_same_linear_eq", "has_same_nullspace", "is_same_tri", "has_same_deriv", "does_satisfy"
         stack_mthd = "CasEqual"
         t_ans1 = cdata(a1)
         prt_ans1 = "a1"
@@ -138,7 +138,7 @@ a1 : #{esq_cdata(a1)};
 a1 : if is_same_interval(a1, ans1) then ans1 else false;
 ]]>
 EOS
-    when "is_same_linear_eq", "is_same_plane"
+    when "is_same_linear_eq", "is_same_plane", "has_same_nullspace"
       ret = ""
       ret <<
 <<EOS
@@ -156,20 +156,25 @@ EOS
       case mthd
       when "is_same_linear_eq"
 ret <<
-<<EOS.chop
+<<EOS
 a1 : #{esq_cdata(a1)};
 a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
-]]>
 EOS
       when "is_same_plane"
 ret <<
-<<EOS.chop
+<<EOS
 a1 : #{esq_cdata(a1)};
 ans1 : list_matrix_entries(ans1);
 a1 : if is_same_plane(a1, ans1) then ans1 else false;
-]]>
+EOS
+      when "has_same_nullspace"
+ret <<
+<<EOS
+a1 : #{esq_cdata(a1)};
+a1 : if is_same_linear_space(args(a1), args(ans1)) then ans1 else false;
 EOS
       end
+      ret << "]]>"
       ret
     else
       ""
