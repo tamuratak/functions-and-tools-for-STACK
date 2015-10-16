@@ -156,25 +156,27 @@ EOS
       case mthd
       when "is_same_linear_eq"
 ret <<
-<<EOS
+<<EOS.chop
 a1 : #{esq_cdata(a1)};
 a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
+]]>
 EOS
       when "is_same_plane"
 ret <<
-<<EOS
+<<EOS.chop
 a1 : #{esq_cdata(a1)};
 ans1 : list_matrix_entries(ans1);
 a1 : if is_same_plane(a1, ans1) then ans1 else false;
+]]>
 EOS
       when "has_same_nullspace"
 ret <<
-<<EOS
+<<EOS.chop
 a1 : #{esq_cdata(a1)};
 a1 : if is_same_linear_space(args(a1), args(ans1)) then ans1 else false;
+]]>
 EOS
       end
-      ret << "]]>"
       ret
     else
       ""
