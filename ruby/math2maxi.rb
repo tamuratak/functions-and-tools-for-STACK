@@ -9,12 +9,13 @@ loop do
   l = STDIN.gets
   l = l.gsub(/\\/, "")
 #  l = l.gsub(/(\W)Pi(\W)/){|s| $1 + "%pi" + $2}
+  l = l.gsub(/(?<!\w)I(?!\w)/){|s| "%i" }
   l = l.gsub(/(\w+)/){|s| $1.downcase }
   5.times{
     l = l.gsub(/\[([^\[\]]+)\]/){|s| "(" + $1 + ")" }
   }
-  l = l.gsub(/([\d\)])\s*([a-z\(])/){|s| $1 + "*" + $2}
-  l = l.gsub(/([a-z]+)\s+([a-z]+\()/){|s| $1 + "*" + $2}
+  l = l.gsub(/([\d\)])\s*([a-z\(%])/){|s| $1 + "*" + $2}
+  l = l.gsub(/([a-z]+)\s+([a-z%]+\()/){|s| $1 + "*" + $2}
   l = l.gsub(/\(pi\)/){ "Pi" }
   [["arctan", "atan"],
    ["arcsin", "asin"],
