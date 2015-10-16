@@ -17,6 +17,7 @@ class STACK_Q
 
     @txt.each_line{|l|
       next if /\A\s*\Z/ =~ l
+      @err_msg = "error at line: #{line_num}"
 
       x = ERB.new(TMPL)
       input_size = 55
