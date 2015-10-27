@@ -20,7 +20,7 @@ class STACK_Q
       @err_msg = "error at line: #{line_num}"
 
       x = ERB.new(TMPL)
-      input_size = 55
+      input_size = 100
       input_type = "algebraic"
 
       qname, qstr, a1, mthd, ext = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }
@@ -188,7 +188,9 @@ EOS
     until tmp == " XXX "
       prev = tmp
       tmp = tmp.gsub(/(?<=\A|[\(\[\{,]|and|or|not)\s*-?(\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*([\*\+\-\^\/\=]|[\>\<]=?))*\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*(?=\z|[\)\]\},]|and|or)/, " XXX ")
-      tmp = tmp.gsub(/(?!(and|or|not)\s*\()([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
+      5.times{
+        tmp = tmp.gsub(/(?!(and|or|not)\s*\()([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
+      }
       tmp = tmp.gsub(/\( XXX \)/, " XXX ")
       tmp = tmp.gsub(/\[( XXX ,)* XXX \]/, " XXX ")
       tmp = tmp.gsub(/\{( XXX ,)* XXX \}/, " XXX ")

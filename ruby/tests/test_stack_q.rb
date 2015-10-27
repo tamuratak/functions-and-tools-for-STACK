@@ -44,7 +44,7 @@ class TestStackQ < Test::Unit::TestCase
     assert_equal( false,
                   @stck.is_matrix_type("matrix((),() ) + matrix()") )
 
-    assert_equal( Kekka01.gsub("algebraic", "matrix").gsub("55", "10").gsub("abcd03", "matrix([1],[2],[3])"), 
+    assert_equal( Kekka01.gsub("algebraic", "matrix").gsub("100", "10").gsub("abcd03", "matrix([1],[2],[3])"), 
                   STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])").txt2xml )
 
     assert_equal( Kekka01.gsub("abcd03", "matrix([1],[2],[3])+matrix([1],[2],[3])"), 
@@ -117,6 +117,7 @@ class TestStackQ < Test::Unit::TestCase
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("2a")  }
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("sin x")  }
 
+    assert_nothing_raised { @stck.validate_maxima_exp("log (sin(x*y))") }
     assert_nothing_raised { @stck.validate_maxima_exp("sin(x)") }
     assert_nothing_raised { @stck.validate_maxima_exp("2 * (a + sin(x))") }
     assert_raise(RuntimeError) { @stck.validate_maxima_exp("2 * (a + sin(x)) (b + c)") }
@@ -202,7 +203,7 @@ class TestStackQ  < Test::Unit::TestCase
       <name>ans1</name>
       <type>algebraic</type>
       <tans><![CDATA[abcd03]]></tans>
-      <boxsize>55</boxsize>
+      <boxsize>100</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
