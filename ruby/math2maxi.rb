@@ -8,7 +8,6 @@ opt = ARGV.getopts("Cm")
 class Math2Maxima
   def self.to_maxima(l, opt = {})
     l = l.gsub(/\\/, "")
-    #  l = l.gsub(/(\W)Pi(\W)/){|s| $1 + "%pi" + $2}
     l = l.gsub(/(?<!\w)I(?!\w)/){|s| "%i" }
     l = l.gsub(/(?<!\w)E(?!\w)/){|s| "%e" }
     l = l.gsub(/(\w+)/){|s| $1.downcase }
