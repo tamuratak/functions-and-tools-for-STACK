@@ -39,6 +39,7 @@ class STACK_Q
         input_type = "matrix"
       end
 
+      # workaround for Moodle + MathJax bug
       qstr = '\(\,\)  ' + inline_tex(qstr)
 
       # teacher's answer == a1 == t_ans1 == prt_ans1, (prt stands for potential response tree)
