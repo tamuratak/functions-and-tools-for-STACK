@@ -49,7 +49,7 @@ class STACK_Q
         stack_mthd = mthd
         t_ans1 = cdata(a1)
         prt_ans1 = cdata(a1)
-        feedbk = ""
+        feedbk = feedback(mthd, a1)
         if mthd == "CasEqualNotAsin"
           stack_mthd = "CasEqual"
           forbidwords = ",asin,acos,atan"
@@ -100,10 +100,21 @@ class STACK_Q
   end
 
   def feedback(mthd, a1, ext="")
+    xy_alart = <<EOS.chop
+xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+EOS
+
     case mthd
+    when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
+       <<EOS.chop
+<![CDATA[
+#{xy_alart}
+]]>
+EOS
     when "has_same_deriv"
       <<EOS.chop
 <![CDATA[
+#{xy_alart}
 a1 : #{esq_cdata(a1)};
 a1 : diff(a1,x);
 ans1 : diff(ans1, x);
@@ -122,6 +133,7 @@ EOS
     when "does_satisfy"
       <<EOS.chop
 <![CDATA[
+#{xy_alart}
 a1 : #{esq_cdata(a1)};
 a1 : if is(ratsimp(#{esq_cdata(ext)})) then ans1 else false;
 ]]>
@@ -437,8 +449,56 @@ EOS
         <falsescoremode>=</falsescoremode>
         <falsescore>0.0000000</falsescore>
         <falsepenalty></falsepenalty>
-        <falsenextnode>-1</falsenextnode>
+        <falsenextnode>1</falsenextnode>
         <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>xyalart</sans>
+        <tans>1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*y などを xy と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>2</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
         <falsefeedback format="html">
           <text></text>
         </falsefeedback>
