@@ -57,7 +57,7 @@
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -73,6 +73,7 @@
         <text><![CDATA[
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
 ]]></text>
       </feedbackvariables>
       <node>
@@ -223,7 +224,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],asin,acos,atan </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -239,6 +240,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
         <text><![CDATA[
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
 ]]></text>
       </feedbackvariables>
       <node>
@@ -389,7 +391,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -405,6 +407,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
         <text><![CDATA[
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
 ]]></text>
       </feedbackvariables>
       <node>
@@ -555,7 +558,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -730,7 +733,7 @@ a1 : if is_same_plane(a1, ans1) then ans1 else false;
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -904,7 +907,7 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -920,6 +923,7 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
         <text><![CDATA[
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1070,7 +1074,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -1086,6 +1090,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
         <text><![CDATA[
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([-(1/sqrt(5))], [1], [1/sqrt(5)]);
 a1 : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then ans1 else false;
 ]]></text>
@@ -1238,7 +1243,7 @@ a1 : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then ans1 else false;
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -1586,7 +1591,7 @@ x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([a1, a2, a3] : [ans1,
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
@@ -1602,6 +1607,7 @@ x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([a1, a2, a3] : [ans1,
         <text><![CDATA[
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
 a1 : -3/(1 + 2*x);
 a1 : diff(a1,x);
 ans1 : diff(ans1, x);

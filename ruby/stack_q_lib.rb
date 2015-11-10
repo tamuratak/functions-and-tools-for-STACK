@@ -103,6 +103,7 @@ class STACK_Q
     fdbk_alart = <<EOS.chop
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
 EOS
 
     case mthd
@@ -417,7 +418,7 @@ EOS
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
       <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]]<%=h forbidwords %> </forbidwords>
-      <allowwords></allowwords>
+      <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
       <checkanswertype>0</checkanswertype>
