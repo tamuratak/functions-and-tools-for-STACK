@@ -7,6 +7,17 @@ opt = ARGV.getopts("Cm")
 
 class Math2Maxima
   def self.to_maxima(l, opt = {})
+
+    l = l.gsub('\[PartialD]f/\[PartialD]x', "fx")
+    l = l.gsub('\[PartialD]f/\[PartialD]y', "fy")
+    l = l.gsub('\[PartialD]^2f/(\[PartialD]x\[ThinSpace]\[PartialD]y)', "fxy")
+    l = l.gsub('\[PartialD]^2f/(\[PartialD]y\[ThinSpace]\[PartialD]x)', "fxy")
+    l = l.gsub('\[PartialD]^2f/\[PartialD]x^2', "fxx")
+    l = l.gsub('\[PartialD]^2f/\[PartialD]y^2', "fyy")
+
+    l = l.gsub(/cos\^(.*?)\((.*?)\)/){ "cos(" + $2 + ")^(" + $1 + ")" }
+    l = l.gsub(/sin\^(.*?)\((.*?)\)/){ "sin(" + $2 + ")^(" + $1 + ")" }
+
     l = l.gsub(/\\/, "")
     l = l.gsub(/(?<!\w)I(?!\w)/){|s| "%i" }
     l = l.gsub(/(?<!\w)E(?!\w)/){|s| "%e" }
