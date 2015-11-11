@@ -45,10 +45,10 @@ class STACK_Q
       # teacher's answer == a1 == t_ans1 == prt_ans1, (prt stands for potential response tree)
       # student's answer == ans1
       case mthd
-      when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
+      when "AlgEquiv", "CasEqualNotAsin"
         stack_mthd = mthd
         t_ans1 = cdata(a1)
-        prt_ans1 = cdata(a1)
+        prt_ans1 = "a1"
         feedbk = feedback(mthd, a1)
         if mthd == "CasEqualNotAsin"
           stack_mthd = "CasEqual"
@@ -103,14 +103,18 @@ class STACK_Q
     fdbk_alart = <<EOS.chop
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
+fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 EOS
 
     case mthd
-    when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
+    when "AlgEquiv", "CasEqualNotAsin"
        <<EOS.chop
 <![CDATA[
 #{fdbk_alart}
+a1 : #{esq_cdata(a1)};
+a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
 ]]>
 EOS
     when "has_same_deriv"
@@ -492,7 +496,7 @@ EOS
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
-        <trueanswernote>prt1-2-T</trueanswernote>
+        <trueanswernote>prt1-3-T</trueanswernote>
         <truefeedback format="html">
           <text><![CDATA[<p></p><p><br></p><p>【注意】sin(2*x) などを sin2*x と( )なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
@@ -500,13 +504,37 @@ EOS
         <falsescore>0.0000000</falsescore>
         <falsepenalty></falsepenalty>
         <falsenextnode>3</falsenextnode>
-        <falseanswernote>prt1-2-F</falseanswernote>
+        <falseanswernote>prt1-3-F</falseanswernote>
         <falsefeedback format="html">
           <text></text>
         </falsefeedback>
       </node>
       <node>
         <name>3</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>fxalart</sans>
+        <tans>1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
         <answertest>AlgEquiv</answertest>
         <sans>1</sans>
         <tans>2</tans>
@@ -516,7 +544,7 @@ EOS
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
-        <trueanswernote>prt1-3-T</trueanswernote>
+        <trueanswernote>prt1-5-T</trueanswernote>
         <truefeedback format="html">
           <text></text>
         </truefeedback>
@@ -524,7 +552,7 @@ EOS
         <falsescore>0.0000000</falsescore>
         <falsepenalty></falsepenalty>
         <falsenextnode>-1</falsenextnode>
-        <falseanswernote>prt1-3-F</falseanswernote>
+        <falseanswernote>prt1-5-F</falseanswernote>
         <falsefeedback format="html">
           <text></text>
         </falsefeedback>
