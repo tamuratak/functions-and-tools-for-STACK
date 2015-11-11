@@ -45,7 +45,7 @@ class STACK_Q
       # teacher's answer == a1 == t_ans1 == prt_ans1, (prt stands for potential response tree)
       # student's answer == ans1
       case mthd
-      when "AlgEquiv", "CasEqualNotAsin"
+      when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
         stack_mthd = mthd
         t_ans1 = cdata(a1)
         prt_ans1 = "a1"
@@ -109,12 +109,17 @@ ans1 : ratsubst(fxy, fyx, ans1);
 EOS
 
     case mthd
-    when "AlgEquiv", "CasEqualNotAsin"
+    when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
+      if mthd == "AlgEquiv"
+        ratsimp_exp = "a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;"
+      else
+        ratsimp_exp = ""
+      end
        <<EOS.chop
 <![CDATA[
 #{fdbk_alart}
 a1 : #{esq_cdata(a1)};
-a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+#{ratsimp_exp}
 ]]>
 EOS
     when "has_same_deriv"

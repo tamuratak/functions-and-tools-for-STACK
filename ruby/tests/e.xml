@@ -272,7 +272,7 @@ listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops
 fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (2*x+y)/(2-x*y);
-a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+
 ]]></text>
       </feedbackvariables>
       <node>
