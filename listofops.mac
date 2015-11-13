@@ -1,0 +1,3 @@
+listofops(x) := block([],
+  if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else []
+  );

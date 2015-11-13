@@ -1,0 +1,5 @@
+load("myassert.mac");
+load("../listofops.mac");
+
+test_assert( is( {"+"} = setify(listofops(a+b)) ) );
+test_assert( is( {"+", "*"} = setify(listofops( a+b*c )) ) );
