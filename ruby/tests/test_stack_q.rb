@@ -17,15 +17,9 @@ class TestStackQ < Test::Unit::TestCase
     assert_equal(e_xml, STACK_Q.new(e_stk).txt2xml)
   end
 
-#   def test_s
-#     assert_equal( Kekka01, STACK_Q.new("abcd01**abcd02**abcd03").txt2xml )
-#     assert_equal( Kekka01, STACK_Q.new(" abcd01 ** abcd02 ** abcd03 ").txt2xml )
-#     assert_equal( Kekka01.gsub("abcd01", "&lt;"),
-#                   STACK_Q.new(" < ** abcd02 ** abcd03 ").txt2xml )
-    
-#     assert_equal( Kekka01, 
-#                    STACK_Q.new("abcd01**abcd02**abcd03**AlgEquiv").txt2xml )
-#   end
+   def test_s
+     assert_equal( Feedbk.gsub("ZZZ", "abcd03"), @stck.feedback("AlgEquiv", "abcd03") )
+   end
 
   def test_f
     assert_equal( Func01, 
@@ -41,12 +35,6 @@ class TestStackQ < Test::Unit::TestCase
                    @stck.is_matrix_type("matrix ((),() )") )
      assert_equal( false,
                    @stck.is_matrix_type("matrix((),() ) + matrix()") )
-
-#     assert_equal( Kekka01.gsub("algebraic", "matrix").gsub("100", "10").gsub("abcd03", "matrix([1],[2],[3])"), 
-#                   STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])").txt2xml )
-
-#     assert_equal( Kekka01.gsub("abcd03", "matrix([1],[2],[3])+matrix([1],[2],[3])"), 
-#                   STACK_Q.new("abcd01**abcd02**matrix([1],[2],[3])+matrix([1],[2],[3])").txt2xml )
    end
 
   def test_e
@@ -146,6 +134,19 @@ end
 
 
 class TestStackQ  < Test::Unit::TestCase
+
+  Feedbk = <<EOS.chop
+<![CDATA[
+xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
+fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+ans1 : ratsubst(fxy, fyx, ans1);
+a1 : ZZZ;
+a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+]]>
+EOS
+
   Kekka01 = <<EOS.chop
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
