@@ -17,14 +17,12 @@ class TestStackQ < Test::Unit::TestCase
     assert_equal(e_xml, STACK_Q.new(e_stk).txt2xml)
   end
 
-   def test_s
-     assert_equal( Feedbk.gsub("ZZZ", "abcd03"), @stck.feedback("AlgEquiv", "abcd03") )
-   end
+  def test_feedback
+    assert_equal( Feedbk01.gsub("ZZZ", "abcd03"), @stck.feedback("AlgEquiv", "abcd03") )
 
-  def test_f
-    assert_equal( Func01, 
+    assert_equal( Feedbk02,
                   @stck.feedback('is_same_interval', 'abcd') )
-    assert_equal( Func01.gsub("abcd", "]]]]><![CDATA[>"), 
+    assert_equal( Feedbk02.gsub("abcd", "]]]]><![CDATA[>"),
                   @stck.feedback('is_same_interval', ']]>') )
   end
 
@@ -135,7 +133,7 @@ end
 
 class TestStackQ  < Test::Unit::TestCase
 
-  Feedbk = <<EOS.chop
+  Feedbk01 = <<EOS.chop
 <![CDATA[
 xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
@@ -144,6 +142,20 @@ fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listo
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : ZZZ;
 a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+]]>
+EOS
+
+
+  Feedbk02 = <<EOS.chop
+<![CDATA[
+myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
+chk_op(as, xs) := block([op1, x],if not( atom(as) ) and not( atom(xs) ) then (if member(x, as) then (op1 : op(xs),return( member(op1, ["and", "or", "<", ">", ">=", "<="]) ))),true);
+edges(xs) := block([x],delete(x, flatten( scanmap(myargs, xs))));
+xs_in_interval(xs, cond) := block(map(lambda([x], charfun(cond)), xs));
+is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 : edges(c1),xs2 : edges(c2),m : lmax( map(abs, append(xs1, xs2)) ),m : 2*min(max(m, 1), 100),ret : ret and is(xs_in_interval(xs1, c1) = xs_in_interval(xs1, c2)),ret : ret and is(xs_in_interval(xs2, c1) = xs_in_interval(xs2, c2)),if ret then (v1 : quad_qags(charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],v2 : quad_qags(charfun(c2)*charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],ret : ret and is(v1 = v2)),ret);
+
+a1 : abcd;
+a1 : if is_same_interval(a1, ans1) then ans1 else false;
 ]]>
 EOS
 
@@ -339,16 +351,4 @@ x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([a1, a2, a3] : [ans1,
 </quiz>
 EOS
 
-  Func01 = <<EOS.chop
-<![CDATA[
-myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
-chk_op(as, xs) := block([op1, x],if not( atom(as) ) and not( atom(xs) ) then (if member(x, as) then (op1 : op(xs),return( member(op1, ["and", "or", "<", ">", ">=", "<="]) ))),true);
-edges(xs) := block([x],delete(x, flatten( scanmap(myargs, xs))));
-xs_in_interval(xs, cond) := block(map(lambda([x], charfun(cond)), xs));
-is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 : edges(c1),xs2 : edges(c2),m : lmax( map(abs, append(xs1, xs2)) ),m : 2*min(max(m, 1), 100),ret : ret and is(xs_in_interval(xs1, c1) = xs_in_interval(xs1, c2)),ret : ret and is(xs_in_interval(xs2, c1) = xs_in_interval(xs2, c2)),if ret then (v1 : quad_qags(charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],v2 : quad_qags(charfun(c2)*charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],ret : ret and is(v1 = v2)),ret);
-
-a1 : abcd;
-a1 : if is_same_interval(a1, ans1) then ans1 else false;
-]]>
-EOS
 end
