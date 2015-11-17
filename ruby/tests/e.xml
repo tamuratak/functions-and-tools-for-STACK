@@ -71,7 +71,7 @@
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
@@ -266,7 +266,7 @@ a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
@@ -461,7 +461,7 @@ a1 : (2*x+y)/(2-x*y);
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
@@ -1053,7 +1053,7 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
@@ -1248,7 +1248,7 @@ a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
@@ -1815,7 +1815,7 @@ x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([a1, a2, a3] : [ans1,
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx}, setify(listofvars(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
