@@ -136,7 +136,7 @@ class TestStackQ  < Test::Unit::TestCase
   Feedbk01 = <<EOS.chop
 <![CDATA[
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( append(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
