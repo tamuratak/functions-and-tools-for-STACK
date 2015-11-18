@@ -71,10 +71,10 @@
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : 12/13;
 a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
@@ -165,7 +165,7 @@ a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -266,10 +266,10 @@ a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (2*x+y)/(2-x*y);
 
@@ -360,7 +360,7 @@ a1 : (2*x+y)/(2-x*y);
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -461,10 +461,10 @@ a1 : (2*x+y)/(2-x*y);
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (1*x^2)/(1 + x^2) - (1*x*(-1 + x^3))/(1 + x^2)^2;
 a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
@@ -555,7 +555,7 @@ a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -754,7 +754,7 @@ a1 : if is_same_plane(a1, ans1) then ans1 else false;
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -952,7 +952,7 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1053,10 +1053,10 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([9, 1], [1, 1]);
 a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
@@ -1147,7 +1147,7 @@ a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1248,10 +1248,10 @@ a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([-(1/sqrt(5))], [1], [1/sqrt(5)]);
 a1 : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then ans1 else false;
@@ -1342,7 +1342,7 @@ a1 : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then ans1 else false;
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1535,7 +1535,7 @@ a1 : if is_same_triangle(a1, ans1) then ans1 else false;
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1815,10 +1815,10 @@ x : if is_same_linear_space(k1, b1) and is_basis(b1) then ([a1, a2, a3] : [ans1,
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : -3/(1 + 2*x);
 a1 : diff(a1,x);
@@ -1910,7 +1910,7 @@ ans1 : diff(ans1, x);
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>

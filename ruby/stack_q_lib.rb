@@ -101,10 +101,10 @@ class STACK_Q
 
   def feedback(mthd, a1, ext="")
     fdbk_alart = <<EOS.chop
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify(listofvars(ans1))) ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-fxalart : if not emptyp( intersection({fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( cons(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 EOS
 
@@ -527,7 +527,7 @@ EOS
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】fx*(x+y) などを fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
