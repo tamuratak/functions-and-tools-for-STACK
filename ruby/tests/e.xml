@@ -678,7 +678,7 @@ is_same_linear_eq(eq1, eq2) := block([pa1, pa2],pa1 : eq_to_param(eq1),pa2 : eq_
 
 a1 : [1 + s, 1 + s];
 ans1 : list_matrix_entries(ans1);
-a1 : if is_same_plane(a1, ans1) then ans1 else false;
+result : if is_same_plane(a1, ans1) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -876,7 +876,7 @@ eq_to_param(eq) := block([params, tmp],eq : listify(eq),params : sort(listofvars
 is_same_linear_eq(eq1, eq2) := block([pa1, pa2],pa1 : eq_to_param(eq1),pa2 : eq_to_param(eq2),is_same_plane(pa1, pa2));
 
 a1 : {-1 - 3*y + z = 2*x};
-a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
+result : if is_same_linear_eq(a1, ans1) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1274,7 +1274,7 @@ fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([-(1/sqrt(5))], [1], [1/sqrt(5)]);
-a1 : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then ans1 else false;
+result : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1467,7 +1467,7 @@ echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(
 is_triangle(m) := block([len,i,k0,k,arry, ret],ret : true,len : length(m),len0 : length(m[1]) + 1,arry : sublist_indices(m[1], lambda([x], not (x = 0)) ),(if is(arry = []) then (k0 : length(m[1]) + 1) else (k0 : arry[1])),(for i: 2 while i <= len do (arry : sublist_indices(m[i], lambda([x], not (x = 0)) ),k : (if is(arry = []) then (length(m[1]) + 1) else (arry[1])),(if not is( (k > k0) or (len0 = k and len0 = k0) ) then (ret : ret and false)),k0 : k)),ret);
 is_same_triangle(a, x) := block([],a0 : echelon_1(a),x0 : echelon_1(x),x1 : triangularize(x),is(is_triangle(x) and (a0 = x0)));
 a1 : matrix([1,2],[3,4]);
-a1 : if is_same_triangle(a1, ans1) then ans1 else false;
+result : if is_same_triangle(a1, ans1) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>

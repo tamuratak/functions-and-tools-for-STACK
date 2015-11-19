@@ -142,7 +142,7 @@ echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(
 is_triangle(m) := block([len,i,k0,k,arry, ret],ret : true,len : length(m),len0 : length(m[1]) + 1,arry : sublist_indices(m[1], lambda([x], not (x = 0)) ),(if is(arry = []) then (k0 : length(m[1]) + 1) else (k0 : arry[1])),(for i: 2 while i <= len do (arry : sublist_indices(m[i], lambda([x], not (x = 0)) ),k : (if is(arry = []) then (length(m[1]) + 1) else (arry[1])),(if not is( (k > k0) or (len0 = k and len0 = k0) ) then (ret : ret and false)),k0 : k)),ret);
 is_same_triangle(a, x) := block([],a0 : echelon_1(a),x0 : echelon_1(x),x1 : triangularize(x),is(is_triangle(x) and (a0 = x0)));
 a1 : #{esq_cdata(a1)};
-a1 : if is_same_triangle(a1, ans1) then ans1 else false;
+result : if is_same_triangle(a1, ans1) then 1 else false;
 ]]>
 EOS
     when "does_satisfy"
@@ -150,7 +150,7 @@ EOS
 <![CDATA[
 #{fdbk_alart}
 a1 : #{esq_cdata(a1)};
-a1 : if is(ratsimp(#{esq_cdata(ext)})) then ans1 else false;
+result : if is(ratsimp(#{esq_cdata(ext)})) then 1 else false;
 ]]>
 EOS
     when "is_same_interval"
@@ -163,7 +163,7 @@ xs_in_interval(xs, cond) := block(map(lambda([x], charfun(cond)), xs));
 is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 : edges(c1),xs2 : edges(c2),m : lmax( map(abs, append(xs1, xs2)) ),m : 2*min(max(m, 1), 100),ret : ret and is(xs_in_interval(xs1, c1) = xs_in_interval(xs1, c2)),ret : ret and is(xs_in_interval(xs2, c1) = xs_in_interval(xs2, c2)),if ret then (v1 : quad_qags(charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],v2 : quad_qags(charfun(c2)*charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],ret : ret and is(v1 = v2)),ret);
 
 a1 : #{esq_cdata(a1)};
-a1 : if is_same_interval(a1, ans1) then ans1 else false;
+result : if is_same_interval(a1, ans1) then 1 else false;
 ]]>
 EOS
     when "is_same_linear_eq", "is_same_plane", "has_same_nullspace"
@@ -186,7 +186,7 @@ EOS
 ret <<
 <<EOS.chop
 a1 : #{esq_cdata(a1)};
-a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
+result : if is_same_linear_eq(a1, ans1) then 1 else false;
 ]]>
 EOS
       when "is_same_plane"
@@ -194,14 +194,14 @@ ret <<
 <<EOS.chop
 a1 : #{esq_cdata(a1)};
 ans1 : list_matrix_entries(ans1);
-a1 : if is_same_plane(a1, ans1) then ans1 else false;
+result : if is_same_plane(a1, ans1) then 1 else false;
 ]]>
 EOS
       when "has_same_nullspace"
 ret <<
 <<EOS.chop
 a1 : #{esq_cdata(a1)};
-a1 : if is_same_linear_space(args(a1), args(ans1)) then ans1 else false;
+result : if is_same_linear_space(args(a1), args(ans1)) then 1 else false;
 ]]>
 EOS
       end

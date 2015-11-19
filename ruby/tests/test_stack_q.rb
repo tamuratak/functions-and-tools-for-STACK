@@ -159,7 +159,7 @@ xs_in_interval(xs, cond) := block(map(lambda([x], charfun(cond)), xs));
 is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 : edges(c1),xs2 : edges(c2),m : lmax( map(abs, append(xs1, xs2)) ),m : 2*min(max(m, 1), 100),ret : ret and is(xs_in_interval(xs1, c1) = xs_in_interval(xs1, c2)),ret : ret and is(xs_in_interval(xs2, c1) = xs_in_interval(xs2, c2)),if ret then (v1 : quad_qags(charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],v2 : quad_qags(charfun(c2)*charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],ret : ret and is(v1 = v2)),ret);
 
 a1 : abcd;
-a1 : if is_same_interval(a1, ans1) then ans1 else false;
+result : if is_same_interval(a1, ans1) then 1 else false;
 ]]>
 EOS
 
