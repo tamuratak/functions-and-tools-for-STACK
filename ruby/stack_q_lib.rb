@@ -115,7 +115,7 @@ EOS
     case mthd
     when "AlgEquiv", "CasEqual", "CasEqualNotAsin"
       if mthd == "AlgEquiv"
-        ratsimp_exp = "a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;"
+        ratsimp_exp = "result : if is( ratsimp(a1 = ans1) ) then 1 else false;"
       else
         ratsimp_exp = ""
       end
@@ -451,8 +451,8 @@ EOS
       <node>
         <name>0</name>
         <answertest><%=h stack_mthd %></answertest>
-        <sans>ans1</sans>
-        <tans><%= prt_ans1 %></tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>

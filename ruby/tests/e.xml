@@ -81,14 +81,14 @@ fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : 12/13;
-a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+result : if is( ratsimp(a1 = ans1) ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
         <name>0</name>
         <answertest>AlgEquiv</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -286,8 +286,8 @@ a1 : (2*x+y)/(2-x*y);
       <node>
         <name>0</name>
         <answertest>CasEqual</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -479,14 +479,14 @@ fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (1*x^2)/(1 + x^2) - (1*x*(-1 + x^3))/(1 + x^2)^2;
-a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+result : if is( ratsimp(a1 = ans1) ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
         <name>0</name>
         <answertest>AlgEquiv</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -684,8 +684,8 @@ a1 : if is_same_plane(a1, ans1) then ans1 else false;
       <node>
         <name>0</name>
         <answertest>CasEqual</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -882,8 +882,8 @@ a1 : if is_same_linear_eq(a1, ans1) then ans1 else false;
       <node>
         <name>0</name>
         <answertest>CasEqual</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -1075,14 +1075,14 @@ fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([9, 1], [1, 1]);
-a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+result : if is( ratsimp(a1 = ans1) ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
         <name>0</name>
         <answertest>AlgEquiv</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -1280,8 +1280,8 @@ a1 : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then ans1 else false;
       <node>
         <name>0</name>
         <answertest>CasEqual</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -1473,8 +1473,8 @@ a1 : if is_same_triangle(a1, ans1) then ans1 else false;
       <node>
         <name>0</name>
         <answertest>CasEqual</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -1853,8 +1853,8 @@ ans1 : diff(ans1, x);
       <node>
         <name>0</name>
         <answertest>AlgEquiv</answertest>
-        <sans>ans1</sans>
-        <tans>a1</tans>
+        <sans>result</sans>
+        <tans>1</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>

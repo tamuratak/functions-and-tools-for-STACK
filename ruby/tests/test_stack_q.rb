@@ -145,7 +145,7 @@ fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : ZZZ;
-a1 : if is( ratsimp(ans1 = a1) ) then ans1 else false;
+result : if is( ratsimp(a1 = ans1) ) then 1 else false;
 ]]>
 EOS
 
