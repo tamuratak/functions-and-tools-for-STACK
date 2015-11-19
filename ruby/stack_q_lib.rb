@@ -102,9 +102,13 @@ class STACK_Q
   def feedback(mthd, a1, ext="")
     fdbk_alart = <<EOS.chop
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-xyalart : if not emptyp( intersection({xy, yx, st, ts}, setify( append(listofvars(ans1), listofops(ans1)) ))) then 1 else false;
+xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
+xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
+xyalart : if not emptyp( xyalart_set ) then 1 else false;
 sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
-fxalart : if not emptyp( intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1))) ) then 1 else false;
+fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
+fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
+fxalart : if not emptyp( fxalart_set ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 EOS
 
@@ -481,7 +485,7 @@ EOS
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】x*y などを xy と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -529,7 +533,7 @@ EOS
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p><br></p><p>【注意】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。【要確認】</p><p><br></p><p></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
