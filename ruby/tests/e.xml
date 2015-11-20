@@ -280,7 +280,7 @@ fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (2*x+y)/(2-x*y);
-
+result : if is( ratsimp(a1 = ans1) ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1848,6 +1848,7 @@ ans1 : ratsubst(fxy, fyx, ans1);
 a1 : -3/(1 + 2*x);
 a1 : diff(a1,x);
 ans1 : diff(ans1, x);
+result : if is( ratsimp(a1 = ans1) ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
