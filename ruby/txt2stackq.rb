@@ -9,5 +9,7 @@ end
 $LOAD_PATH.push File.dirname(f)
 
 require 'stack_q_lib'
+require 'optparse'
 
-puts STACK_Q.new(ARGF.read).txt2xml
+opt = ARGV.getopts("", "category:")
+puts STACK_Q.new(ARGF.read, opt).txt2xml

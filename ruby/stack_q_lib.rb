@@ -4,15 +4,16 @@ require 'erb'
 class STACK_Q
   include ERB::Util
 
-  def initialize(s)
+  def initialize(s, opt = {})
     @txt = s
     @err_msg = ""
+    @category = opt["category"] || "stack_q"
   end
   attr_reader :err_msg
 
   def txt2xml
     ret = ""
-    ret << HEAD
+    ret << ERB.new(HEAD).result(binding)
     line_num = 1
 
     @txt.each_line{|l|
@@ -372,7 +373,7 @@ class STACK_Q
 <!-- question: 0  -->
   <question type="category">
     <category>
-        <text>$course$/stack_q</text>
+        <text>$course$/<%=h @category %></text>
 
     </category>
   </question>
