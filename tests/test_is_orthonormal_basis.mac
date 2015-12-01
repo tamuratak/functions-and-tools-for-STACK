@@ -1,0 +1,8 @@
+load("myassert.mac");
+load("../is_orthonormal_basis.mac");
+
+test_assert( is_orthonormal_basis([[1,0], [0,1]]) );
+test_assert( is_orthonormal_basis([[1/sqrt(2), 1/sqrt(2)], [1/sqrt(2), -1/sqrt(2)]]) );
+test_assert( not is_orthonormal_basis([[1/sqrt(2), 1/sqrt(2)], [1/sqrt(2), -1]]) );
+test_assert( is_orthonormal_basis([[1,0,0], [0,1,0]]) );
+
