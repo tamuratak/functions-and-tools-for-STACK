@@ -11,5 +11,5 @@ $LOAD_PATH.push File.dirname(f)
 require 'stack_q_lib'
 require 'optparse'
 
-opt = ARGV.getopts("", "category:")
+opt = ARGV.getopts("", "category:", "sort-prefix")
 puts STACK_Q.new(ARGF.read, opt).txt2xml

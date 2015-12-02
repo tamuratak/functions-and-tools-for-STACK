@@ -8,6 +8,7 @@ class STACK_Q
     @txt = s
     @err_msg = ""
     @category = opt["category"] || "stack_q"
+    @opt = opt
   end
   attr_reader :err_msg
 
@@ -15,6 +16,7 @@ class STACK_Q
     ret = ""
     ret << ERB.new(HEAD).result(binding)
     line_num = 1
+    sort_prefix0 = sort_prefix()
 
     @txt.each_line{|l|
       next if /\A\s*\Z/ =~ l
@@ -27,6 +29,12 @@ class STACK_Q
       qname, qstr, a1, mthd, ext = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }
       mthd = mthd || "AlgEquiv"
       forbidwords = ""
+      if @opt["sort-prefix"]
+        ln = "%.2d" % line_num
+        qname_0 = sort_prefix0 + "-" + ln + "-" + qname
+      else
+        qname_0 = qname
+      end
 
       begin
         validate_maxima_exp(a1)
@@ -249,6 +257,17 @@ EOS
     end
   end
 
+  def sort_prefix
+    today = Time.now
+    if [1, 2, 3].include?( today.month )
+      num = Time.new(today.year, 4, 1) - today
+    else
+      num =  Time.new(today.year+1, 4, 1) - today
+    end
+    num = num.round / (60*60)
+    "%.4d" % num
+  end
+
   def basis_dim(s)
     if m = s.match(/\[([^\[\]]*?)\]/)
       $1.split(",").size
@@ -393,7 +412,7 @@ EOS
   TMPL = <<"EOS"
   <question type="stack">
     <name>
-      <text><%=h qname  %></text>
+      <text><%=h qname_0  %></text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p><%=h qname  %></p>
@@ -583,7 +602,7 @@ EOS
   TMPL2 = <<"EOS"
   <question type="stack">
     <name>
-      <text><%=h qname  %></text>
+      <text><%=h qname_0  %></text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p><%=h qname  %></p>
