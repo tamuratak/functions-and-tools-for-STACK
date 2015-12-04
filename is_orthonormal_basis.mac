@@ -1,5 +1,5 @@
 is_orthonormal_basis(x) := block([xm],
   xm : apply(matrix, x),
-  if is( ident(length(x)) = xm.transpose(xm) ) then true else false
+  if is( ident(length(x)) = xm.conjugate(transpose(xm)) ) then true else false
   ) ;
 

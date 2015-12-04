@@ -5,4 +5,5 @@ test_assert( is_orthonormal_basis([[1,0], [0,1]]) );
 test_assert( is_orthonormal_basis([[1/sqrt(2), 1/sqrt(2)], [1/sqrt(2), -1/sqrt(2)]]) );
 test_assert( not is_orthonormal_basis([[1/sqrt(2), 1/sqrt(2)], [1/sqrt(2), -1]]) );
 test_assert( is_orthonormal_basis([[1,0,0], [0,1,0]]) );
+test_assert( is_orthonormal_basis([[1,%i,0]/sqrt(2), [1,-%i,0]/sqrt(2)]) );
 
