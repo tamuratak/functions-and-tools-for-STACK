@@ -79,9 +79,10 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : 12/13;
-result : if is( ratsimp(a1 = ans1) ) then 1 else false;
+result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -278,9 +279,10 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (2*x+y)/(2-x*y);
-result : if is( ratsimp(a1 = ans1) ) then 1 else false;
+result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -477,9 +479,10 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (1*x^2)/(1 + x^2) - (1*x*(-1 + x^3))/(1 + x^2)^2;
-result : if is( ratsimp(a1 = ans1) ) then 1 else false;
+result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1073,9 +1076,10 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([9, 1], [1, 1]);
-result : if is( ratsimp(a1 = ans1) ) then 1 else false;
+result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1272,9 +1276,10 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([-(1/sqrt(5))], [1], [1/sqrt(5)]);
-result : if is(ratsimp(ans1 = a1 or ans1 = - a1)) then 1 else false;
+result : if does_hold( ans1 = a1 or ans1 = - a1 ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1845,11 +1850,12 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : -3/(1 + 2*x);
 a1 : diff(a1,x);
 ans1 : diff(ans1, x);
-result : if is( ratsimp(a1 = ans1) ) then 1 else false;
+result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>

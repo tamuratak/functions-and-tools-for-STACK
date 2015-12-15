@@ -143,9 +143,10 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : ZZZ;
-result : if is( ratsimp(a1 = ans1) ) then 1 else false;
+result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]>
 EOS
 
