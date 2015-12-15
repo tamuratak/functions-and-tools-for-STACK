@@ -1,0 +1,8 @@
+load("myassert.mac");
+load("../does_hold.mac");
+
+test_assert( does_hold( 2/sqrt(2) = sqrt(2) ) );
+test_assert( does_hold( sqrt(2/3)=2/sqrt(6) ) );
+test_assert( does_hold( abs(x) = sqrt(x^2)  ) );
+test_assert( does_hold( log(2*y^2*x^2) = 2 * log(x) + 2*log(y) + log(2) ) );
+test_assert( does_hold( sinh(2)=(%e^4-1)/(2*%e^2) ) );
