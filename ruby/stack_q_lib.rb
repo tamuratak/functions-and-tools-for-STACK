@@ -23,7 +23,7 @@ class STACK_Q
       @err_msg = "error at line: #{line_num}"
 
       x = ERB.new(TMPL)
-      input_size = 100
+      input_size = @opt["form-size"] || 100
       input_type = "algebraic"
 
       qname, qstr, a1, mthd, ext = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }
@@ -44,7 +44,7 @@ class STACK_Q
       end
 
       if is_matrix_type(a1)
-        input_size = 10
+        input_size = @opt["form-size"] || 15
         input_type = "matrix"
       end
 
@@ -83,10 +83,11 @@ class STACK_Q
         input_size = 15
         input_type = "matrix"
       when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
+        input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL2)
         basis_type_check(a1, line_num)
         dim = basis_dim(a1)
-        inputs = basis_ans(dim, dim)
+        inputs = basis_ans(dim, dim, input_size)
         prt = basis_prt(dim)
         feedbk = basis_feedback(dim, mthd)
         basis_ans_form0 = basis_ans_form(dim)
@@ -283,14 +284,14 @@ EOS
     (1..dim).map{|i| "[[validation:ans#{i}]]"}.join(" ") 
   end
 
-  def basis_ans(n, dim)
+  def basis_ans(n, dim, input_size)
     ERB.new(<<HERE, nil, '-').result(binding)
 <%- (1..n).each do |i| -%>
     <input>
       <name>ans<%= i %></name>
       <type>matrix</type>
       <tans>matrix(<%= (["[1]"]*dim).join(",")  %>)</tans>
-      <boxsize>5</boxsize>
+      <boxsize><%= input_size %></boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>

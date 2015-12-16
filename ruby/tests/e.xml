@@ -1049,7 +1049,7 @@ result : if is_same_linear_eq(a1, ans1) then 1 else false;
       <name>ans1</name>
       <type>matrix</type>
       <tans><![CDATA[matrix([9, 1], [1, 1])]]></tans>
-      <boxsize>10</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -1249,7 +1249,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <name>ans1</name>
       <type>matrix</type>
       <tans><![CDATA[matrix([-(1/sqrt(5))], [1], [1/sqrt(5)])]]></tans>
-      <boxsize>10</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -1449,7 +1449,7 @@ result : if does_hold( ans1 = a1 or ans1 = - a1 ) then 1 else false;
       <name>ans1</name>
       <type>matrix</type>
       <tans><![CDATA[matrix([1,2],[3,4])]]></tans>
-      <boxsize>10</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -1642,7 +1642,7 @@ result : if is_same_triangle(a1, ans1) then 1 else false;
       <name>ans1</name>
       <type>matrix</type>
       <tans>matrix([1],[1],[1])</tans>
-      <boxsize>5</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -1659,7 +1659,7 @@ result : if is_same_triangle(a1, ans1) then 1 else false;
       <name>ans2</name>
       <type>matrix</type>
       <tans>matrix([1],[1],[1])</tans>
-      <boxsize>5</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -1676,7 +1676,7 @@ result : if is_same_triangle(a1, ans1) then 1 else false;
       <name>ans3</name>
       <type>matrix</type>
       <tans>matrix([1],[1],[1])</tans>
-      <boxsize>5</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>

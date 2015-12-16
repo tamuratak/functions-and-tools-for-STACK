@@ -219,7 +219,7 @@ EOS
       <name>ans1</name>
       <type>matrix</type>
       <tans>matrix([1],[1],[1])</tans>
-      <boxsize>5</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -236,7 +236,7 @@ EOS
       <name>ans2</name>
       <type>matrix</type>
       <tans>matrix([1],[1],[1])</tans>
-      <boxsize>5</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -253,7 +253,7 @@ EOS
       <name>ans3</name>
       <type>matrix</type>
       <tans>matrix([1],[1],[1])</tans>
-      <boxsize>5</boxsize>
+      <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
