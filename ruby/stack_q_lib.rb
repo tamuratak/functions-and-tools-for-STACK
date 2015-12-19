@@ -88,7 +88,6 @@ class STACK_Q
         basis_type_check(a1, line_num)
         dim = basis_dim(a1)
         inputs = basis_ans(dim, dim, input_size)
-        prt = basis_prt(dim)
         feedbk = basis_feedback(dim, mthd)
         basis_ans_form0 = basis_ans_form(dim)
         basis_validation_form0 = basis_validation_form(dim)
@@ -342,10 +341,7 @@ HERE
   
   def basis_feedback(dim, mthd)
     b1 = (1..dim).map{|i| "list_matrix_entries(ans#{i})"}.join(", ")
-    alhs = (1..dim).map{|i| "a#{i}" }.join(", ")
-    arhs = (1..dim).map{|i| "ans#{i}" }.join(", ")
     large_Ns = (1..dim).map{|i| "N" }.join(", ")
-
     basis_chk = case mthd
                 when "is_basis_of_same_linear_space"
                   "is_basis"
@@ -361,7 +357,7 @@ is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,
 is_basis(x) := block([ret, x0, xm, i, n], ret : true, x0 : x, xm : apply(matrix, x0), ret: true, n : -(length(x0)+1), for i:1 thru length(x0) do (m : apply(matrix, append(rest(x0,i), rest(x0,n+i))), ret : ret and is(rank(m) + 1 = rank(xm))), ret) ;
 is_orthonormal_basis(x) := block([xm], xm : apply(matrix, radcan(x)), if is( ratsimp( ident(length(x)) = xm.conjugate(transpose(xm)) ) ) then true else false) ;
 b1 : delete([#{large_Ns}], [#{b1}]);
-x : if is_same_linear_space(k1, b1) and #{basis_chk}(b1) then ([#{alhs}] : [#{arhs}]) else false;
+result : if is_same_linear_space(k1, b1) and #{basis_chk}(b1) then 1 else false;
 ]]>
 HERE
   end
@@ -651,7 +647,30 @@ EOS
       <feedbackvariables>
         <text><%= feedbk %></text>
       </feedbackvariables>
-<%= prt %>
+      <node>
+        <name>0</name>
+        <answertest>CasEqual</answertest>
+        <sans>result</sans>
+        <tans>1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
     </prt>
   </question>
 EOS
