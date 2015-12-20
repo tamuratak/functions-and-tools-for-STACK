@@ -363,11 +363,10 @@ HERE
   end
 
   def basis_forms(dim)
-    ret = ERB.new(<<HERE, nil, '-').result(binding)
+    ret = ERB.new(<<HERE, nil, '-').result(binding).chop
 <p> <%= basis_ans_form(dim) %></p>
 <div><%= basis_validation_form(dim) %></div>
 HERE
-    ret.chop
   end
 
   def basis_ans_form(dim)
