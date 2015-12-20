@@ -401,38 +401,6 @@ HERE
 <%- end -%>
 HERE
   end
-
-  def basis_prt(n)
-    n1 = n-1
-    ERB.new(<<HERE, nil, '-').result(binding)
-<%- (0..(n1)).each do |i| -%>
-      <node>
-        <name><%= i %></name>
-        <answertest>CasEqual</answertest>
-        <sans>ans<%= i+1 %></sans>
-        <tans>a<%= i+1 %></tans>
-        <testoptions></testoptions>
-        <quiet>0</quiet>
-        <truescoremode>+</truescoremode>
-        <truescore><%= i == n1 ? 1.0 : 0.0 %></truescore>
-        <truepenalty></truepenalty>
-        <truenextnode><%= i == n1 ? -1 : i+1 %></truenextnode>
-        <trueanswernote>prt1-<%= i+1 %>-T</trueanswernote>
-        <truefeedback format="html">
-          <text></text>
-        </truefeedback>
-        <falsescoremode>=</falsescoremode>
-        <falsescore>0.0000000</falsescore>
-        <falsepenalty></falsepenalty>
-        <falsenextnode>-1</falsenextnode>
-        <falseanswernote>prt1-<%= i+1 %>-F</falseanswernote>
-        <falsefeedback format="html">
-          <text></text>
-        </falsefeedback>
-      </node>
-<%- end -%>
-HERE
-  end
   
   def basis_feedback_0
 <<HERE.chop
