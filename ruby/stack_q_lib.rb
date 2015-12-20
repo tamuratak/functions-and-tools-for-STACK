@@ -421,11 +421,11 @@ HERE
       else
         raise
       end
-<<"HERE".chop
+    ERB.new(<<HERE, nil, '-').result(binding).chop
 <![CDATA[
-#{basis_feedback_0}
-b1 : delete([#{large_Ns}], [#{b1}]);
-result : if is_same_linear_space(k1, b1) and #{basis_chk}(b1) then true else false;
+<%= basis_feedback_0() %>
+b1 : delete([<%= large_Ns %>], [<%= b1 %>]);
+result : if is_same_linear_space(k1, b1) and <%= basis_chk %>(b1) then true else false;
 ]]>
 HERE
   end
