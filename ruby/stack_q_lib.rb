@@ -87,10 +87,16 @@ class STACK_Q
         x = ERB.new(TMPL2)
         basis_type_check(a1, line_num)
         dim = basis_dim(a1)
-        inputs = basis_ans(dim, dim, input_size)
+        ans_nodes = basis_ans(dim, dim, input_size)
         feedbk = basis_feedback(dim, mthd)
-        basis_ans_form0 = basis_ans_form(dim)
-        basis_validation_form0 = basis_validation_form(dim)
+        ans_forms = basis_forms(dim)
+      when "is_same_eigenval_and_eigenvec"
+        input_size = @opt["form-size"] || 15
+        x = ERB.new(TMPL2)
+        eigen_val_num, dim = eigen_num_dim(a1)
+        ans_forms = eigen_forms(eigen_val_num, dim)
+        feedbk = eigen_feedback(eigen_val_num, dim)
+        ans_nodes = eigen_ans_nodes(eigen_val_num, dim, input_size)
       else
         @err_msg = "error at line: #{line_num}"
         raise "invalid grading method"
@@ -269,27 +275,115 @@ EOS
     "%.4d" % num
   end
 
+  def eigen_num_dim(s)
+    vecs = []
+    arry = s.scan(/\[(.*?), \[\s*((?:\[.*?\],?)+)\s*\]\s*\]/)
+    arry.each{|e|
+      vecs += e[1].scan(/\[.*?\]/).map{|s| s.split(",") }
+    }
+    vecs_sizes = vecs.map{|e| e.size }
+    unless vecs_sizes.uniq.size == 1
+      raise "the dims of eigen vectors are not the same"
+    end
+    dim = vecs_sizes[0]
+    eigen_val_num = arry.size
+    return *[eigen_val_num, dim]
+  end
+
+  def n_join(n, str, sp = ", ")
+    (1..n).map{|i| str % i }.join(sp)
+  end
+
+  def eigen_feedback(eigen_val_num, dim)
+    ans_vals = n_join(eigen_val_num, "ans_val%d")
+    large_Ns = n_join(dim, "N", ", ")
+    ERB.new(<<HERE, nil, '-').result(binding).chop
+<![CDATA[
+<%= basis_feedback_0() %>
+result : is(<%= eigen_val_num %> = length(unique([<%= ans_vals %>])));
+<%- (1..eigen_val_num).each do |i| -%>
+vec<%= i %> : delete([<%= large_Ns %>], maplist(list_matrix_entries, [<%= n_join(dim, "ans%d_%%d" % i) %>]));
+kvec<%= i %> : assoc(ans_val<%= i %>, k1);
+result : if result and listp(kvec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>) then true else false;
+<%- end -%>
+]]>
+HERE
+  end
+
+  def eigen_val_nodes(i)
+    ERB.new(<<HERE, nil, '-').result(binding)
+    <input>
+      <name>ans_val<%= i %></name>
+      <type>algebraic</type>
+      <tans>1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+HERE
+  end
+
+  def eigen_ans_nodes(eigen_val_num, dim, input_size)
+    ret = ""
+    (1..eigen_val_num).each{|i|
+      ret << eigen_val_nodes(i)
+      ret << basis_ans(dim, dim, input_size, "#{i}_")
+    }
+    ret
+  end
+
+  def eigen_forms(eigen_val_num, dim)
+    ret = ""
+    (1..eigen_val_num).each{|idx|
+      ans = n_join(dim, "[[input:ans#{idx}_%d]]", " ")
+      valid = "[[validation:ans_val#{idx}]] "
+      valid += n_join(dim, "[[validation:ans#{idx}_%d]]", " ")
+      ret << ERB.new(<<HERE, nil, '-').result(binding)
+<p> 固有値 [[input:ans_val<%= idx %>]] それに対する固有ベクトル <%= ans %></p>
+<div><%= valid %></div><br><br>
+HERE
+    }
+    ret
+  end
+
   def basis_dim(s)
     if m = s.match(/\[([^\[\]]*?)\]/)
       $1.split(",").size
     end
   end
 
+  def basis_forms(dim)
+    ret = ERB.new(<<HERE, nil, '-').result(binding)
+<p> <%= basis_ans_form(dim) %></p>
+<div><%= basis_validation_form(dim) %></div>
+HERE
+    ret.chop
+  end
+
   def basis_ans_form(dim)
-    (1..dim).map{|i| "[[input:ans#{i}]]"}.join(" ") 
+    n_join(dim, "[[input:ans%d]]", " ")
   end
 
   def basis_validation_form(dim)
-    (1..dim).map{|i| "[[validation:ans#{i}]]"}.join(" ") 
+    n_join(dim, "[[validation:ans%d]]", " ")
   end
 
-  def basis_ans(n, dim, input_size)
+  def basis_ans(n, dim, input_size, prefix="")
     ERB.new(<<HERE, nil, '-').result(binding)
 <%- (1..n).each do |i| -%>
     <input>
-      <name>ans<%= i %></name>
+      <name>ans<%= prefix %><%= i %></name>
       <type>matrix</type>
-      <tans>matrix(<%= (["[1]"]*dim).join(",")  %>)</tans>
+      <tans>matrix(<%= n_join(dim, "[1]", ",")  %>)</tans>
       <boxsize><%= input_size %></boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
@@ -339,25 +433,31 @@ HERE
 HERE
   end
   
-  def basis_feedback(dim, mthd)
-    b1 = (1..dim).map{|i| "list_matrix_entries(ans#{i})"}.join(", ")
-    large_Ns = (1..dim).map{|i| "N" }.join(", ")
-    basis_chk = case mthd
-                when "is_basis_of_same_linear_space"
-                  "is_basis"
-                when "is_orthonormal_basis_of_same_linear_space"
-                  "is_orthonormal_basis"
-                else
-                  raise
-                end
-
-<<"HERE".chop
-<![CDATA[
+  def basis_feedback_0
+<<HERE.chop
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([ret, x0, xm, i, n], ret : true, x0 : x, xm : apply(matrix, x0), ret: true, n : -(length(x0)+1), for i:1 thru length(x0) do (m : apply(matrix, append(rest(x0,i), rest(x0,n+i))), ret : ret and is(rank(m) + 1 = rank(xm))), ret) ;
 is_orthonormal_basis(x) := block([xm], xm : apply(matrix, radcan(x)), if is( ratsimp( ident(length(x)) = xm.conjugate(transpose(xm)) ) ) then true else false) ;
+HERE
+  end
+
+  def basis_feedback(dim, mthd)
+    b1 = n_join(dim, "list_matrix_entries(ans%d)", ", ")
+    large_Ns = n_join(dim, "N", ", ")
+    basis_chk =
+      case mthd
+      when "is_basis_of_same_linear_space"
+        "is_basis"
+      when "is_orthonormal_basis_of_same_linear_space"
+        "is_orthonormal_basis"
+      else
+        raise
+      end
+<<"HERE".chop
+<![CDATA[
+#{basis_feedback_0}
 b1 : delete([#{large_Ns}], [#{b1}]);
-result : if is_same_linear_space(k1, b1) and #{basis_chk}(b1) then 1 else false;
+result : if is_same_linear_space(k1, b1) and #{basis_chk}(b1) then true else false;
 ]]>
 HERE
   end
@@ -604,8 +704,7 @@ EOS
     </name>
     <questiontext format="html">
       <text><![CDATA[<p><%=h qname  %></p>
-<p><%=h qstr  %> <p> <%=h basis_ans_form0 %></p>
-<div><%= basis_validation_form0 %></div>]]></text>
+<p><%=h qstr  %> <%= ans_forms %>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -639,7 +738,7 @@ EOS
     <inversetrig>cos-1</inversetrig>
     <matrixparens>[</matrixparens>
     <variantsselectionseed></variantsselectionseed>
-<%= inputs %>
+<%= ans_nodes %>
     <prt>
       <name>prt1</name>
       <value>1.0000000</value>
@@ -651,7 +750,7 @@ EOS
         <name>0</name>
         <answertest>CasEqual</answertest>
         <sans>result</sans>
-        <tans>1</tans>
+        <tans>true</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>

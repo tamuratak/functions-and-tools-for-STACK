@@ -47,6 +47,9 @@ class TestStackQ < Test::Unit::TestCase
                   STACK_Q.new("abs ** xyz ** [[1,1,0], [1,0,0]] ** is_basis_of_same_linear_space").txt2xml )
   end
   
+  def test_eigen
+  end
+
   def test_basis_type_check
     assert_nothing_raised{ 
       @stck.basis_type_check("[[1,1]]", 1)
@@ -277,14 +280,14 @@ is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,
 is_basis(x) := block([ret, x0, xm, i, n], ret : true, x0 : x, xm : apply(matrix, x0), ret: true, n : -(length(x0)+1), for i:1 thru length(x0) do (m : apply(matrix, append(rest(x0,i), rest(x0,n+i))), ret : ret and is(rank(m) + 1 = rank(xm))), ret) ;
 is_orthonormal_basis(x) := block([xm], xm : apply(matrix, radcan(x)), if is( ratsimp( ident(length(x)) = xm.conjugate(transpose(xm)) ) ) then true else false) ;
 b1 : delete([N, N, N], [list_matrix_entries(ans1), list_matrix_entries(ans2), list_matrix_entries(ans3)]);
-result : if is_same_linear_space(k1, b1) and is_basis(b1) then 1 else false;
+result : if is_same_linear_space(k1, b1) and is_basis(b1) then true else false;
 ]]></text>
       </feedbackvariables>
       <node>
         <name>0</name>
         <answertest>CasEqual</answertest>
         <sans>result</sans>
-        <tans>1</tans>
+        <tans>true</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
