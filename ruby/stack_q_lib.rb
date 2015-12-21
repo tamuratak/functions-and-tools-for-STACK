@@ -85,7 +85,7 @@ class STACK_Q
         input_type = "matrix"
       when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
         input_size = @opt["form-size"] || 15
-        x = ERB.new(TMPL2)
+        x = ERB.new(TMPL_basis, nil, '-')
         basis_type_check(a1, line_num)
         dim = basis_dim(a1)
         ans_nodes = basis_ans(dim, dim, input_size)
@@ -93,7 +93,7 @@ class STACK_Q
         ans_forms = basis_forms(dim)
       when "is_same_eigenval_and_eigenvec"
         input_size = @opt["form-size"] || 15
-        x = ERB.new(TMPL2)
+        x = ERB.new(TMPL_eigen, nil, '-')
         eigen_val_num, dim = eigen_num_dim(a1)
         ans_forms = eigen_forms(eigen_val_num, dim)
         feedbk = eigen_feedback(eigen_val_num, dim)
@@ -301,11 +301,14 @@ EOS
     ERB.new(<<HERE, nil, '-').result(binding).chop
 <![CDATA[
 <%= basis_feedback_0() %>
+ith : 0;
 result : is(<%= eigen_val_num %> = length(unique([<%= ans_vals %>])));
+ith : if result then ith + 1 else ith;
 <%- (1..eigen_val_num).each do |i| -%>
 vec<%= i %> : delete([<%= large_Ns %>], maplist(list_matrix_entries, [<%= n_join(dim, "ans%d_%%d" % i) %>]));
 kvec<%= i %> : assoc(ans_val<%= i %>, k1);
-result : if result and listp(kvec<%= i %>) and is_basis(vec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>) then true else false;
+result : result and listp(kvec<%= i %>) and is_basis(vec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>);
+ith : if result then ith + 1 else ith;
 <%- end -%>
 ]]>
 HERE

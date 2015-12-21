@@ -204,7 +204,7 @@ EOS
   </question>
 EOS
 
-  TMPL2 = <<"EOS"
+  TMPL_basis = <<"EOS"
   <question type="stack">
     <name>
       <text><%=h qname_0  %></text>
@@ -275,6 +275,111 @@ EOS
         <falseanswernote>prt1-1-F</falseanswernote>
         <falsefeedback format="html">
           <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+EOS
+
+  TMPL_eigen = <<"EOS"
+  <question type="stack">
+    <name>
+      <text><%=h qname_0  %></text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p><%=h qname  %></p>
+<p><%=h qstr  %> <%= ans_forms %>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <questionvariables>
+      <text>k1 : <%=esq_cdata a1 %>;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text><![CDATA[<p>[[feedback:prt1]]</p>]]></text>
+    </specificfeedback>
+    <questionnote>
+      <text></text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <prtcorrect format="html">
+      <text><![CDATA[<p>よくできました。正解です!</p>]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<p>惜しい！部分的に正解です。</p>]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<p>残念，間違いです。</p>]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+<%= ans_nodes %>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackvariables>
+        <text><%= feedbk %></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>CasEqual</answertest>
+        <sans>result</sans>
+        <tans>true</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>CasEqual</answertest>
+        <sans>ith</sans>
+        <tans>0</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+<% unless eigen_val_num == 1 -%>
+          <text><![CDATA[<p>【ヒント】解答中に同じ値の固有値が複数あります。<br></p>]]></text>
+<% end -%>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+<% unless eigen_val_num == 1 -%>
+          <text><![CDATA[<p>【ヒント】@ith@番目の解答の固有値か固有ベクトルが違います。<br></p>]]></text>
+<% end -%>
         </falsefeedback>
       </node>
     </prt>
