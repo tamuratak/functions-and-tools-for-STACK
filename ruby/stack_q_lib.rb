@@ -305,7 +305,7 @@ result : is(<%= eigen_val_num %> = length(unique([<%= ans_vals %>])));
 <%- (1..eigen_val_num).each do |i| -%>
 vec<%= i %> : delete([<%= large_Ns %>], maplist(list_matrix_entries, [<%= n_join(dim, "ans%d_%%d" % i) %>]));
 kvec<%= i %> : assoc(ans_val<%= i %>, k1);
-result : if result and listp(kvec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>) then true else false;
+result : if result and listp(kvec<%= i %>) and is_basis(vec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>) then true else false;
 <%- end -%>
 ]]>
 HERE
@@ -349,7 +349,7 @@ HERE
       valid = "[[validation:ans_val#{idx}]] "
       valid += n_join(dim, "[[validation:ans#{idx}_%d]]", " ")
       ret << ERB.new(<<HERE, nil, '-').result(binding)
-<p> 固有値 [[input:ans_val<%= idx %>]] それに対する固有ベクトル <%= ans %></p>
+<p> 固有値 [[input:ans_val<%= idx %>]] それに対する固有ベクトルは次のベクトルの1次結合である <%= ans %></p>
 <div><%= valid %></div><br><br>
 HERE
     }
