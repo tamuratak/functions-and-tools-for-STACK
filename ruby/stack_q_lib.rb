@@ -80,6 +80,12 @@ class STACK_Q
         feedbk = feedback(mthd, a1)
         input_size = 15
         input_type = "matrix"
+      when "is_same_diag"
+        stack_mthd = "CasEqual"
+        t_ans1 = cdata(a1)
+        feedbk = feedback(mthd, a1)
+        input_size = 15
+        input_type = "matrix"
       when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_basis, nil, '-')
@@ -174,6 +180,17 @@ is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 :
 
 a1 : #{esq_cdata(a1)};
 result : if is_same_interval(a1, ans1) then 1 else false;
+]]>
+EOS
+    when "is_same_diag"
+      <<EOS.chop
+<![CDATA[
+is_diagonal(m) := block([ret, col_size, row_size],ret : true,col_size : length(m),row_size : length(m[1]),(if is(col_size = row_size) then ((if is( not m = m * diagmatrix(col_size, 1))  then (ret : ret and false))) else (ret : ret and false)),ret);
+get_diag_element(m) := block([len, i],len : length(m),maplist(lambda([i], m[i,i]), makelist(i, i, len)));
+is_same_diag(a, x) := block([ret, len],ret : true,ret : ret and is_diagonal(x),(if ret then (ret : ret and is( sort(get_diag_element(a)) = sort(get_diag_element(x)) ))),ret);
+
+a1 : #{esq_cdata(a1)};
+result : if is_same_diag(a1, ans1) then 1 else false;
 ]]>
 EOS
     when "is_same_linear_eq", "is_same_plane", "has_same_nullspace"
