@@ -52,13 +52,12 @@ class STACK_Q
       # workaround for Moodle + MathJax bug
       qstr = '\(\,\)  ' + inline_tex(qstr)
 
-      # teacher's answer == a1 == t_ans1 == prt_ans1, (prt stands for potential response tree)
+      # teacher's answer == a1 == t_ans1, (prt stands for potential response tree)
       # student's answer == ans1
       case mthd
       when "AlgEquiv", "CasEqualNotAsin"
         stack_mthd = mthd
         t_ans1 = cdata(a1)
-        prt_ans1 = "a1"
         feedbk = feedback(mthd, a1)
         if mthd == "CasEqualNotAsin"
           stack_mthd = "CasEqual"
@@ -67,7 +66,6 @@ class STACK_Q
       when "is_same_interval",  "is_same_linear_eq", "has_same_nullspace", "is_same_tri", "has_same_deriv", "does_satisfy"
         stack_mthd = "CasEqual"
         t_ans1 = cdata(a1)
-        prt_ans1 = "a1"
         feedbk = feedback(mthd, a1, ext)
         case mthd
         when "is_same_linear_eq"
@@ -79,7 +77,6 @@ class STACK_Q
 #        plane_type_check(a1, line_num)
         stack_mthd = "CasEqual"
         t_ans1 = cdata("transpose(matrix(" + a1 + "))")
-        prt_ans1 = "a1"
         feedbk = feedback(mthd, a1)
         input_size = 15
         input_type = "matrix"
