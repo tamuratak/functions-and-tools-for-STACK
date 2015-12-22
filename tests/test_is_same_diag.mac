@@ -4,8 +4,13 @@ load("../is_same_diag.mac");
 m : matrix([1,0],[0,1])$
 m1 : matrix([1,0],[0,2])$
 m2 : matrix([2,0],[0,1])$
+a1 : matrix([1,0,0],[0,1,0],[0,0,1])$
+a2 : matrix([1,0,0],[0,1,0],[0,0,2])$
+a3 : matrix([1,0,1],[0,1,0],[0,0,1])$
 test_assert( is_diagonal(m) );
 test_assert( get_diag_element(m) = [1,1] );
 test_assert( is_same_diag(m, m) );
 test_assert( not is_same_diag(m, m1) );
 test_assert( is_same_diag(m1, m2) );
+test_assert( not is_same_diag(a1, a2) );
+test_assert( not is_same_diag(a1, a3) );

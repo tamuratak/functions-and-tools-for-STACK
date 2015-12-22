@@ -13,13 +13,9 @@ is_diagonal(m) := block([ret, col_size, row_size],
   ret
   );
 
-get_diag_element(m) := block([ret, len],
-  ret : [],
+get_diag_element(m) := block([len, i],
   len : length(m),
-  (for i: 1 while i <= len do (
-      push(m[i,i], ret)
-      )),
-  ret
+  maplist(lambda([i], m[i,i]), makelist(i, i, len))
   );
 
 is_same_diag(a, x) := block([ret, len],
