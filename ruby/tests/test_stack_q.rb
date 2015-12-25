@@ -47,6 +47,10 @@ class TestStackQ < Test::Unit::TestCase
                   STACK_Q.new("abs ** xyz ** [[1,1,0], [1,0,0]] ** is_basis_of_same_linear_space").txt2xml )
   end
   
+  def test_multi
+    assert_equal(2, @stck.multi_ans_num("[[1,2],[3,4]]"))
+  end
+
   def test_eigen
     assert_equal( [1, 2], @stck.eigen_num_dim("[[1, [[1,2]]]]") )
     assert_equal( [1, 2], @stck.eigen_num_dim("[[1, [[1,2], [1,1]]]]") )

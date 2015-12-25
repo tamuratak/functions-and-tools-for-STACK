@@ -86,6 +86,14 @@ class STACK_Q
         feedbk = feedback(mthd, a1)
         input_size = 15
         input_type = "matrix"
+      when "multi_eigen_eq"
+        input_size = @opt["form-size"] || 15
+        x = ERB.new(TMPL_multi, nil, '-')
+        ans_num = multi_ans_num(a1)
+        desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["次元", "jigen"]]
+        ans_nodes = multi_ans_nodes_0(ans_num, desc_varnames, input_size)
+        feedbk = multi_feedback(ans_num, desc_varnames)
+        ans_forms = multi_forms_0(ans_num, desc_varnames)
       when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_basis, nil, '-')
@@ -290,7 +298,20 @@ EOS
     "%.4d" % num
   end
 
-  def multi_ans_nodes_0(ans_num, desc_varnames, input_size)
+  def multi_ans_num(s)
+    vecs = []
+    arry = s.scan(/\[.*?\]/)
+    arry.each{|e|
+      vecs << e.split(",")
+    }
+    vecs_sizes = vecs.map{|e| e.size }
+    unless vecs_sizes.uniq.size == 1
+      raise "the dims of eigen vectors are not the same"
+    end
+    return arry.size
+  end
+
+  def multi_ans_nodes_0(ans_num, desc_varnames, input_size = 15)
     ret = ""
     (1..ans_num).each{|i|
       desc_varnames.each{|desc0, name0|
@@ -303,7 +324,7 @@ EOS
   def multi_val_nodes_0(name, i, input_size)
     ERB.new(<<HERE, nil, '-').result(binding)
     <input>
-      <name><%= name %>_<%= i %></name>
+      <name><%= varname_0(name, i) %></name>
       <type>algebraic</type>
       <tans>1</tans>
       <boxsize><%= input_size %></boxsize>
@@ -322,21 +343,43 @@ EOS
 HERE
   end
 
+  def varname_0(name, idx)
+    "#{name}_#{idx}"
+  end
+
   def multi_forms_0(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding)
 <% (1..ans_num).each do |idx| %>
 <p>
-<%     desc_varnames.each do |desc0, name0| %>
-<%=h desc0  %> [[input:<%= name0 %>_%<= idx %>]],
-<%     end %>
+<%     desc_varnames.each do |desc0, name0| -%>
+<%=h desc0  %> [[input:<%= varname_0(name0, idx) %>]] &nbsp;&nbsp;&nbsp;
+<%     end -%>
 </p>
 <div>
-<%     desc_varnames.each do |desc0, name0| %>
-[[validation:<%= name0 %>_<%= idx %>]]
-<%     end %>
+<%     desc_varnames.each do |desc0, name0| -%>
+[[validation:<%= varname_0(name0, idx) %>]]
+<%     end -%>
 </div>
-<% end %>
+<br><br>
+<% end -%>
 HERE
+  end
+
+  def multi_feedback(ans_num, desc_varnames)
+    ERB.new(<<HERE, nil, '-').result(binding).chop
+<![CDATA[
+does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
+sans1 : [<%= (1..ans_num).map{|idx| "[" + desc_varnames.map{|desc0, name0| varname_0(name0, idx) }.join(", ") + "]" }.join(",") %>];
+ith : 0;
+result : is(<%= ans_num %> = length(unique(sans1)));
+<% (1..ans_num).each do |idx| -%>
+ith : if result then ith + 1 else ith;
+sans0 : [<%= desc_varnames.map{|desc0, name0| varname_0(name0, idx) }.join(", ") %>];
+result : result and some(lambda([x], does_hold(sans0 = x)), k1);
+<% end -%>
+]]>
+HERE
+
   end
 
   def eigen_num_dim(s)
