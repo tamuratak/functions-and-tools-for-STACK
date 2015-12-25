@@ -290,6 +290,55 @@ EOS
     "%.4d" % num
   end
 
+  def multi_ans_nodes_0(ans_num, desc_varnames, input_size)
+    ret = ""
+    (1..ans_num).each{|i|
+      desc_varnames.each{|desc0, name0|
+        ret << multi_val_nodes_0(name0, i, input_size)
+      }
+    }
+    ret
+  end
+
+  def multi_val_nodes_0(name, i, input_size)
+    ERB.new(<<HERE, nil, '-').result(binding)
+    <input>
+      <name><%= name %>_<%= i %></name>
+      <type>algebraic</type>
+      <tans>1</tans>
+      <boxsize><%= input_size %></boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+HERE
+  end
+
+  def multi_forms_0(ans_num, desc_varnames)
+    ERB.new(<<HERE, nil, '-').result(binding)
+<% (1..ans_num).each do |idx| %>
+<p>
+<%     desc_varnames.each do |desc0, name0| %>
+<%=h desc0  %> [[input:<%= name0 %>_%<= idx %>]],
+<%     end %>
+</p>
+<div>
+<%     desc_varnames.each do |desc0, name0| %>
+[[validation:<%= name0 %>_<%= idx %>]]
+<%     end %>
+</div>
+<% end %>
+HERE
+  end
+
   def eigen_num_dim(s)
     vecs = []
     arry = s.scan(/\[(.*?), \[\s*((?:\[.*?\],?)+)\s*\]\s*\]/)
