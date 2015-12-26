@@ -48,8 +48,11 @@ class TestStackQ < Test::Unit::TestCase
   end
   
   def test_multi
-    assert_equal(2, @stck.multi_ans_num("[[1,2],[3,4]]"))
-    assert_raise(RuntimeError){ @stck.multi_ans_nodes_0(2, [["desc", "ans"]]) }
+    assert_equal([2,2], @stck.multi_ans_num("[[1,2],[3,4]]"))
+    assert_equal([3,2], @stck.multi_ans_num("[[1,2,3],[3,3,4]]"))
+    assert_raise(RuntimeError){ @stck.multi_ans_check_size(2, [["desc", "ans"]]) }
+    assert_raise(RuntimeError){ @stck.multi_ans_check_size(3, [["desc", "ans"],["desc1", "ans1"]]) }
+    assert_nothing_raised{ @stck.multi_ans_check_size(1, [["desc", "ans"]]) }
   end
 
   def test_eigen

@@ -97,10 +97,11 @@ class STACK_Q
         end
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_multi, nil, '-')
-        ans_num = multi_ans_num(a1)
-        ans_nodes = multi_ans_nodes_0(ans_num, desc_varnames, input_size)
+        ans_dim, ans_num = multi_ans_num(a1)
+        multi_ans_check_size(ans_dim, desc_varnames)
+        ans_nodes = multi_ans_nodes(ans_num, desc_varnames, input_size)
         feedbk = multi_feedback(ans_num, desc_varnames)
-        ans_forms = multi_forms_0(ans_num, desc_varnames)
+        ans_forms = multi_forms(ans_num, desc_varnames)
       when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_basis, nil, '-')
@@ -315,21 +316,26 @@ EOS
     unless vecs_sizes.uniq.size == 1
       raise "the dims of eigen vectors are not the same"
     end
-    return arry.size
+    return *[vecs_sizes[0], arry.size]
   end
 
-  def multi_ans_nodes_0(ans_num, desc_varnames, input_size = 15)
-    raise "ans_num and the size of desc_varnames are not the same" unless ans_num == desc_varnames.size
+  def multi_ans_check_size(ans_dim, desc_varnames)
+    unless ans_dim == desc_varnames.size
+      raise "ans_dim and the size of desc_varnames are not the same"
+    end
+  end
+
+  def multi_ans_nodes(ans_num, desc_varnames, input_size = 15)
     ret = ""
     (1..ans_num).each{|i|
       desc_varnames.each{|desc0, name0|
-        ret << multi_val_nodes_0(name0, i, input_size)
+        ret << multi_val_nodes(name0, i, input_size)
       }
     }
     ret
   end
 
-  def multi_val_nodes_0(name, i, input_size)
+  def multi_val_nodes(name, i, input_size)
     ERB.new(<<HERE, nil, '-').result(binding)
     <input>
       <name><%= varname_0(name, i) %></name>
@@ -355,7 +361,7 @@ HERE
     "#{name}_#{idx}"
   end
 
-  def multi_forms_0(ans_num, desc_varnames)
+  def multi_forms(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding)
 <% (1..ans_num).each do |idx| %>
 <p>
