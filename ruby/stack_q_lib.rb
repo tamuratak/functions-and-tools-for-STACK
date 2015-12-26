@@ -63,6 +63,7 @@ class STACK_Q
           stack_mthd = "CasEqual"
           forbidwords = ",asin,acos,atan"
         end
+
       when "is_same_interval",  "is_same_linear_eq", "has_same_nullspace", "is_same_tri", "has_same_deriv", "does_satisfy"
         stack_mthd = "CasEqual"
         t_ans1 = cdata(a1)
@@ -73,6 +74,7 @@ class STACK_Q
         when "has_same_deriv"
           stack_mthd = "AlgEquiv"
         end
+
       when "is_same_plane"
 #        plane_type_check(a1, line_num)
         stack_mthd = "CasEqual"
@@ -80,6 +82,7 @@ class STACK_Q
         feedbk = feedback(mthd, a1)
         input_size = 15
         input_type = "matrix"
+
       when "is_same_diag"
         stack_mthd = "CasEqual"
         t_ans1 = cdata(a1)
@@ -87,7 +90,9 @@ class STACK_Q
         input_size = 15
         input_type = "matrix"
 
+      #
       #  questions with multiple answers
+      #
       when "multi_eigen_eq"
         case mthd
         when "multi_eigen_eq"
@@ -97,11 +102,12 @@ class STACK_Q
         end
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_multi, nil, '-')
-        ans_dim, ans_num = multi_ans_num(a1)
+        ans_num, ans_dim = multi_ans_num_dim(a1)
         multi_ans_check_size(ans_dim, desc_varnames)
         ans_nodes = multi_ans_nodes(ans_num, desc_varnames, input_size)
         feedbk = multi_feedback(ans_num, desc_varnames)
         ans_forms = multi_forms(ans_num, desc_varnames)
+
       when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_basis, nil, '-')
@@ -110,6 +116,7 @@ class STACK_Q
         ans_nodes = basis_ans(dim, dim, input_size)
         feedbk = basis_feedback(dim, mthd)
         ans_forms = basis_forms(dim)
+
       when "is_same_eigenval_and_eigenvec"
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_eigen, nil, '-')
@@ -117,6 +124,7 @@ class STACK_Q
         ans_forms = eigen_forms(eigen_val_num, dim)
         feedbk = eigen_feedback(eigen_val_num, dim)
         ans_nodes = eigen_ans_nodes(eigen_val_num, dim, input_size)
+
       else
         @err_msg = "error at line: #{line_num}"
         raise "invalid grading method"
@@ -306,7 +314,7 @@ EOS
     "%.4d" % num
   end
 
-  def multi_ans_num(s)
+  def multi_ans_num_dim(s)
     vecs = []
     arry = s.scan(/\[.*?\]/)
     arry.each{|e|
@@ -316,7 +324,7 @@ EOS
     unless vecs_sizes.uniq.size == 1
       raise "the dims of eigen vectors are not the same"
     end
-    return *[vecs_sizes[0], arry.size]
+    return *[arry.size, vecs_sizes[0]]
   end
 
   def multi_ans_check_size(ans_dim, desc_varnames)
