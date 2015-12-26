@@ -49,6 +49,7 @@ class TestStackQ < Test::Unit::TestCase
   
   def test_multi
     assert_equal(2, @stck.multi_ans_num("[[1,2],[3,4]]"))
+    assert_raise(RuntimeError){ @stck.multi_ans_nodes_0(2, [["desc", "ans"]]) }
   end
 
   def test_eigen

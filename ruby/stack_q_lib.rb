@@ -86,11 +86,18 @@ class STACK_Q
         feedbk = feedback(mthd, a1)
         input_size = 15
         input_type = "matrix"
+
+      #  questions with multiple answers
       when "multi_eigen_eq"
+        case mthd
+        when "multi_eigen_eq"
+          desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["次元", "jigen"]]
+        else
+          raise
+        end
         input_size = @opt["form-size"] || 15
         x = ERB.new(TMPL_multi, nil, '-')
         ans_num = multi_ans_num(a1)
-        desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["次元", "jigen"]]
         ans_nodes = multi_ans_nodes_0(ans_num, desc_varnames, input_size)
         feedbk = multi_feedback(ans_num, desc_varnames)
         ans_forms = multi_forms_0(ans_num, desc_varnames)
@@ -312,6 +319,7 @@ EOS
   end
 
   def multi_ans_nodes_0(ans_num, desc_varnames, input_size = 15)
+    raise "ans_num and the size of desc_varnames are not the same" unless ans_num == desc_varnames.size
     ret = ""
     (1..ans_num).each{|i|
       desc_varnames.each{|desc0, name0|
