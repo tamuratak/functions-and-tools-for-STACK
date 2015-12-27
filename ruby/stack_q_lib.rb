@@ -96,7 +96,7 @@ class STACK_Q
       when "multi_eigen_eq"
         case mthd
         when "multi_eigen_eq"
-          desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["次元", "jigen"]]
+          desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
         else
           raise
         end
@@ -152,7 +152,8 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
+stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
+does_hold(ex) := is( stackqsimp(ex) );
 ans1 : ratsubst(fxy, fyx, ans1);
 EOS
 
@@ -390,8 +391,9 @@ HERE
   def multi_feedback(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding).chop
 <![CDATA[
-does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
-sans1 : [<%= (1..ans_num).map{|idx| "[" + desc_varnames.map{|desc0, name0| varname_0(name0, idx) }.join(", ") + "]" }.join(",") %>];
+stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
+does_hold(ex) := is( stackqsimp(ex) );
+sans1 : stackqsimp([<%= (1..ans_num).map{|idx| "[" + desc_varnames.map{|desc0, name0| varname_0(name0, idx) }.join(", ") + "]" }.join(",") %>]);
 ith : 0;
 result : is(<%= ans_num %> = length(unique(sans1)));
 <% (1..ans_num).each do |idx| -%>
@@ -424,7 +426,7 @@ HERE
   end
 
   def eigen_feedback(eigen_val_num, dim)
-    ans_vals = n_join(eigen_val_num, "ans_val%d")
+    ans_vals = n_join(eigen_val_num, "ans_val%d") # ans_val == ans_eigenval
     large_Ns = n_join(dim, "N", ", ")
     ERB.new(<<HERE, nil, '-').result(binding).chop
 <![CDATA[

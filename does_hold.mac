@@ -1,1 +1,2 @@
-does_hold(ex) := is( ratsimp( radcan( exponentialize(ex) ) ) );
+stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
+does_hold(ex) := is( stackqsimp(ex) );
