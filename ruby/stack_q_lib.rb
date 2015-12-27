@@ -543,7 +543,7 @@ HERE
   end
 
   def basis_feedback(dim, mthd)
-    b1 = n_join(dim, "list_matrix_entries(ans%d)", ", ")
+    b1 = n_join(dim, "list_matrix_entries(ans%d)", ", ") # b1 == ans1 == student's answer
     large_Ns = n_join(dim, "N", ", ")
     basis_chk =
       case mthd
