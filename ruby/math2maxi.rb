@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 require 'optparse'
+require 'open3'
 
 caret = true
 opt = ARGV.getopts("Cm")
@@ -52,10 +53,11 @@ end
 
 if __FILE__ == $0
   loop do
-    l = STDIN.gets
+    l = STDIN.gets.chomp
     l = Math2Maxima.to_maxima(l, opt)
+    Open3.capture2("/usr/bin/pbcopy", :stdin_data => l)
     puts
-    puts l
+    puts "copying: #{l}"
     puts
     puts
   end
