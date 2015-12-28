@@ -143,7 +143,7 @@ class STACK_Q
   end
 
   def feedback(mthd, a1, ext="")
-    fdbk_alart = <<EOS.chop
+    fdbk_alart = <<EOS.chomp
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
@@ -159,7 +159,7 @@ EOS
 
     case mthd
     when "AlgEquiv", "CasEqualNotAsin"
-       <<EOS.chop
+       <<EOS.chomp
 <![CDATA[
 #{fdbk_alart}
 a1 : #{esq_cdata(a1)};
@@ -167,7 +167,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]>
 EOS
     when "has_same_deriv"
-      <<EOS.chop
+      <<EOS.chomp
 <![CDATA[
 #{fdbk_alart}
 a1 : #{esq_cdata(a1)};
@@ -177,7 +177,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
 ]]>
 EOS
     when "is_same_tri"
-      <<EOS.chop
+      <<EOS.chomp
 <![CDATA[
 echelon_1(m) := block([arry, m0, len, k, i, j],m0 : echelon(m),len : length(m),(for i: 2 while i <= len do (arry : sublist_indices(m0[i], lambda([x], x = 1)),(if not is(arry = []) then (k : arry[1],(for j: 1 while j < i do ((m0[j] : m0[j] - m0[j][k] * m0[i]))))))),m0);
 is_triangle(m) := block([len,i,k0,k,arry, ret],ret : true,len : length(m),len0 : length(m[1]) + 1,arry : sublist_indices(m[1], lambda([x], not (x = 0)) ),(if is(arry = []) then (k0 : length(m[1]) + 1) else (k0 : arry[1])),(for i: 2 while i <= len do (arry : sublist_indices(m[i], lambda([x], not (x = 0)) ),k : (if is(arry = []) then (length(m[1]) + 1) else (arry[1])),(if not is( (k > k0) or (len0 = k and len0 = k0) ) then (ret : ret and false)),k0 : k)),ret);
@@ -187,7 +187,7 @@ result : if is_same_triangle(a1, ans1) then 1 else false;
 ]]>
 EOS
     when "does_satisfy"
-      <<EOS.chop
+      <<EOS.chomp
 <![CDATA[
 #{fdbk_alart}
 a1 : #{esq_cdata(a1)};
@@ -195,7 +195,7 @@ result : if does_hold( #{esq_cdata(ext)} ) then 1 else false;
 ]]>
 EOS
     when "is_same_interval"
-      <<EOS.chop
+      <<EOS.chomp
 <![CDATA[
 myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
 chk_op(as, xs) := block([op1, x],if not( atom(as) ) and not( atom(xs) ) then (if member(x, as) then (op1 : op(xs),return( member(op1, ["and", "or", "<", ">", ">=", "<="]) ))),true);
@@ -208,7 +208,7 @@ result : if is_same_interval(a1, ans1) then 1 else false;
 ]]>
 EOS
     when "is_same_diag"
-      <<EOS.chop
+      <<EOS.chomp
 <![CDATA[
 is_diagonal(m) := block([ret, col_size, row_size],ret : true,col_size : length(m),row_size : length(m[1]),(if is(col_size = row_size) then ((if is( not m = m * diagmatrix(col_size, 1))  then (ret : ret and false))) else (ret : ret and false)),ret);
 get_diag_element(m) := block([len, i],len : length(m),maplist(lambda([i], m[i,i]), makelist(i, i, len)));
@@ -236,14 +236,14 @@ EOS
       case mthd
       when "is_same_linear_eq"
 ret <<
-<<EOS.chop
+<<EOS.chomp
 a1 : #{esq_cdata(a1)};
 result : if is_same_linear_eq(a1, ans1) then 1 else false;
 ]]>
 EOS
       when "is_same_plane"
 ret <<
-<<EOS.chop
+<<EOS.chomp
 a1 : #{esq_cdata(a1)};
 ans1 : list_matrix_entries(ans1);
 result : if is_same_plane(a1, ans1) then 1 else false;
@@ -251,7 +251,7 @@ result : if is_same_plane(a1, ans1) then 1 else false;
 EOS
       when "has_same_nullspace"
 ret <<
-<<EOS.chop
+<<EOS.chomp
 a1 : #{esq_cdata(a1)};
 result : if is_same_linear_space(args(a1), args(ans1)) then 1 else false;
 ]]>
@@ -389,7 +389,7 @@ HERE
   end
 
   def multi_feedback(ans_num, desc_varnames)
-    ERB.new(<<HERE, nil, '-').result(binding).chop
+    ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
 stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
 does_hold(ex) := is( stackqsimp(ex) );
@@ -428,7 +428,7 @@ HERE
   def eigen_feedback(eigen_val_num, dim)
     ans_vals = n_join(eigen_val_num, "ans_val%d") # ans_val == ans_eigenval
     large_Ns = n_join(dim, "N", ", ")
-    ERB.new(<<HERE, nil, '-').result(binding).chop
+    ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
 <%= basis_feedback_0() %>
 ith : 0;
@@ -496,7 +496,7 @@ HERE
   end
 
   def basis_forms(dim)
-    ret = ERB.new(<<HERE, nil, '-').result(binding).chop
+    ret = ERB.new(<<HERE, nil, '-').result(binding).chomp
 <p> <%= basis_ans_form(dim) %></p>
 <div><%= basis_validation_form(dim) %></div>
 HERE
@@ -535,7 +535,7 @@ HERE
   end
   
   def basis_feedback_0
-<<HERE.chop
+<<HERE.chomp
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([ret, x0, xm, i, n], ret : true, x0 : x, xm : apply(matrix, x0), ret: true, n : -(length(x0)+1), for i:1 thru length(x0) do (m : apply(matrix, append(rest(x0,i), rest(x0,n+i))), ret : ret and is(rank(m) + 1 = rank(xm))), ret) ;
 is_orthonormal_basis(x) := block([xm], xm : apply(matrix, radcan(x)), if is( ratsimp( ident(length(x)) = xm.conjugate(transpose(xm)) ) ) then true else false) ;
@@ -554,7 +554,7 @@ HERE
       else
         raise
       end
-    ERB.new(<<HERE, nil, '-').result(binding).chop
+    ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
 <%= basis_feedback_0() %>
 b1 : delete([<%= large_Ns %>], [<%= b1 %>]);

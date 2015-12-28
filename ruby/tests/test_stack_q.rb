@@ -13,7 +13,7 @@ class TestStackQ < Test::Unit::TestCase
   def test_whole_xml
     dir = File.dirname( File.expand_path(__FILE__) )
     e_stk = File.read( File.join(dir, "e.stk") )
-    e_xml = File.read( File.join(dir, "e.xml") ).chop
+    e_xml = File.read( File.join(dir, "e.xml") ).chomp
     assert_equal(e_xml, STACK_Q.new(e_stk).txt2xml)
   end
 
@@ -150,7 +150,7 @@ end
 
 class TestStackQ  < Test::Unit::TestCase
 
-  Feedbk01 = <<EOS.chop
+  Feedbk01 = <<EOS.chomp
 <![CDATA[
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
@@ -169,7 +169,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
 EOS
 
 
-  Feedbk02 = <<EOS.chop
+  Feedbk02 = <<EOS.chomp
 <![CDATA[
 myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
 chk_op(as, xs) := block([op1, x],if not( atom(as) ) and not( atom(xs) ) then (if member(x, as) then (op1 : op(xs),return( member(op1, ["and", "or", "<", ">", ">=", "<="]) ))),true);
@@ -182,7 +182,7 @@ result : if is_same_interval(a1, ans1) then 1 else false;
 ]]>
 EOS
 
-  Kekka02 = <<EOS.chop
+  Kekka02 = <<EOS.chomp
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
 <!-- question: 0  -->
