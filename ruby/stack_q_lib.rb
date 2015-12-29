@@ -142,6 +142,13 @@ class STACK_Q
     s.gsub(/([^\\]|\A)\$((\\\$|[^\$])*)\$/) { $1 + '\\(' + $2 + '\\)' }
   end
 
+  def does_hold_mac
+    <<EOS.chomp
+stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
+does_hold(ex) := is( stackqsimp(ex) );
+EOS
+  end
+
   def feedback(mthd, a1, ext="")
     fdbk_alart = <<EOS.chomp
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
@@ -152,8 +159,7 @@ sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) );
+#{does_hold_mac}
 ans1 : ratsubst(fxy, fyx, ans1);
 EOS
 
@@ -200,9 +206,10 @@ EOS
     when "is_same_diag"
       <<EOS.chomp
 <![CDATA[
-is_diagonal(m) := block([ret, col_size, row_size],ret : true,col_size : length(m),row_size : length(m[1]),(if is(col_size = row_size) then ((if is( not m = m * diagmatrix(col_size, 1))  then (ret : ret and false))) else (ret : ret and false)),ret);
+is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
 get_diag_element(m) := block([len, i],len : length(m),maplist(lambda([i], m[i,i]), makelist(i, i, len)));
-is_same_diag(a, x) := block([ret, len],ret : true,ret : ret and is_diagonal(x),(if ret then (ret : ret and is( sort(get_diag_element(a)) = sort(get_diag_element(x)) ))),ret);
+is_same_diag(a, x) := block([],is_diagonal(a) and is_diagonal(x) and does_hold( sort(get_diag_element(a)) = sort(get_diag_element(x)) ));
+#{does_hold_mac}
 
 a1 : #{esq_cdata(a1)};
 result : if is_same_diag(a1, ans1) then 1 else false;
@@ -381,8 +388,7 @@ HERE
   def multi_feedback(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) );
+#{does_hold_mac}
 sans1 : stackqsimp([<%= (1..ans_num).map{|idx| "[" + desc_varnames.map{|desc0, name0| varname_0(name0, idx) }.join(", ") + "]" }.join(",") %>]);
 ith : 0;
 result : is(<%= ans_num %> = length(unique(sans1)));
@@ -526,9 +532,10 @@ HERE
   
   def basis_feedback_0
 <<HERE.chomp
+#{does_hold_mac}
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
-is_basis(x) := block([ret, x0, xm, i, n], ret : true, x0 : x, xm : apply(matrix, x0), ret: true, n : -(length(x0)+1), for i:1 thru length(x0) do (m : apply(matrix, append(rest(x0,i), rest(x0,n+i))), ret : ret and is(rank(m) + 1 = rank(xm))), ret) ;
-is_orthonormal_basis(x) := block([xm], xm : apply(matrix, radcan(x)), if is( ratsimp( ident(length(x)) = xm.conjugate(transpose(xm)) ) ) then true else false) ;
+is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
+is_orthonormal_basis(x) := block([xm],xm : apply(matrix, radcan(x)),does_hold( ident(length(x)) = xm.(conjugate(transpose(xm))) ));
 HERE
   end
 
