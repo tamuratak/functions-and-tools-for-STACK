@@ -1,4 +1,5 @@
 load("myassert.mac");
+load("../does_hold.mac");
 load("../is_orthonormal_basis.mac");
 
 test_assert( is_orthonormal_basis([[1,0], [0,1]]) );
