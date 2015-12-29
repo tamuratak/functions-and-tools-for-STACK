@@ -1,10 +1,9 @@
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],
-  ret : true,
   a0 : listify(radcan(a)),
   x0 : listify(radcan(x)),
   am : apply(matrix, a0),
   xm : apply(matrix, x0),
-  ret: ret and is(rank(am) = rank(xm)),
+  ret: is(rank(am) = rank(xm)),
   if ret then (
     am_dim : rank(am),
     for i:1 thru length(x0) do (
