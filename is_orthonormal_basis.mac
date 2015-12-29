@@ -1,5 +1,5 @@
 is_orthonormal_basis(x) := block([xm],
   xm : apply(matrix, radcan(x)),
   does_hold( ident(length(x)) = xm.(conjugate(transpose(xm))) )
-  ) ;
+  );
 
