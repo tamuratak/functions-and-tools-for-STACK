@@ -1,16 +1,7 @@
-is_diagonal(m) := block([ret, col_size, row_size],
-  ret : true,
+is_diagonal(m) := block([col_size, row_size],
   col_size : length(m),
   row_size : length(m[1]),
-  (if is(col_size = row_size)
-    then (
-      (if is( not m = m * diagmatrix(col_size, 1))  then (
-          ret : ret and false
-          )))
-    else (
-      ret : ret and false
-      )),
-  ret
+  is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1))
   );
 
 get_diag_element(m) := block([len, i],
@@ -18,11 +9,6 @@ get_diag_element(m) := block([len, i],
   maplist(lambda([i], m[i,i]), makelist(i, i, len))
   );
 
-is_same_diag(a, x) := block([ret, len],
-  ret : true,
-  ret : ret and is_diagonal(x),
-  (if ret then (
-      ret : ret and is( sort(get_diag_element(a)) = sort(get_diag_element(x)) )
-      )),
-  ret
+is_same_diag(a, x) := block([],
+  is_diagonal(a) and is_diagonal(x) and does_hold( sort(get_diag_element(a)) = sort(get_diag_element(x)) )
   );
