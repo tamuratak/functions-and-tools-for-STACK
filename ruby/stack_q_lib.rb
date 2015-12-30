@@ -344,7 +344,7 @@ EOS
   def multi_val_nodes(name, i, input_size)
     ERB.new(<<HERE, nil, '-').result(binding)
     <input>
-      <name><%= varname_0(name, i) %></name>
+      <name><%= varname(name, i) %></name>
       <type>algebraic</type>
       <tans>1</tans>
       <boxsize><%= input_size %></boxsize>
@@ -363,7 +363,7 @@ EOS
 HERE
   end
 
-  def varname_0(name, idx)
+  def varname(name, idx)
     "#{name}_#{idx}"
   end
 
@@ -372,12 +372,12 @@ HERE
 <% (1..ans_num).each do |idx| %>
 <p>
 <%     desc_varnames.each do |desc0, name0| -%>
-<%=h desc0  %> [[input:<%= varname_0(name0, idx) %>]] &nbsp;&nbsp;&nbsp;
+<%=h desc0  %> [[input:<%= varname(name0, idx) %>]] &nbsp;&nbsp;&nbsp;
 <%     end -%>
 </p>
 <div>
 <%     desc_varnames.each do |desc0, name0| -%>
-[[validation:<%= varname_0(name0, idx) %>]]
+[[validation:<%= varname(name0, idx) %>]]
 <%     end -%>
 </div>
 <br><br>
@@ -389,17 +389,16 @@ HERE
     ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
 #{does_hold_mac}
-sans1 : stackqsimp([<%= (1..ans_num).map{|idx| "[" + desc_varnames.map{|desc0, name0| varname_0(name0, idx) }.join(", ") + "]" }.join(",") %>]);
+sans1 : stackqsimp([<%= (1..ans_num).map{|idx| "[" + desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") + "]" }.join(",") %>]);
 ith : 0;
 result : is(<%= ans_num %> = length(unique(sans1)));
 <% (1..ans_num).each do |idx| -%>
 ith : if result then ith + 1 else ith;
-sans0 : [<%= desc_varnames.map{|desc0, name0| varname_0(name0, idx) }.join(", ") %>];
+sans0 : [<%= desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") %>];
 result : result and some(lambda([x], does_hold(sans0 = x)), k1);
 <% end -%>
 ]]>
 HERE
-
   end
 
   def eigen_num_dim(s)
@@ -426,7 +425,7 @@ HERE
     large_Ns = n_join(dim, "N", ", ")
     ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
-<%= basis_feedback_0() %>
+<%= basis_feedback_lib_mac() %>
 ith : 0;
 result : is(<%= eigen_val_num %> = length(unique([<%= ans_vals %>])));
 ith : if result then ith + 1 else ith;
@@ -530,7 +529,7 @@ HERE
 HERE
   end
   
-  def basis_feedback_0
+  def basis_feedback_lib_mac
 <<HERE.chomp
 #{does_hold_mac}
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
@@ -553,7 +552,7 @@ HERE
       end
     ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
-<%= basis_feedback_0() %>
+<%= basis_feedback_lib_mac() %>
 b1 : delete([<%= large_Ns %>], [<%= b1 %>]);
 result : if is_same_linear_space(k1, b1) and <%= basis_chk %>(b1) then true else false;
 ]]>
