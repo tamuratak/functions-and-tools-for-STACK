@@ -17,125 +17,130 @@ class STACK_Q
     ret = ""
     ret << ERB.new(HEAD).result(binding)
     line_num = 1
-    sort_prefix0 = sort_prefix()
+    @sort_prefix0 ||= sort_prefix()
 
     @txt.each_line{|l|
       next if /\A\s*\Z/ =~ l
       @err_msg = "error at line: #{line_num}"
 
-      x = ERB.new(TMPL)
-      input_size = @opt["form-size"] || 100
-      input_type = "algebraic"
-
       qname, qstr, a1, mthd, ext = l.split(/\s*\*\*\s*/).map{|s| s.sub(/\A\s*/, "").sub(/\s*\Z/, "") }
       mthd = mthd || "AlgEquiv"
-      forbidwords = ""
-      if @opt["sort-prefix"]
-        ln = "%.2d" % line_num
-        qname_0 = sort_prefix0 + "-" + ln + "-" + qname
-      else
-        qname_0 = qname
-      end
-
-      begin
-        validate_maxima_exp(a1)
-      rescue RuntimeError
-        @err_msg = "validation error of maxima expression at line #{line_num}" + "\n"
-        raise "\n\n" + @err_msg + l + "\n\n"
-      end
-
-      if is_matrix_type(a1)
-        input_size = @opt["form-size"] || 15
-        input_type = "matrix"
-      end
+      validate_maxima_exp(a1, line_num, l)
 
       # workaround for Moodle + MathJax bug
       qstr = '\(\,\)  ' + inline_tex(qstr)
 
       # teacher's answer == a1 == t_ans1, (prt stands for potential response tree)
       # student's answer == ans1
-      case mthd
-      when "AlgEquiv", "CasEqualNotAsin"
-        stack_mthd = mthd
-        t_ans1 = cdata(a1)
-        feedbk = feedback(mthd, a1)
-        if mthd == "CasEqualNotAsin"
-          stack_mthd = "CasEqual"
-          forbidwords = ",asin,acos,atan"
-        end
-
-      when "is_same_interval",  "is_same_linear_eq", "has_same_nullspace", "has_same_deriv", "does_satisfy"
-        stack_mthd = "CasEqual"
-        t_ans1 = cdata(a1)
-        feedbk = feedback(mthd, a1, ext)
-        case mthd
-        when "is_same_linear_eq"
-          eq_type_check(a1, line_num)
-        when "has_same_deriv"
-          stack_mthd = "AlgEquiv"
-        end
-
-      when "is_same_plane"
-#        plane_type_check(a1, line_num)
-        stack_mthd = "CasEqual"
-        t_ans1 = cdata("transpose(matrix(" + a1 + "))")
-        feedbk = feedback(mthd, a1)
-        input_size = 15
-        input_type = "matrix"
-
-      when "is_same_diag"
-        stack_mthd = "CasEqual"
-        t_ans1 = cdata(a1)
-        feedbk = feedback(mthd, a1)
-        input_size = 15
-        input_type = "matrix"
-
-      #
-      #  questions with multiple answers
-      #
-      when "multi_eigen_eq"
-        case mthd
-        when "multi_eigen_eq"
-          desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
-        else
-          raise
-        end
-        input_size = @opt["form-size"] || 15
-        x = ERB.new(TMPL_multi, nil, '-')
-        ans_num, ans_dim = multi_ans_num_dim(a1)
-        multi_ans_check_size(ans_dim, desc_varnames)
-        ans_nodes = multi_ans_nodes(ans_num, desc_varnames, input_size)
-        feedbk = multi_feedback(ans_num, desc_varnames)
-        ans_forms = multi_forms(ans_num, desc_varnames)
-
-      when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
-        input_size = @opt["form-size"] || 15
-        x = ERB.new(TMPL_basis, nil, '-')
-        basis_type_check(a1, line_num)
-        dim = basis_dim(a1)
-        ans_nodes = basis_ans(dim, dim, input_size)
-        feedbk = basis_feedback(dim, mthd)
-        ans_forms = basis_forms(dim)
-
-      when "is_same_eigenval_and_eigenvec"
-        input_size = @opt["form-size"] || 15
-        x = ERB.new(TMPL_eigen, nil, '-')
-        eigen_val_num, dim = eigen_num_dim(a1)
-        ans_forms = eigen_forms(eigen_val_num, dim)
-        feedbk = eigen_feedback(eigen_val_num, dim)
-        ans_nodes = eigen_ans_nodes(eigen_val_num, dim, input_size)
-
-      else
-        @err_msg = "error at line: #{line_num}"
+      unless ret0 = ( txt2xml_single(qname, qstr, a1, mthd, ext, line_num) or
+                      txt2xml_multi(qname, qstr, a1, mthd, ext, line_num) )
         raise "invalid grading method"
       end
 
-      ret << x.result(binding)
+      ret << ret0
       line_num  += 1
     }
     
     ret << FOOT
-    
+  end
+
+  def qname_0(qname, line_num)
+    if @opt["sort-prefix"]
+      ln = "%.2d" % line_num
+      qname_0 = @sort_prefix0 + "-" + ln + "-" + qname
+    else
+      qname_0 = qname
+    end
+  end
+
+  def txt2xml_single(qname, qstr, a1, mthd, ext, line_num)
+    x = ERB.new(TMPL)
+    input_size = @opt["form-size"] || 100
+    input_type = "algebraic"
+    qname_0 = qname_0(qname, line_num)
+    if is_matrix_type(a1)
+      input_size = @opt["form-size"] || 15
+      input_type = "matrix"
+    end
+
+    case mthd
+    when "AlgEquiv", "CasEqualNotAsin"
+      stack_mthd = mthd
+      t_ans1 = cdata(a1)
+      feedbk = feedback(mthd, a1)
+      if mthd == "CasEqualNotAsin"
+        stack_mthd = "CasEqual"
+        forbidwords = ",asin,acos,atan"
+      end
+    when "is_same_interval",  "is_same_linear_eq", "has_same_nullspace", "has_same_deriv", "does_satisfy"
+      stack_mthd = "CasEqual"
+      t_ans1 = cdata(a1)
+      feedbk = feedback(mthd, a1, ext)
+      case mthd
+      when "is_same_linear_eq"
+        eq_type_check(a1, line_num)
+      when "has_same_deriv"
+        stack_mthd = "AlgEquiv"
+      end
+    when "is_same_plane"
+      #        plane_type_check(a1, line_num)
+      stack_mthd = "CasEqual"
+      t_ans1 = cdata("transpose(matrix(" + a1 + "))")
+      feedbk = feedback(mthd, a1)
+      input_size = 15
+      input_type = "matrix"
+    when "is_same_diag"
+      stack_mthd = "CasEqual"
+      t_ans1 = cdata(a1)
+      feedbk = feedback(mthd, a1)
+      input_size = 15
+      input_type = "matrix"
+    else
+      return nil
+    end
+
+    x.result(binding)
+  end
+
+  def txt2xml_multi(qname, qstr, a1, mthd, ext, line_num)
+    qname_0 = qname_0(qname, line_num)
+
+    case mthd
+    when "multi_eigen_eq"
+      case mthd
+      when "multi_eigen_eq"
+        desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
+      else
+        raise
+      end
+      input_size = @opt["form-size"] || 15
+      x = ERB.new(TMPL_multi, nil, '-')
+      ans_num, ans_dim = multi_ans_num_dim(a1)
+      multi_ans_check_size(ans_dim, desc_varnames)
+      ans_nodes = multi_ans_nodes(ans_num, desc_varnames, input_size)
+      feedbk = multi_feedback(ans_num, desc_varnames)
+      ans_forms = multi_forms(ans_num, desc_varnames)
+
+    when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
+      input_size = @opt["form-size"] || 15
+      x = ERB.new(TMPL_basis, nil, '-')
+      basis_type_check(a1, line_num)
+      dim = basis_dim(a1)
+      ans_nodes = basis_ans(dim, dim, input_size)
+      feedbk = basis_feedback(dim, mthd)
+      ans_forms = basis_forms(dim)
+
+    when "is_same_eigenval_and_eigenvec"
+      input_size = @opt["form-size"] || 15
+      x = ERB.new(TMPL_eigen, nil, '-')
+      eigen_val_num, dim = eigen_num_dim(a1)
+      ans_forms = eigen_forms(eigen_val_num, dim)
+      feedbk = eigen_feedback(eigen_val_num, dim)
+      ans_nodes = eigen_ans_nodes(eigen_val_num, dim, input_size)
+    else
+      return nil
+    end
+    x.result(binding)
   end
 
   def inline_tex(s)
@@ -260,7 +265,7 @@ EOS
     end
   end
   
-  def validate_maxima_exp(s)
+  def validate_maxima_exp(s, line_num = 1, l = "")
     tmp = s
     until tmp == " XXX "
       prev = tmp
@@ -274,7 +279,8 @@ EOS
       tmp = tmp.gsub(/ XXX (and|or) XXX /, " XXX ")
       tmp = tmp.gsub(/not XXX/, " XXX ")
       if tmp == prev
-        raise s
+        @err_msg = "validation error of maxima expression at line #{line_num}" + "\n"
+        raise "\n\n" + @err_msg + l + "\n\n"
       end
     end
 
