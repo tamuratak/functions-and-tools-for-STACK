@@ -150,7 +150,7 @@ class STACK_Q
   def does_hold_mac
     <<EOS.chomp
 stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) );
+does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
 EOS
   end
 
