@@ -1,0 +1,1 @@
+does_eq_hold(ex) := ATAlgEquiv(lhs(ex), rhs(ex))[2];
