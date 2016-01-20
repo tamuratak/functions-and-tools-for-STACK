@@ -161,7 +161,7 @@ fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(list
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
 stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) );
+does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : ZZZ;
 result : if does_hold( a1 = ans1 ) then 1 else false;
@@ -292,7 +292,7 @@ EOS
       <feedbackvariables>
         <text><![CDATA[
 stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) );
+does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
 is_orthonormal_basis(x) := block([xm],xm : apply(matrix, radcan(x)),does_hold( ident(length(x)) = xm.(conjugate(transpose(xm))) ));

@@ -130,12 +130,12 @@ class STACK_Q
       feedbk = basis_feedback(dim, mthd)
       ans_forms = basis_forms(dim)
 
-    when "is_same_eigenval_and_eigenvec"
+    when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_eigen, nil, '-')
       eigen_val_num, dim = eigen_num_dim(a1)
       ans_forms = eigen_forms(eigen_val_num, dim)
-      feedbk = eigen_feedback(eigen_val_num, dim)
+      feedbk = eigen_feedback(eigen_val_num, dim, mthd)
       ans_nodes = eigen_ans_nodes(eigen_val_num, dim, input_size)
     else
       return nil
@@ -426,7 +426,16 @@ HERE
     (1..n).map{|i| str % i }.join(sp)
   end
 
-  def eigen_feedback(eigen_val_num, dim)
+  def basis_chk(mthd)
+    case mthd
+    when /orthonormal/
+      "is_orthonormal_basis"
+    else
+      "is_basis"
+    end
+  end
+
+  def eigen_feedback(eigen_val_num, dim, mthd = "")
     ans_vals = n_join(eigen_val_num, "ans_val%d") # ans_val == ans_eigenval
     large_Ns = n_join(dim, "N", ", ")
     ERB.new(<<HERE, nil, '-').result(binding).chomp
@@ -438,7 +447,7 @@ ith : if result then ith + 1 else ith;
 <%- (1..eigen_val_num).each do |i| -%>
 vec<%= i %> : delete([<%= large_Ns %>], maplist(list_matrix_entries, [<%= n_join(dim, "ans%d_%%d" % i) %>]));
 kvec<%= i %> : assoc(ans_val<%= i %>, k1);
-result : result and listp(kvec<%= i %>) and is_basis(vec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>);
+result : result and listp(kvec<%= i %>) and <%= basis_chk(mthd) %>(vec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>);
 ith : if result then ith + 1 else ith;
 <%- end -%>
 ]]>
