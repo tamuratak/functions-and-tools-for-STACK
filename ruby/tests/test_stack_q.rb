@@ -295,7 +295,7 @@ stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
 does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
-is_orthonormal_basis(x) := block([xm],xm : apply(matrix, radcan(x)),does_hold( ident(length(x)) = xm.(conjugate(transpose(xm))) ));
+is_orthonormal_basis(x) := block([xm, tmp],xm : apply(matrix, radcan(x)),tmp : xm.(conjugate(transpose(xm))),does_hold( ident(length(x)) = tmp ) or does_hold( 1 = tmp ));
 b1 : delete([N, N, N], [list_matrix_entries(ans1), list_matrix_entries(ans2), list_matrix_entries(ans3)]);
 result : if is_same_linear_space(k1, b1) and is_basis(b1) then true else false;
 ]]></text>
