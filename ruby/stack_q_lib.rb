@@ -155,12 +155,13 @@ EOS
   end
 
   def feedback(mthd, a1, ext="")
+    fun_num_list = ["sin", "cos", "tan", "asin", "acos", "atan", "exp", "log"].product((0..9).to_a).map(&:join).join(", ")
     fdbk_alart = <<EOS.chomp
 listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
 xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({#{fun_num_list}}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
