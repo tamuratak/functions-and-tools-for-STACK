@@ -149,7 +149,7 @@ class STACK_Q
 
   def does_hold_mac
     <<EOS.chomp
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
+stackqsimp(ex) := ratsimp( radcan( factcomb( exponentialize(ex) ) ) );
 does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
 EOS
   end
@@ -270,7 +270,7 @@ EOS
     tmp = s
     until tmp == " XXX "
       prev = tmp
-      tmp = tmp.gsub(/(?<=\A|[\(\[\{,]|and|or|not)\s*-?(\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*([\*\+\-\^\/\=]|[\>\<]=?))*\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*(?=\z|[\)\]\},]|and|or)/, " XXX ")
+      tmp = tmp.gsub(/(?<=\A|[\(\[\{,]|and|or|not)\s*-?(\s*([a-zA-Z]\w*|\d+|%e|%pi|%i)\s*([\*\+\-\^\/\=]|[\>\<]=?))*\s*([a-zA-Z]\w*\!?|\d+\!?|%e|%pi|%i)\s*(?=\z|[\)\]\},]|and|or)/, " XXX ")
       5.times{
         tmp = tmp.gsub(/(?!(and|or|not)\s*\()([a-z]{3,})\s*\(( XXX ,)* XXX \)/, " XXX ")
       }
