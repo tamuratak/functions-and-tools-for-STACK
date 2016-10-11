@@ -56,7 +56,7 @@
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -75,12 +75,13 @@ listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
 xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6, sin7, sin8, sin9, cos0, cos1, cos2, cos3, cos4, cos5, cos6, cos7, cos8, cos9, tan0, tan1, tan2, tan3, tan4, tan5, tan6, tan7, tan8, tan9, asin0, asin1, asin2, asin3, asin4, asin5, asin6, asin7, asin8, asin9, acos0, acos1, acos2, acos3, acos4, acos5, acos6, acos7, acos8, acos9, atan0, atan1, atan2, atan3, atan4, atan5, atan6, atan7, atan8, atan9, exp0, exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, log0, log1, log2, log3, log4, log5, log6, log7, log8, log9}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : 12/13;
 result : if does_hold( a1 = ans1 ) then 1 else false;
@@ -257,7 +258,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],asin,acos,atan </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max,asin,acos,atan </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -276,12 +277,13 @@ listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
 xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6, sin7, sin8, sin9, cos0, cos1, cos2, cos3, cos4, cos5, cos6, cos7, cos8, cos9, tan0, tan1, tan2, tan3, tan4, tan5, tan6, tan7, tan8, tan9, asin0, asin1, asin2, asin3, asin4, asin5, asin6, asin7, asin8, asin9, acos0, acos1, acos2, acos3, acos4, acos5, acos6, acos7, acos8, acos9, atan0, atan1, atan2, atan3, atan4, atan5, atan6, atan7, atan8, atan9, exp0, exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, log0, log1, log2, log3, log4, log5, log6, log7, log8, log9}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (2*x+y)/(2-x*y);
 result : if does_hold( a1 = ans1 ) then 1 else false;
@@ -458,7 +460,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -477,12 +479,13 @@ listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
 xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6, sin7, sin8, sin9, cos0, cos1, cos2, cos3, cos4, cos5, cos6, cos7, cos8, cos9, tan0, tan1, tan2, tan3, tan4, tan5, tan6, tan7, tan8, tan9, asin0, asin1, asin2, asin3, asin4, asin5, asin6, asin7, asin8, asin9, acos0, acos1, acos2, acos3, acos4, acos5, acos6, acos7, acos8, acos9, atan0, atan1, atan2, atan3, atan4, atan5, atan6, atan7, atan8, atan9, exp0, exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, log0, log1, log2, log3, log4, log5, log6, log7, log8, log9}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (1*x^2)/(1 + x^2) - (1*x*(-1 + x^3))/(1 + x^2)^2;
 result : if does_hold( a1 = ans1 ) then 1 else false;
@@ -659,7 +662,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -858,7 +861,7 @@ result : if is_same_plane(a1, ans1) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -1056,7 +1059,7 @@ result : if is_same_linear_eq(a1, ans1) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -1075,12 +1078,13 @@ listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
 xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6, sin7, sin8, sin9, cos0, cos1, cos2, cos3, cos4, cos5, cos6, cos7, cos8, cos9, tan0, tan1, tan2, tan3, tan4, tan5, tan6, tan7, tan8, tan9, asin0, asin1, asin2, asin3, asin4, asin5, asin6, asin7, asin8, asin9, acos0, acos1, acos2, acos3, acos4, acos5, acos6, acos7, acos8, acos9, atan0, atan1, atan2, atan3, atan4, atan5, atan6, atan7, atan8, atan9, exp0, exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, log0, log1, log2, log3, log4, log5, log6, log7, log8, log9}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([9, 1], [1, 1]);
 result : if does_hold( a1 = ans1 ) then 1 else false;
@@ -1257,7 +1261,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -1276,15 +1280,16 @@ listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
 xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6, sin7, sin8, sin9, cos0, cos1, cos2, cos3, cos4, cos5, cos6, cos7, cos8, cos9, tan0, tan1, tan2, tan3, tan4, tan5, tan6, tan7, tan8, tan9, asin0, asin1, asin2, asin3, asin4, asin5, asin6, asin7, asin8, asin9, acos0, acos1, acos2, acos3, acos4, acos5, acos6, acos7, acos8, acos9, atan0, atan1, atan2, atan3, atan4, atan5, atan6, atan7, atan8, atan9, exp0, exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, log0, log1, log2, log3, log4, log5, log6, log7, log8, log9}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([-(1/sqrt(5))], [1], [1/sqrt(5)]);
-result : if does_hold( ans1 = a1 or ans1 = - a1 ) then 1 else false;
+result : if does_hold(ans1 = a1) or does_hold(ans1 = - a1)  then 1 else false;
 ]]></text>
       </feedbackvariables>
       <node>
@@ -1458,7 +1463,7 @@ result : if does_hold( ans1 = a1 or ans1 = - a1 ) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords></allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -1475,7 +1480,7 @@ result : if does_hold( ans1 = a1 or ans1 = - a1 ) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords></allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -1492,7 +1497,7 @@ result : if does_hold( ans1 = a1 or ans1 = - a1 ) then 1 else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords></allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -1508,8 +1513,9 @@ result : if does_hold( ans1 = a1 or ans1 = - a1 ) then 1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
 is_orthonormal_basis(x) := block([xm, tmp],xm : apply(matrix, radcan(x)),tmp : xm.(conjugate(transpose(xm))),does_hold( ident(length(x)) = tmp ) or does_hold( 1 = tmp ));
@@ -1592,7 +1598,7 @@ result : if is_same_linear_space(k1, b1) and is_basis(b1) then true else false;
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]] </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
@@ -1611,12 +1617,13 @@ listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops
 xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
 xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
 xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({sin2, sin3, sin4, sin5, cos2, cos3, cos4, cos5, tan2, tan3, tan4, tan5, asin2, asin3, acos2, acos3, atan2, atan3}, setify(listofvars(ans1))) ) then 1 else false;
+sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6, sin7, sin8, sin9, cos0, cos1, cos2, cos3, cos4, cos5, cos6, cos7, cos8, cos9, tan0, tan1, tan2, tan3, tan4, tan5, tan6, tan7, tan8, tan9, asin0, asin1, asin2, asin3, asin4, asin5, asin6, asin7, asin8, asin9, acos0, acos1, acos2, acos3, acos4, acos5, acos6, acos7, acos8, acos9, atan0, atan1, atan2, atan3, atan4, atan5, atan6, atan7, atan8, atan9, exp0, exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9, log0, log1, log2, log3, log4, log5, log6, log7, log8, log9}, setify(listofvars(ans1))) ) then 1 else false;
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := ratsimp( radcan( exponentialize(ex) ) );
-does_hold(ex) := is( stackqsimp(ex) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : -3/(1 + 2*x);
 a1 : diff(a1,x);
