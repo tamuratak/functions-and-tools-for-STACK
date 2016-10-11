@@ -155,7 +155,7 @@ declare(n, integer);
 EOS
   end
 
-  def does_satisfy_(ext)
+  def does_satisfy_ex(ext)
     if /\A\(.*?\)\s*((and|or)\s*\(.*?\))*\z/ =~ ext
       ext.gsub(/\((.*?)\)\s*(and|or|\z)/){|s|
         e1 = $1
@@ -210,7 +210,7 @@ EOS
 <![CDATA[
 #{fdbk_alart}
 a1 : #{esq_cdata(a1)};
-result : if #{esq_cdata(does_satisfy_(ext))} then 1 else false;
+result : if #{esq_cdata(does_satisfy_ex(ext))} then 1 else false;
 ]]>
 EOS
     when "is_same_interval"
