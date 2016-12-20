@@ -1753,4 +1753,260 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       </node>
     </prt>
   </question>
+  <question type="stack">
+    <name>
+      <text>第99回 12 (1)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>第99回 12 (1)</p>
+<p>\(\,\)   <p> 固有値 [[input:ans_val1]] それに対する固有ベクトルは次のベクトルの1次結合である [[input:ans1_1]] [[input:ans1_2]] [[input:ans1_3]]</p>
+<div>[[validation:ans_val1]] [[validation:ans1_1]] [[validation:ans1_2]] [[validation:ans1_3]]</div><br><br>
+<p> 固有値 [[input:ans_val2]] それに対する固有ベクトルは次のベクトルの1次結合である [[input:ans2_1]] [[input:ans2_2]] [[input:ans2_3]]</p>
+<div>[[validation:ans_val2]] [[validation:ans2_1]] [[validation:ans2_2]] [[validation:ans2_3]]</div><br><br>
+]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <questionvariables>
+      <text>k1 : [[2, [[2, 1, 1]]], [1, [[1, 0, 2], [1, 1, 0]]]];</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text><![CDATA[<p>[[feedback:prt1]]</p>]]></text>
+    </specificfeedback>
+    <questionnote>
+      <text></text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <prtcorrect format="html">
+      <text><![CDATA[<p>よくできました。正解です!</p>]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<p>惜しい！部分的に正解です。</p>]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<p>残念，間違いです。</p>]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans_val1</name>
+      <type>algebraic</type>
+      <tans>1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans1_1</name>
+      <type>matrix</type>
+      <tans>matrix([1],[1],[1])</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans1_2</name>
+      <type>matrix</type>
+      <tans>matrix([1],[1],[1])</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans1_3</name>
+      <type>matrix</type>
+      <tans>matrix([1],[1],[1])</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans_val2</name>
+      <type>algebraic</type>
+      <tans>1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2_1</name>
+      <type>matrix</type>
+      <tans>matrix([1],[1],[1])</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2_2</name>
+      <type>matrix</type>
+      <tans>matrix([1],[1],[1])</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2_3</name>
+      <type>matrix</type>
+      <tans>matrix([1],[1],[1])</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackvariables>
+        <text><![CDATA[
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
+is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
+is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
+is_orthonormal_basis(x) := block([xm, tmp],xm : apply(matrix, radcan(x)),tmp : xm.(conjugate(transpose(xm))),does_hold( ident(length(x)) = tmp ) or does_hold( 1 = tmp ));
+ith : 0;
+result : is(2 = length(unique([ans_val1, ans_val2])));
+ith : if result then ith + 1 else ith;
+vec1 : delete([N, N, N], maplist(list_matrix_entries, [ans1_1, ans1_2, ans1_3]));
+kvec1 : assoc(ans_val1, k1);
+result : result and listp(kvec1) and is_basis(vec1) and is_same_linear_space(kvec1, vec1);
+ith : if result then ith + 1 else ith;
+vec2 : delete([N, N, N], maplist(list_matrix_entries, [ans2_1, ans2_2, ans2_3]));
+kvec2 : assoc(ans_val2, k1);
+result : result and listp(kvec2) and is_basis(vec2) and is_same_linear_space(kvec2, vec2);
+ith : if result then ith + 1 else ith;
+]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>CasEqual</answertest>
+        <sans>result</sans>
+        <tans>true</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>CasEqual</answertest>
+        <sans>ith</sans>
+        <tans>0</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>【ヒント】解答中に同じ値の固有値が複数あります。<br></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>【ヒント】@ith@番目の解答の固有値か固有ベクトルが違います。<br></p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
 </quiz>
