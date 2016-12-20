@@ -121,6 +121,16 @@ class STACK_Q
       feedbk = multi_feedback(ans_num, desc_varnames)
       ans_forms = multi_forms(ans_num, desc_varnames)
 
+    when "is_same_P_and_PAP"
+      input_size = @opt["form-size"] || 15
+      x = ERB.new(TMPL_basis, nil, '-')
+      dim = basis_dim(a1)
+      arry = [ ["ans1", "matrix", [dim,dim]],
+               ["ans2", "matrix", [dim,dim]] ]
+      ans_nodes = multi_input(arry)
+      feedbk = feedback(mthd, a1)
+      ans_forms = basis_forms(2)
+
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_basis, nil, '-')
@@ -236,6 +246,15 @@ is_same_diag(a, x) := block([],is_diagonal(a) and is_diagonal(x) and does_hold( 
 
 a1 : #{esq_cdata(a1)};
 result : if is_same_diag(a1, ans1) then 1 else false;
+]]>
+EOS
+    when "is_same_P_and_PAP"
+      <<EOS.chomp
+<![CDATA[
+is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
+
+b1 : #{esq_cdata(a1)};
+result: if is(rank(ans1) = length(ans1)) and is_diagonal(invert(ans1).b1.ans1) and is(b1.ans1 = ans1.ans2) then true else false;
 ]]>
 EOS
     when "is_same_linear_eq", "is_same_plane", "has_same_nullspace"
@@ -366,25 +385,7 @@ EOS
   end
 
   def multi_val_nodes(name, i, input_size)
-    ERB.new(<<HERE, nil, '-').result(binding)
-    <input>
-      <name><%= varname(name, i) %></name>
-      <type>algebraic</type>
-      <tans>1</tans>
-      <boxsize><%= input_size %></boxsize>
-      <strictsyntax>1</strictsyntax>
-      <insertstars>0</insertstars>
-      <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
-      <allowwords></allowwords>
-      <forbidfloat>1</forbidfloat>
-      <requirelowestterms>0</requirelowestterms>
-      <checkanswertype>0</checkanswertype>
-      <mustverify>1</mustverify>
-      <showvalidation>1</showvalidation>
-      <options></options>
-    </input>
-HERE
+    one_input(varname(name, i), "algebraic", nil, input_size)
   end
 
   def varname(name, idx)
@@ -473,25 +474,7 @@ HERE
   end
 
   def eigen_val_nodes(i)
-    ERB.new(<<HERE, nil, '-').result(binding)
-    <input>
-      <name>ans_val<%= i %></name>
-      <type>algebraic</type>
-      <tans>1</tans>
-      <boxsize>15</boxsize>
-      <strictsyntax>1</strictsyntax>
-      <insertstars>0</insertstars>
-      <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
-      <allowwords></allowwords>
-      <forbidfloat>1</forbidfloat>
-      <requirelowestterms>0</requirelowestterms>
-      <checkanswertype>0</checkanswertype>
-      <mustverify>1</mustverify>
-      <showvalidation>1</showvalidation>
-      <options></options>
-    </input>
-HERE
+    one_input("ans_val#{i}", "algebraic")
   end
 
   def eigen_ans_nodes(eigen_val_num, dim, input_size)
@@ -539,27 +522,11 @@ HERE
   end
 
   def basis_ans(n, dim, input_size, prefix="")
-    ERB.new(<<HERE, nil, '-').result(binding)
-<%- (1..n).each do |i| -%>
-    <input>
-      <name>ans<%= prefix %><%= i %></name>
-      <type>matrix</type>
-      <tans>matrix(<%= n_join(dim, "[1]", ",")  %>)</tans>
-      <boxsize><%= input_size %></boxsize>
-      <strictsyntax>1</strictsyntax>
-      <insertstars>0</insertstars>
-      <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
-      <allowwords></allowwords>
-      <forbidfloat>1</forbidfloat>
-      <requirelowestterms>0</requirelowestterms>
-      <checkanswertype>0</checkanswertype>
-      <mustverify>1</mustverify>
-      <showvalidation>1</showvalidation>
-      <options></options>
-    </input>
-<%- end -%>
-HERE
+    ret = ""
+    (1..n).each do |i|
+      ret << one_input("ans"+prefix+i.to_s, "matrix", [dim, 1], input_size)
+    end
+    ret
   end
   
   def basis_feedback_lib_mac
@@ -620,5 +587,44 @@ HERE
       raise "invalid answer type"
     end
   end
+
+  def one_input(name, type, dims = nil, input_size = 15)
+    if type == "matrix"
+      cols, rows = dims
+      tmp = "[" + n_join(rows, "1", ",") + "]"
+      tans = "matrix(" + n_join(cols, tmp, ",") + ")"
+    else
+      tans = "1"
+    end
+    ERB.new(<<HERE, nil, '-').result(binding)
+    <input>
+      <name><%= name %></name>
+      <type><%= type %></type>
+      <tans><%= tans %></tans>
+      <boxsize><%= input_size %></boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max </forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+HERE
+  end
+
+  def multi_input(arry)
+    ret = ""
+    arry.each{|e|
+      name, type, dims, input_size = e
+      ret << one_input(name, type, dims, input_size)
+    }
+    ret
+  end
+
 end
 
