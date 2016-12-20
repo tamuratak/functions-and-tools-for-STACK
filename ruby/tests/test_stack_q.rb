@@ -17,6 +17,19 @@ class TestStackQ < Test::Unit::TestCase
     assert_equal(e_xml, STACK_Q.new(e_stk).txt2xml)
   end
 
+  def test_one_input
+    @stck.one_input("matrix", "ans1", [2,3])
+  end
+
+  def test_multi_input
+    arry = [
+            ["ans1", "matrix", [2,3]],
+            ["ans2", "matrix", [3,1]],
+            ["ans3", "matrix", [3,1], 25]
+           ]
+    @stck.multi_input(arry)
+  end
+
   def test_feedback
 #    assert_equal( Feedbk01.gsub("ZZZ", "abcd03"), @stck.feedback("AlgEquiv", "abcd03") )
 
