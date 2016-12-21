@@ -1772,7 +1772,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
     <penalty>0.0000000</penalty>
     <hidden>0</hidden>
     <questionvariables>
-      <text>k1 : [[2, [[2, 1, 1]]], [1, [[1, 0, 2], [1, 1, 0]]]];</text>
+      <text>k1 : [[2, [[2, 1, 1]]], [1, [[0, 0, 2], [1, 1, 0]]]];</text>
     </questionvariables>
     <specificfeedback format="html">
       <text><![CDATA[<p>[[feedback:prt1]]</p>]]></text>
@@ -2060,7 +2060,7 @@ ith : if result then ith + 1 else ith;
     <penalty>0.0000000</penalty>
     <hidden>0</hidden>
     <questionvariables>
-      <text>k1 : [[2,1,1],[-1,2,2],[1,1,1]];</text>
+      <text>k1 : [[2,1,1],[1,2,2],[1,0,1]];</text>
     </questionvariables>
     <specificfeedback format="html">
       <text><![CDATA[<p>[[feedback:prt1]]</p>]]></text>
