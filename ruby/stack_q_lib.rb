@@ -129,7 +129,8 @@ class STACK_Q
                ["ans2", "matrix", [dim,dim]] ]
       ans_nodes = multi_input(arry)
       feedbk = feedback(mthd, a1)
-      ans_forms = basis_forms(2)
+      desc_varnames = [['\(P=\)', "ans1"], ['\(P^{-1}AP=\)', "ans2"]]
+      ans_forms = desc_varnames_forms(desc_varnames)
 
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       input_size = @opt["form-size"] || 15
@@ -383,13 +384,16 @@ EOS
     ret
   end
 
-  def varname(name, idx)
-    "#{name}_#{idx}"
+  def varname(name, idx = nil)
+    if idx
+      "#{name}_#{idx}"
+    else
+      name
+    end
   end
 
-  def eigen_multiplicity_forms(ans_num, desc_varnames)
-    ERB.new(<<HERE, nil, '-').result(binding)
-<% (1..ans_num).each do |idx| %>
+  def desc_varnames_forms(desc_varnames, idx = nil)
+    ERB.new(<<HERE, nil, '-').result(binding).chop
 <p>
 <%     desc_varnames.each do |desc0, name0| -%>
 <%=h desc0  %> [[input:<%= varname(name0, idx) %>]] &nbsp;&nbsp;&nbsp;
@@ -401,6 +405,13 @@ EOS
 <%     end -%>
 </div>
 <br><br>
+HERE
+  end
+
+  def eigen_multiplicity_forms(ans_num, desc_varnames)
+    ERB.new(<<HERE, nil, '-').result(binding)
+<% (1..ans_num).each do |idx| %>
+<%= desc_varnames_forms(desc_varnames, idx) %>
 <% end -%>
 HERE
   end
