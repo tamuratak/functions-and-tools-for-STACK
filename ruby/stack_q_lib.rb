@@ -410,14 +410,14 @@ HERE
   end
 
   def varnames_matrix(desc_varnames, ans_num)
-    (1..ans_num).map{|idx| varnames_arry(desc_varnames, idx) }.join(",")
+    "[" + (1..ans_num).map{|idx| varnames_arry(desc_varnames, idx) }.join(",") + "]"
   end
 
   def eigen_multiplicity_feedback(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
 #{does_hold_mac}
-sans1 : stackqsimp([<%= varnames_matrix(desc_varnames, ans_num) %>]);
+sans1 : stackqsimp(<%= varnames_matrix(desc_varnames, ans_num) %>);
 ith : 0;
 result : is(<%= ans_num %> = length(unique(sans1)));
 <% (1..ans_num).each do |idx| -%>
