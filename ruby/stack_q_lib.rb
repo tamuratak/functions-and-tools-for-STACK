@@ -377,14 +377,10 @@ EOS
     ret = ""
     (1..ans_num).each{|i|
       desc_varnames.each{|desc0, name0|
-        ret << eigen_multiplicity_val_nodes(name0, i, input_size)
+        ret << one_input(varname(name0, i), "algebraic", nil, input_size)
       }
     }
     ret
-  end
-
-  def eigen_multiplicity_val_nodes(name, i, input_size)
-    one_input(varname(name, i), "algebraic", nil, input_size)
   end
 
   def varname(name, idx)
@@ -409,16 +405,24 @@ EOS
 HERE
   end
 
+  def varnames_arry(desc_varnames, idx)
+    "[" + desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") + "]"
+  end
+
+  def varnames_matrix(desc_varnames, ans_num)
+    (1..ans_num).map{|idx| varnames_arry(desc_varnames, idx) }.join(",")
+  end
+
   def eigen_multiplicity_feedback(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
 #{does_hold_mac}
-sans1 : stackqsimp([<%= (1..ans_num).map{|idx| "[" + desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") + "]" }.join(",") %>]);
+sans1 : stackqsimp([<%= varnames_matrix(desc_varnames, ans_num) %>]);
 ith : 0;
 result : is(<%= ans_num %> = length(unique(sans1)));
 <% (1..ans_num).each do |idx| -%>
 ith : if result then ith + 1 else ith;
-sans0 : [<%= desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") %>];
+sans0 : <%= varnames_arry(desc_varnames, idx) %>;
 result : result and some(lambda([x], does_hold(sans0 = x)), k1);
 <% end -%>
 ]]>
