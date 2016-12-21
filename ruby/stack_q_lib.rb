@@ -457,6 +457,10 @@ HERE
     end
   end
 
+  def eigen_ans_arry(dim, idx)
+    "[" + n_join(dim, "ans#{idx}_%d") + "]"
+  end
+
   def eigen_feedback(eigen_val_num, dim, mthd = "")
     ans_vals = n_join(eigen_val_num, "ans_val%d") # ans_val == ans_eigenval
     large_Ns = n_join(dim, "N", ", ")
@@ -467,7 +471,7 @@ ith : 0;
 result : is(<%= eigen_val_num %> = length(unique([<%= ans_vals %>])));
 ith : if result then ith + 1 else ith;
 <%- (1..eigen_val_num).each do |i| -%>
-vec<%= i %> : delete([<%= large_Ns %>], maplist(list_matrix_entries, [<%= n_join(dim, "ans%d_%%d" % i) %>]));
+vec<%= i %> : delete([<%= large_Ns %>], maplist(list_matrix_entries, <%= eigen_ans_arry(dim,i) %>));
 kvec<%= i %> : assoc(ans_val<%= i %>, k1);
 result : result and listp(kvec<%= i %>) and <%= basis_chk(mthd) %>(vec<%= i %>) and is_same_linear_space(kvec<%= i %>, vec<%= i %>);
 ith : if result then ith + 1 else ith;
