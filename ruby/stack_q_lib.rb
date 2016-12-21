@@ -115,11 +115,11 @@ class STACK_Q
       end
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_multi, nil, '-')
-      ans_num, ans_dim = multi_ans_num_dim(a1)
-      multi_ans_check_size(ans_dim, desc_varnames)
-      ans_nodes = multi_ans_nodes(ans_num, desc_varnames, input_size)
-      feedbk = multi_feedback(ans_num, desc_varnames)
-      ans_forms = multi_forms(ans_num, desc_varnames)
+      ans_num, ans_dim = multi_eigen_num_dim(a1)
+      multi_eigen_check_size(ans_dim, desc_varnames)
+      ans_nodes = multi_eigen_nodes(ans_num, desc_varnames, input_size)
+      feedbk = multi_eigen_feedback(ans_num, desc_varnames)
+      ans_forms = multi_eigen_forms(ans_num, desc_varnames)
 
     when "is_P_and_PAP"
       input_size = @opt["form-size"] || 15
@@ -354,7 +354,7 @@ EOS
     "%.4d" % num
   end
 
-  def multi_ans_num_dim(s)
+  def multi_eigen_num_dim(s)
     vecs = []
     arry = s.scan(/\[.*?\]/)
     arry.each{|e|
@@ -367,23 +367,23 @@ EOS
     return *[arry.size, vecs_sizes[0]]
   end
 
-  def multi_ans_check_size(ans_dim, desc_varnames)
+  def multi_eigen_check_size(ans_dim, desc_varnames)
     unless ans_dim == desc_varnames.size
       raise "ans_dim and the size of desc_varnames are not the same"
     end
   end
 
-  def multi_ans_nodes(ans_num, desc_varnames, input_size = 15)
+  def multi_eigen_nodes(ans_num, desc_varnames, input_size = 15)
     ret = ""
     (1..ans_num).each{|i|
       desc_varnames.each{|desc0, name0|
-        ret << multi_val_nodes(name0, i, input_size)
+        ret << multi_eigen_val_nodes(name0, i, input_size)
       }
     }
     ret
   end
 
-  def multi_val_nodes(name, i, input_size)
+  def multi_eigen_val_nodes(name, i, input_size)
     one_input(varname(name, i), "algebraic", nil, input_size)
   end
 
@@ -391,7 +391,7 @@ EOS
     "#{name}_#{idx}"
   end
 
-  def multi_forms(ans_num, desc_varnames)
+  def multi_eigen_forms(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding)
 <% (1..ans_num).each do |idx| %>
 <p>
@@ -409,7 +409,7 @@ EOS
 HERE
   end
 
-  def multi_feedback(ans_num, desc_varnames)
+  def multi_eigen_feedback(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding).chomp
 <![CDATA[
 #{does_hold_mac}
