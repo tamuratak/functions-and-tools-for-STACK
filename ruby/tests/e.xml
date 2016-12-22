@@ -2318,8 +2318,15 @@ result : result and some(lambda([x], does_hold(sans0 = x)), k1);
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>第99回 14 (1)</p>
-<p>\(\,\)   <p> [[input:ans1]] [[input:ans2]]</p>
-<div>[[validation:ans1]] [[validation:ans2]]</div>]]></text>
+<p>\(\,\)   <p>
+\(P=\) [[input:ans1]] &nbsp;&nbsp;&nbsp;<br>
+\(P^{-1}AP=\) [[input:ans2]] &nbsp;&nbsp;&nbsp;<br>
+</p>
+<div>
+[[validation:ans1]]
+[[validation:ans2]]
+</div>
+<br><br>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>

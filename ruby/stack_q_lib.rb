@@ -130,7 +130,7 @@ class STACK_Q
       ans_nodes = multi_input(arry)
       feedbk = feedback(mthd, a1)
       desc_varnames = [['\(P=\)', "ans1"], ['\(P^{-1}AP=\)', "ans2"]]
-      ans_forms = desc_varnames_forms(desc_varnames)
+      ans_forms = desc_varnames_forms(desc_varnames, nline: true)
 
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       input_size = @opt["form-size"] || 15
@@ -378,7 +378,7 @@ EOS
     ret = ""
     (1..ans_num).each{|i|
       desc_varnames.each{|desc0, name0|
-        ret << one_input(varname(name0, i), "algebraic", nil, input_size)
+        ret << one_input(varname(name0, i), "algebraic", input_size: input_size)
       }
     }
     ret
@@ -392,11 +392,11 @@ EOS
     end
   end
 
-  def desc_varnames_forms(desc_varnames, idx = nil)
+  def desc_varnames_forms(desc_varnames, idx: nil, nline: nil)
     ERB.new(<<HERE, nil, '-').result(binding).chop
 <p>
 <%     desc_varnames.each do |desc0, name0| -%>
-<%=h desc0  %> [[input:<%= varname(name0, idx) %>]] &nbsp;&nbsp;&nbsp;
+<%=h desc0  %> [[input:<%= varname(name0, idx) %>]] &nbsp;&nbsp;&nbsp;<% if nline %><br><% end %>
 <%     end -%>
 </p>
 <div>
@@ -411,7 +411,7 @@ HERE
   def eigen_multiplicity_forms(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding)
 <% (1..ans_num).each do |idx| %>
-<%= desc_varnames_forms(desc_varnames, idx) %>
+<%= desc_varnames_forms(desc_varnames, idx: idx) %>
 <% end -%>
 HERE
   end
@@ -542,7 +542,7 @@ HERE
   def basis_ans(n, dim, input_size, prefix="")
     ret = ""
     (1..n).each do |i|
-      ret << one_input("ans"+prefix+i.to_s, "matrix", [dim, 1], input_size)
+      ret << one_input("ans"+prefix+i.to_s, "matrix", dims: [dim, 1], input_size: input_size)
     end
     ret
   end
@@ -606,7 +606,7 @@ HERE
     end
   end
 
-  def one_input(name, type, dims = nil, input_size = 15)
+  def one_input(name, type, dims: nil, input_size: 15)
     if type == "matrix"
       cols, rows = dims
       tmp = "[" + n_join(rows, "1", ",") + "]"
@@ -639,7 +639,7 @@ HERE
     ret = ""
     arry.each{|e|
       name, type, dims, input_size = e
-      ret << one_input(name, type, dims, input_size)
+      ret << one_input(name, type, dims: dims, input_size: input_size)
     }
     ret
   end

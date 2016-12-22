@@ -18,7 +18,7 @@ class TestStackQ < Test::Unit::TestCase
   end
 
   def test_one_input
-    @stck.one_input("matrix", "ans1", [2,3])
+    @stck.one_input("matrix", "ans1", dims: [2,3])
   end
 
   def test_multi_input
