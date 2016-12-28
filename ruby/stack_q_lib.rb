@@ -32,8 +32,8 @@ class STACK_Q
 
       # teacher's answer == a1 == t_ans1, (prt stands for potential response tree)
       # student's answer == ans1
-      unless ret0 = ( txt2xml_single(qname, qstr, a1, mthd, ext, line_num) or
-                      txt2xml_multi(qname, qstr, a1, mthd, ext, line_num) )
+      unless ret0 = ( txt2xml_single_input(qname, qstr, a1, mthd, ext, line_num) or
+                      txt2xml_multi_input(qname, qstr, a1, mthd, ext, line_num) )
         raise "invalid grading method"
       end
 
@@ -53,7 +53,7 @@ class STACK_Q
     end
   end
 
-  def txt2xml_single(qname, qstr, a1, mthd, ext, line_num)
+  def txt2xml_single_input(qname, qstr, a1, mthd, ext, line_num)
     x = ERB.new(TMPL)
     input_size = @opt["form-size"] || 100
     input_type = "algebraic"
@@ -102,7 +102,7 @@ class STACK_Q
     x.result(binding)
   end
 
-  def txt2xml_multi(qname, qstr, a1, mthd, ext, line_num)
+  def txt2xml_multi_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
 
     case mthd
@@ -117,7 +117,7 @@ class STACK_Q
       x = ERB.new(TMPL_multi, nil, '-')
       ans_num, ans_dim = eigen_multiplicity_num_dim(a1)
       eigen_multiplicity_check_size(ans_dim, desc_varnames)
-      ans_nodes = eigen_multiplicity_nodes(ans_num, desc_varnames, input_size)
+      ans_inputs = eigen_multiplicity_nodes(ans_num, desc_varnames, input_size)
       feedbk = eigen_multiplicity_feedback(ans_num, desc_varnames)
       ans_forms = eigen_multiplicity_forms(ans_num, desc_varnames)
 
@@ -127,7 +127,7 @@ class STACK_Q
       dim = basis_dim(a1)
       arry = [ ["ans1", "matrix", [dim,dim]],
                ["ans2", "matrix", [dim,dim]] ]
-      ans_nodes = multi_input(arry)
+      ans_inputs = multi_input(arry)
       feedbk = feedback(mthd, a1)
       desc_varnames = [['\(P=\)', "ans1"], ['\(P^{-1}AP=\)', "ans2"]]
       ans_forms = desc_varnames_forms(desc_varnames, nline: true)
@@ -137,7 +137,7 @@ class STACK_Q
       x = ERB.new(TMPL_basis, nil, '-')
       basis_type_check(a1, line_num)
       dim = basis_dim(a1)
-      ans_nodes = basis_ans(dim, dim, input_size)
+      ans_inputs = basis_ans(dim, dim, input_size)
       feedbk = basis_feedback(dim, mthd)
       ans_forms = basis_forms(dim)
 
@@ -145,9 +145,9 @@ class STACK_Q
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_eigen, nil, '-')
       eigen_val_num, dim = eigen_num_dim(a1)
-      ans_forms = eigen_forms(eigen_val_num, dim)
+      ans_inputs = eigen_ans_nodes(eigen_val_num, dim, input_size)
       feedbk = eigen_feedback(eigen_val_num, dim, mthd)
-      ans_nodes = eigen_ans_nodes(eigen_val_num, dim, input_size)
+      ans_forms = eigen_forms(eigen_val_num, dim)
     else
       return nil
     end

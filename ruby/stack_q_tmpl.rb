@@ -245,7 +245,7 @@ EOS
     <inversetrig>cos-1</inversetrig>
     <matrixparens>[</matrixparens>
     <variantsselectionseed></variantsselectionseed>
-<%= ans_nodes %>
+<%= ans_inputs %>
     <prt>
       <name>prt1</name>
       <value>1.0000000</value>
@@ -322,7 +322,7 @@ EOS
     <inversetrig>cos-1</inversetrig>
     <matrixparens>[</matrixparens>
     <variantsselectionseed></variantsselectionseed>
-<%= ans_nodes %>
+<%= ans_inputs %>
     <prt>
       <name>prt1</name>
       <value>1.0000000</value>
@@ -427,7 +427,7 @@ EOS
     <inversetrig>cos-1</inversetrig>
     <matrixparens>[</matrixparens>
     <variantsselectionseed></variantsselectionseed>
-<%= ans_nodes %>
+<%= ans_inputs %>
     <prt>
       <name>prt1</name>
       <value>1.0000000</value>
