@@ -53,6 +53,7 @@ class STACK_Q
     end
   end
 
+  # input == student answer type + form size + etc
   def txt2xml_single_input(qname, qstr, a1, mthd, ext, line_num)
     x = ERB.new(TMPL)
     input_size = @opt["form-size"] || 100
@@ -117,7 +118,7 @@ class STACK_Q
       x = ERB.new(TMPL_multi, nil, '-')
       ans_num, ans_dim = eigen_multiplicity_num_dim(a1)
       eigen_multiplicity_check_size(ans_dim, desc_varnames)
-      ans_inputs = eigen_multiplicity_nodes(ans_num, desc_varnames, input_size)
+      ans_inputs = eigen_multiplicity_inputs(ans_num, desc_varnames, input_size)
       feedbk = eigen_multiplicity_feedback(ans_num, desc_varnames)
       ans_forms = eigen_multiplicity_forms(ans_num, desc_varnames)
 
@@ -145,7 +146,7 @@ class STACK_Q
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_eigen, nil, '-')
       eigen_val_num, dim = eigen_num_dim(a1)
-      ans_inputs = eigen_ans_nodes(eigen_val_num, dim, input_size)
+      ans_inputs = eigen_ans_inputs(eigen_val_num, dim, input_size)
       feedbk = eigen_feedback(eigen_val_num, dim, mthd)
       ans_forms = eigen_forms(eigen_val_num, dim)
     else
@@ -374,7 +375,7 @@ EOS
     end
   end
 
-  def eigen_multiplicity_nodes(ans_num, desc_varnames, input_size = 15)
+  def eigen_multiplicity_inputs(ans_num, desc_varnames, input_size = 15)
     ret = ""
     (1..ans_num).each{|i|
       desc_varnames.each{|desc0, name0|
@@ -491,14 +492,14 @@ ith : if result then ith + 1 else ith;
 HERE
   end
 
-  def eigen_val_nodes(i)
+  def eigen_val_inputs(i)
     one_input("ans_val#{i}", "algebraic")
   end
 
-  def eigen_ans_nodes(eigen_val_num, dim, input_size)
+  def eigen_ans_inputs(eigen_val_num, dim, input_size)
     ret = ""
     (1..eigen_val_num).each{|i|
-      ret << eigen_val_nodes(i)
+      ret << eigen_val_inputs(i)
       ret << basis_ans(dim, dim, input_size, "#{i}_")
     }
     ret
@@ -610,9 +611,9 @@ HERE
     if type == "matrix"
       cols, rows = dims
       tmp = "[" + n_join(rows, "1", ",") + "]"
-      tans = "matrix(" + n_join(cols, tmp, ",") + ")"
+      tans = "matrix(" + n_join(cols, tmp, ",") + ")" # dummy
     else
-      tans = "1"
+      tans = "1" # dummy
     end
     ERB.new(<<HERE, nil, '-').result(binding)
     <input>
