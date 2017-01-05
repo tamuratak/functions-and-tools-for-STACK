@@ -131,11 +131,17 @@ class STACK_Q
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_basis, nil, '-')
-      basis_type_check(a1, line_num)
-      dim = basis_dim(a1)
-      ans_inputs = basis_ans(dim, dim, input_size)
-      feedbk = basis_feedback(dim, mthd)
-      ans_forms = basis_forms(dim)
+      quiz = Is_basis_of_same_linear_space.new(a1)
+      quiz.mthd = mthd
+      ans_inputs = quiz.ans_inputs
+      feedbk = quiz.feedbk
+      ans_forms = quiz.ans_forms
+
+#       basis_type_check(a1, line_num)
+#       dim = basis_dim(a1)
+#       ans_inputs = basis_ans(dim, dim, input_size)
+#       feedbk = basis_feedback(dim, mthd)
+#       ans_forms = basis_forms(dim)
 
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       input_size = @opt["form-size"] || 15
@@ -425,21 +431,6 @@ HERE
     ret
   end
 
-  def basis_forms(dim)
-    ret = ERB.new(<<HERE, nil, '-').result(binding).chomp
-<p> <%= basis_ans_form(dim) %></p>
-<div><%= basis_validation_form(dim) %></div>
-HERE
-  end
-
-  def basis_ans_form(dim)
-    n_join(dim, "[[input:ans%d]]", " ")
-  end
-
-  def basis_validation_form(dim)
-    n_join(dim, "[[validation:ans%d]]", " ")
-  end
-
   def basis_ans(n, dim, input_size, prefix="")
     ret = ""
     (1..n).each do |i|
@@ -447,52 +438,16 @@ HERE
     end
     ret
   end
-  
-  def basis_feedback_lib_mac
-<<HERE.chomp
+
+   def basis_feedback_lib_mac
+ <<HERE.chomp
 #{does_hold_mac}
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
 is_orthonormal_basis(x) := block([xm, tmp],xm : apply(matrix, radcan(x)),tmp : xm.(conjugate(transpose(xm))),does_hold( ident(length(x)) = tmp ) or does_hold( 1 = tmp ));
 HERE
-  end
-
-  def basis_feedback(dim, mthd)
-    b1 = n_join(dim, "list_matrix_entries(ans%d)", ", ") # b1 == ans1 == student's answer
-    large_Ns = n_join(dim, "N", ", ")
-    basis_chk =
-      case mthd
-      when "is_basis_of_same_linear_space"
-        "is_basis"
-      when "is_orthonormal_basis_of_same_linear_space"
-        "is_orthonormal_basis"
-      else
-        raise
-      end
-    ERB.new(<<HERE, nil, '-').result(binding).chomp
-<![CDATA[
-<%= basis_feedback_lib_mac() %>
-b1 : delete([<%= large_Ns %>], [<%= b1 %>]);
-result : if is_same_linear_space(k1, b1) and <%= basis_chk %>(b1) then true else false;
-]]>
-HERE
-  end
-
-  def basis_type_check(s, line_num)
-    unless /\A\[(\[[^\[\]]*?\],?\s*)*\]\Z/ =~ s
-      @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
-      raise "invalid answer type"
-    end
-    arry = s.scan(/\[[^\[\]]*?\]/)    
-    siz = arry[0].split(",").size
-    arry.each{|e|
-      unless siz == e.split(",").size
-        @err_msg = "error at line: #{line_num}" + "\n" + "dimensions of basis are different"
-        raise "invalid answer type"
-      end
-    }
-  end
-  
+   end
+ 
   def plane_type_check(s, line_num)
     unless /\A\[[^\[\]]*?\]\z/ =~ s
       @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
@@ -601,11 +556,21 @@ HERE
 end
 include StackqUtil
 
-class Is_P_and_PAP
+class StackqBase
   include StackqUtil
 
-  def initialize(a1)
+  def initialize(a1=nil, input_size: 15, line_num: nil)
     @a1 = a1
+    @input_size = input_size
+    @line_num = line_num
+  end
+
+end
+
+class Is_P_and_PAP < StackqBase
+
+  def initialize(*args)
+    super
     @dim = basis_dim(@a1)
   end
 
@@ -629,12 +594,11 @@ EOS
   end
 end
 
-class Eigen_multiplicity_eq
-  include StackqUtil
+class Eigen_multiplicity_eq < StackqBase
 
-  def initialize(a1)
-    @a1 = a1
-    @ans_num, @ans_dim = eigen_multiplicity_num_dim(a1)
+  def initialize(*args)
+    super
+    @ans_num, @ans_dim = eigen_multiplicity_num_dim(@a1)
     @desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
   end
 
@@ -689,6 +653,85 @@ HERE
 <%= desc_varnames_forms(@desc_varnames, idx: idx) %>
 <% end -%>
 HERE
+  end
+
+end
+
+class Is_basis_of_same_linear_space < StackqBase
+
+  def initialize(*args)
+    super
+    basis_type_check(@a1, @line_num)
+    @dim = basis_dim(@a1)
+  end
+  attr_accessor :mthd
+
+  def basis_ans_form(dim)
+    n_join(dim, "[[input:ans%d]]", " ")
+  end
+
+  def basis_validation_form(dim)
+    n_join(dim, "[[validation:ans%d]]", " ")
+  end
+
+  def ans_inputs(prefix="")
+    ret = ""
+    (1..@dim).each do |i|
+      ret << one_input("ans"+prefix+i.to_s, "matrix", dims: [@dim, 1], input_size: @input_size)
+    end
+    ret
+  end
+
+  def basis_feedback_lib_mac
+<<HERE.chomp
+#{does_hold_mac}
+is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
+is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
+is_orthonormal_basis(x) := block([xm, tmp],xm : apply(matrix, radcan(x)),tmp : xm.(conjugate(transpose(xm))),does_hold( ident(length(x)) = tmp ) or does_hold( 1 = tmp ));
+HERE
+  end
+
+  def feedbk
+    b1 = n_join(@dim, "list_matrix_entries(ans%d)", ", ") # b1 == ans1 == student's answer
+    large_Ns = n_join(@dim, "N", ", ")
+    basis_chk =
+      case @mthd
+      when "is_basis_of_same_linear_space"
+        "is_basis"
+      when "is_orthonormal_basis_of_same_linear_space"
+        "is_orthonormal_basis"
+      else
+        raise
+      end
+    ERB.new(<<HERE, nil, '-').result(binding).chomp
+<![CDATA[
+<%= basis_feedback_lib_mac() %>
+b1 : delete([<%= large_Ns %>], [<%= b1 %>]);
+result : if is_same_linear_space(k1, b1) and <%= basis_chk %>(b1) then true else false;
+]]>
+HERE
+  end
+
+  def ans_forms
+    ret = ERB.new(<<HERE, nil, '-').result(binding).chomp
+<p> <%= basis_ans_form(@dim) %></p>
+<div><%= basis_validation_form(@dim) %></div>
+HERE
+  end
+
+  def basis_type_check(s, line_num)
+    unless /\A\[(\[[^\[\]]*?\],?\s*)*\]\Z/ =~ s
+      @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
+      raise "invalid answer type"
+    end
+    arry = s.scan(/\[[^\[\]]*?\]/)
+    siz = arry[0].split(",").size
+    arry.each{|e|
+      unless siz == e.split(",").size
+        @err_msg = "error at line: #{line_num}" + "\n" + "dimensions of basis are different"
+        raise "invalid answer type"
+      end
+    }
   end
 
 end
