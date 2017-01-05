@@ -224,14 +224,6 @@ a1 : #{esq_cdata(a1)};
 result : if is_same_diag(a1, ans1) then 1 else false;
 ]]>
 EOS
-    when "is_P_and_PAP"
-      <<EOS.chomp
-<![CDATA[
-is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
-
-result: if is(rank(ans1) = length(ans1)) and is_diagonal(invert(ans1).k1.ans1) and is(k1.ans1 = ans1.ans2) then true else false;
-]]>
-EOS
     when "is_same_linear_eq", "is_same_plane", "has_same_nullspace"
       ret = ""
       ret <<
