@@ -3,7 +3,6 @@ require 'erb'
 require 'stack_q_tmpl'
 
 class STACK_Q
-  include ERB::Util
 
   def initialize(s, opt = {})
     @txt = s
