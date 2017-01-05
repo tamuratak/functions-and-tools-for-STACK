@@ -31,8 +31,8 @@ class STACK_Q
 
       # teacher's answer == a1 == t_ans1, (prt stands for potential response tree)
       # student's answer == ans1
-      unless ret0 = ( txt2xml_single_input(qname, qstr, a1, mthd, ext, line_num) or
-                      txt2xml_multi_input(qname, qstr, a1, mthd, ext, line_num) )
+      unless ret0 = ( txt2xml_with_single_input(qname, qstr, a1, mthd, ext, line_num) or
+                      txt2xml_with_multi_input(qname, qstr, a1, mthd, ext, line_num) )
         raise "invalid grading method"
       end
 
@@ -52,8 +52,7 @@ class STACK_Q
     end
   end
 
-  # input == student answer type + form size + etc
-  def txt2xml_single_input(qname, qstr, a1, mthd, ext, line_num)
+  def txt2xml_with_single_input(qname, qstr, a1, mthd, ext, line_num)
     x = ERB.new(TMPL)
     input_size = @opt["form-size"] || 100
     input_type = "algebraic"
@@ -102,8 +101,9 @@ class STACK_Q
     x.result(binding)
   end
 
-  # we have to set (inputs + feedback + answer forms)
-  def txt2xml_multi_input(qname, qstr, a1, mthd, ext, line_num)
+  # we have to set (inputs + feedback + answer forms
+  # inputs == student answer type + form size + etc
+  def txt2xml_with_multi_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
 
     input_size = @opt["form-size"] || 15
