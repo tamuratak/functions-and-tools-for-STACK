@@ -108,11 +108,6 @@ class STACK_Q
 
     case mthd
     when "eigen_multiplicity_eq"
-      case mthd
-      when "eigen_multiplicity_eq"
-      else
-        raise
-      end
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_multi, nil, '-')
       quiz = Eigen_multiplicity_eq.new(a1)
@@ -137,12 +132,6 @@ class STACK_Q
       feedbk = quiz.feedbk
       ans_forms = quiz.ans_forms
 
-#       basis_type_check(a1, line_num)
-#       dim = basis_dim(a1)
-#       ans_inputs = basis_ans(dim, dim, input_size)
-#       feedbk = basis_feedback(dim, mthd)
-#       ans_forms = basis_forms(dim)
-
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_eigen, nil, '-')
@@ -158,14 +147,6 @@ class STACK_Q
 
   def inline_tex(s)
     s.gsub(/([^\\]|\A)\$((\\\$|[^\$])*)\$/) { $1 + '\\(' + $2 + '\\)' }
-  end
-
-  def does_hold_mac
-    <<EOS.chomp
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
-declare(n, integer);
-EOS
   end
 
   def does_satisfy_ex(ext)
