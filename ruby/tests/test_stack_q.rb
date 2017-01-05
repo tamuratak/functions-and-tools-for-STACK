@@ -88,15 +88,16 @@ class TestStackQ < Test::Unit::TestCase
   end
 
   def test_basis_type_check
+    stck = STACK_Q::Is_basis_of_same_linear_space.new("[[1,1],[1,2]]")
     assert_nothing_raised{ 
-      @stck.basis_type_check("[[1,1]]", 1)
-      @stck.basis_type_check("[[1,1],[1,2]]", 1)
+      stck.basis_type_check("[[1,1]]", 1)
+      stck.basis_type_check("[[1,1],[1,2]]", 1)
     }
     assert_raise(RuntimeError) {
-      @stck.basis_type_check("[[1,1],[1]]", 1)
+      stck.basis_type_check("[[1,1],[1]]", 1)
     }
     assert_raise(RuntimeError) {
-      @stck.basis_type_check("{[1,1],[1,0]}", 1)
+      stck.basis_type_check("{[1,1],[1,0]}", 1)
     }
   end
 
