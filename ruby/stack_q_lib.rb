@@ -118,12 +118,13 @@ class STACK_Q
       x = ERB.new(TMPL_basis, nil, '-')
 
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
-      x = ERB.new(TMPL_basis, nil, '-')
       klass = Is_basis_of_same_linear_space
+      x = ERB.new(TMPL_basis, nil, '-')
+
 
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
-      x = ERB.new(TMPL_eigen, nil, '-')
       klass = Is_same_eigenval_and_eigenvec
+      x = ERB.new(TMPL_eigen, nil, '-')
 
     else
       return nil
