@@ -110,17 +110,15 @@ class STACK_Q
     when "eigen_multiplicity_eq"
       case mthd
       when "eigen_multiplicity_eq"
-        desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
       else
         raise
       end
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_multi, nil, '-')
-      ans_num, ans_dim = eigen_multiplicity_num_dim(a1)
-      eigen_multiplicity_check_size(ans_dim, desc_varnames)
-      ans_inputs = eigen_multiplicity_inputs(ans_num, desc_varnames, input_size)
-      feedbk = eigen_multiplicity_feedback(ans_num, desc_varnames)
-      ans_forms = eigen_multiplicity_forms(ans_num, desc_varnames)
+      quiz = Eigen_multiplicity_eq.new(a1)
+      ans_inputs = quiz.ans_inputs
+      feedbk = quiz.feedbk
+      ans_forms = quiz.ans_forms
 
     when "is_P_and_PAP"
       input_size = @opt["form-size"] || 15
@@ -129,6 +127,7 @@ class STACK_Q
       ans_inputs = quiz.ans_inputs
       feedbk = quiz.feedbk
       ans_forms = quiz.ans_forms
+
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_basis, nil, '-')
@@ -352,67 +351,6 @@ EOS
     "%.4d" % num
   end
 
-  def eigen_multiplicity_num_dim(s)
-    vecs = []
-    arry = s.scan(/\[.*?\]/)
-    arry.each{|e|
-      vecs << e.split(",")
-    }
-    vecs_sizes = vecs.map{|e| e.size }
-    unless vecs_sizes.uniq.size == 1
-      raise "the dims of eigen vectors are not the same"
-    end
-    return *[arry.size, vecs_sizes[0]]
-  end
-
-  def eigen_multiplicity_check_size(ans_dim, desc_varnames)
-    unless ans_dim == desc_varnames.size
-      raise "ans_dim and the size of desc_varnames are not the same"
-    end
-  end
-
-  def eigen_multiplicity_inputs(ans_num, desc_varnames, input_size = 15)
-    ret = ""
-    (1..ans_num).each{|i|
-      desc_varnames.each{|desc0, name0|
-        ret << one_input(varname(name0, i), "algebraic", input_size: input_size)
-      }
-    }
-    ret
-  end
-
-  def eigen_multiplicity_forms(ans_num, desc_varnames)
-    ERB.new(<<HERE, nil, '-').result(binding)
-<% (1..ans_num).each do |idx| %>
-<%= desc_varnames_forms(desc_varnames, idx: idx) %>
-<% end -%>
-HERE
-  end
-
-  def varnames_arry(desc_varnames, idx)
-    "[" + desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") + "]"
-  end
-
-  def varnames_matrix(desc_varnames, ans_num)
-    "[" + (1..ans_num).map{|idx| varnames_arry(desc_varnames, idx) }.join(",") + "]"
-  end
-
-  def eigen_multiplicity_feedback(ans_num, desc_varnames)
-    ERB.new(<<HERE, nil, '-').result(binding).chomp
-<![CDATA[
-#{does_hold_mac}
-sans1 : stackqsimp(<%= varnames_matrix(desc_varnames, ans_num) %>);
-ith : 0;
-result : is(<%= ans_num %> = length(unique(sans1)));
-<% (1..ans_num).each do |idx| -%>
-ith : if result then ith + 1 else ith;
-sans0 : <%= varnames_arry(desc_varnames, idx) %>;
-result : result and some(lambda([x], does_hold(sans0 = x)), k1);
-<% end -%>
-]]>
-HERE
-  end
-
   def eigen_num_dim(s)
     vecs = []
     arry = s.scan(/\[(.*?), \[\s*((?:\[.*?\],?)+)\s*\]\s*\]/)
@@ -578,6 +516,22 @@ HERE
 module StackqUtil
 include ERB::Util
 
+  def does_hold_mac
+    <<EOS.chomp
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+declare(n, integer);
+EOS
+  end
+
+  def varnames_arry(desc_varnames, idx)
+    "[" + desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") + "]"
+  end
+
+  def varnames_matrix(desc_varnames, ans_num)
+    "[" + (1..ans_num).map{|idx| varnames_arry(desc_varnames, idx) }.join(",") + "]"
+  end
+
   def one_input(name, type, dims: nil, input_size: 15)
     if type == "matrix"
       cols, rows = dims
@@ -679,6 +633,70 @@ EOS
   def ans_forms
     desc_varnames_forms([['\(P=\)', "ans1"], ['\(P^{-1}AP=\)', "ans2"]], nline: true)
   end
+end
+
+class Eigen_multiplicity_eq
+  include StackqUtil
+
+  def initialize(a1)
+    @a1 = a1
+    @ans_num, @ans_dim = eigen_multiplicity_num_dim(a1)
+    @desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
+  end
+
+  def eigen_multiplicity_num_dim(s)
+    vecs = []
+    arry = s.scan(/\[.*?\]/)
+    arry.each{|e|
+      vecs << e.split(",")
+    }
+    vecs_sizes = vecs.map{|e| e.size }
+    unless vecs_sizes.uniq.size == 1
+      raise "the dims of eigen vectors are not the same"
+    end
+    return *[arry.size, vecs_sizes[0]]
+  end
+
+  def eigen_multiplicity_check_size(ans_dim, desc_varnames)
+    unless ans_dim == desc_varnames.size
+      raise "ans_dim and the size of desc_varnames are not the same"
+    end
+  end
+
+  def ans_inputs
+    ret = ""
+    (1..@ans_num).each{|i|
+      @desc_varnames.each{|desc0, name0|
+        ret << one_input(varname(name0, i), "algebraic", input_size: 15)
+      }
+    }
+    ret
+  end
+
+  def feedbk
+    ERB.new(<<HERE, nil, '-').result(binding).chomp
+<![CDATA[
+#{does_hold_mac}
+sans1 : stackqsimp(<%= varnames_matrix(@desc_varnames, @ans_num) %>);
+ith : 0;
+result : is(<%= @ans_num %> = length(unique(sans1)));
+<% (1..@ans_num).each do |idx| -%>
+ith : if result then ith + 1 else ith;
+sans0 : <%= varnames_arry(@desc_varnames, idx) %>;
+result : result and some(lambda([x], does_hold(sans0 = x)), k1);
+<% end -%>
+]]>
+HERE
+  end
+
+  def ans_forms
+    ERB.new(<<HERE, nil, '-').result(binding)
+<% (1..@ans_num).each do |idx| %>
+<%= desc_varnames_forms(@desc_varnames, idx: idx) %>
+<% end -%>
+HERE
+  end
+
 end
 
 end

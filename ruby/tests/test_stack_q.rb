@@ -69,12 +69,13 @@ class TestStackQ < Test::Unit::TestCase
 #                  STACK_Q.new("abs ** xyz ** [[1,1,0], [1,0,0]] ** is_basis_of_same_linear_space").txt2xml )
   end
   
-  def test_multi
-    assert_equal([2,2], @stck.eigen_multiplicity_num_dim("[[1,2],[3,4]]"))
-    assert_equal([2,3], @stck.eigen_multiplicity_num_dim("[[1,2,3],[3,3,4]]"))
-    assert_raise(RuntimeError){ @stck.eigen_multiplicity_check_size(2, [["desc", "ans"]]) }
-    assert_raise(RuntimeError){ @stck.eigen_multiplicity_check_size(3, [["desc", "ans"],["desc1", "ans1"]]) }
-    assert_nothing_raised{ @stck.eigen_multiplicity_check_size(1, [["desc", "ans"]]) }
+  def test_eigen_multi
+    stck = STACK_Q::Eigen_multiplicity_eq.new("[[2,1,1],[1,2,2],[1,0,1]]")
+    assert_equal([2,2], stck.eigen_multiplicity_num_dim("[[1,2],[3,4]]"))
+    assert_equal([2,3], stck.eigen_multiplicity_num_dim("[[1,2,3],[3,3,4]]"))
+    assert_raise(RuntimeError){ stck.eigen_multiplicity_check_size(2, [["desc", "ans"]]) }
+    assert_raise(RuntimeError){ stck.eigen_multiplicity_check_size(3, [["desc", "ans"],["desc1", "ans1"]]) }
+    assert_nothing_raised{ stck.eigen_multiplicity_check_size(1, [["desc", "ans"]]) }
   end
 
   def test_eigen
