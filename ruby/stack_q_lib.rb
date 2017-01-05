@@ -425,12 +425,6 @@ HERE
     ret
   end
 
-  def basis_dim(s)
-    if m = s.match(/\[([^\[\]]*?)\]/)
-      $1.split(",").size
-    end
-  end
-
   def basis_forms(dim)
     ret = ERB.new(<<HERE, nil, '-').result(binding).chomp
 <p> <%= basis_ans_form(dim) %></p>
