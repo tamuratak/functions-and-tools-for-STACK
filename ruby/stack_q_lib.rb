@@ -126,14 +126,10 @@ class STACK_Q
     when "is_P_and_PAP"
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_basis, nil, '-')
-      dim = basis_dim(a1)
-      arry = [ ["ans1", "matrix", [dim,dim]],
-               ["ans2", "matrix", [dim,dim]] ]
-      ans_inputs = multi_input(arry)
-      feedbk = feedback(mthd, a1)
-      desc_varnames = [['\(P=\)', "ans1"], ['\(P^{-1}AP=\)', "ans2"]]
-      ans_forms = desc_varnames_forms(desc_varnames, nline: true)
-
+      quiz = Is_P_and_PAP.new(a1)
+      ans_inputs = quiz.ans_inputs
+      feedbk = quiz.feedbk
+      ans_forms = quiz.ans_forms
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_basis, nil, '-')
@@ -386,30 +382,6 @@ EOS
     ret
   end
 
-  def varname(name, idx = nil)
-    if idx
-      "#{name}_#{idx}"
-    else
-      name
-    end
-  end
-
-  def desc_varnames_forms(desc_varnames, idx: nil, nline: nil)
-    ERB.new(<<HERE, nil, '-').result(binding).chop
-<p>
-<%     desc_varnames.each do |desc0, name0| -%>
-<%=h desc0  %> [[input:<%= varname(name0, idx) %>]] &nbsp;&nbsp;&nbsp;<% if nline %><br><% end %>
-<%     end -%>
-</p>
-<div>
-<%     desc_varnames.each do |desc0, name0| -%>
-[[validation:<%= varname(name0, idx) %>]]
-<%     end -%>
-</div>
-<br><br>
-HERE
-  end
-
   def eigen_multiplicity_forms(ans_num, desc_varnames)
     ERB.new(<<HERE, nil, '-').result(binding)
 <% (1..ans_num).each do |idx| %>
@@ -455,10 +427,6 @@ HERE
     dim = vecs_sizes[0]
     eigen_val_num = arry.size
     return *[eigen_val_num, dim]
-  end
-
-  def n_join(n, str, sp = ", ")
-    (1..n).map{|i| str % i }.join(sp)
   end
 
   def basis_chk(mthd)
@@ -608,6 +576,9 @@ HERE
     end
   end
 
+module StackqUtil
+include ERB::Util
+
   def one_input(name, type, dims: nil, input_size: 15)
     if type == "matrix"
       cols, rows = dims
@@ -646,5 +617,69 @@ HERE
     ret
   end
 
+  def n_join(n, str, sp = ", ")
+    (1..n).map{|i| str % i }.join(sp)
+  end
+
+  def basis_dim(s)
+    if m = s.match(/\[([^\[\]]*?)\]/)
+      $1.split(",").size
+    end
+  end
+
+  def varname(name, idx = nil)
+    if idx
+      "#{name}_#{idx}"
+    else
+      name
+    end
+  end
+
+  def desc_varnames_forms(desc_varnames, idx: nil, nline: nil)
+    ERB.new(<<HERE, nil, '-').result(binding).chop
+<p>
+<%     desc_varnames.each do |desc0, name0| -%>
+<%=h desc0  %> [[input:<%= varname(name0, idx) %>]] &nbsp;&nbsp;&nbsp;<% if nline %><br><% end %>
+<%     end -%>
+</p>
+<div>
+<%     desc_varnames.each do |desc0, name0| -%>
+[[validation:<%= varname(name0, idx) %>]]
+<%     end -%>
+</div>
+<br><br>
+HERE
+  end
+
+end
+include StackqUtil
+
+class Is_P_and_PAP
+  include StackqUtil
+
+  def initialize(a1)
+    @a1 = a1
+    @dim = basis_dim(@a1)
+  end
+
+  def ans_inputs
+     multi_input([ ["ans1", "matrix", [@dim,@dim]],
+                   ["ans2", "matrix", [@dim,@dim]] ])
+  end
+
+  def feedbk
+    <<EOS.chomp
+<![CDATA[
+is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
+
+result: if is(rank(ans1) = length(ans1)) and is_diagonal(invert(ans1).k1.ans1) and is(k1.ans1 = ans1.ans2) then true else false;
+]]>
+EOS
+  end
+
+  def ans_forms
+    desc_varnames_forms([['\(P=\)', "ans1"], ['\(P^{-1}AP=\)', "ans2"]], nline: true)
+  end
 end
 
+end
