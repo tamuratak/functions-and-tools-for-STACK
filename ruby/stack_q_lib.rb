@@ -102,7 +102,7 @@ class STACK_Q
     x.result(binding)
   end
 
-  # set inputs + feedback + answer forms
+  # we have to set (inputs + feedback + answer forms)
   def txt2xml_multi_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
 
