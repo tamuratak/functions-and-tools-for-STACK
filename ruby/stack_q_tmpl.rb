@@ -367,7 +367,7 @@ EOS
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-<% unless eigen_val_num == 1 -%>
+<% unless quiz.eigen_val_num == 1 -%>
           <text><![CDATA[<p>【ヒント】解答中に同じ解答が複数あります。<br></p>]]></text>
 <% end -%>
         </truefeedback>
@@ -377,7 +377,7 @@ EOS
         <falsenextnode>-1</falsenextnode>
         <falseanswernote>prt1-2-F</falseanswernote>
         <falsefeedback format="html">
-<% unless eigen_val_num == 1 -%>
+<% unless quiz.eigen_val_num == 1 -%>
           <text><![CDATA[<p>【ヒント】@ith@番目の解答のが違います。<br></p>]]></text>
 <% end -%>
         </falsefeedback>
@@ -472,7 +472,7 @@ EOS
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-<% unless eigen_val_num == 1 -%>
+<% unless quiz.eigen_val_num == 1 -%>
           <text><![CDATA[<p>【ヒント】解答中に同じ値の固有値が複数あります。<br></p>]]></text>
 <% end -%>
         </truefeedback>
@@ -482,7 +482,7 @@ EOS
         <falsenextnode>-1</falsenextnode>
         <falseanswernote>prt1-2-F</falseanswernote>
         <falsefeedback format="html">
-<% unless eigen_val_num == 1 -%>
+<% unless quiz.eigen_val_num == 1 -%>
           <text><![CDATA[<p>【ヒント】@ith@番目の解答の固有値か固有ベクトルが違います。<br></p>]]></text>
 <% end -%>
         </falsefeedback>
