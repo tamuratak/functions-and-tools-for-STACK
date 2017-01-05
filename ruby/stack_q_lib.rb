@@ -106,47 +106,34 @@ class STACK_Q
   def txt2xml_multi_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
 
+    input_size = @opt["form-size"] || 15
+
     case mthd
     when "eigen_multiplicity_eq"
-      input_size = @opt["form-size"] || 15
+      klass = Eigen_multiplicity_eq
       x = ERB.new(TMPL_multi, nil, '-')
-      quiz = Eigen_multiplicity_eq.new(a1)
-      ans_inputs = quiz.ans_inputs
-      feedbk = quiz.feedbk
-      ans_forms = quiz.ans_forms
 
     when "is_P_and_PAP"
-      input_size = @opt["form-size"] || 15
+      klass = Is_P_and_PAP
       x = ERB.new(TMPL_basis, nil, '-')
-      quiz = Is_P_and_PAP.new(a1)
-      ans_inputs = quiz.ans_inputs
-      feedbk = quiz.feedbk
-      ans_forms = quiz.ans_forms
 
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
-      input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_basis, nil, '-')
-      quiz = Is_basis_of_same_linear_space.new(a1)
-      quiz.mthd = mthd
-      ans_inputs = quiz.ans_inputs
-      feedbk = quiz.feedbk
-      ans_forms = quiz.ans_forms
+      klass = Is_basis_of_same_linear_space
 
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
-      input_size = @opt["form-size"] || 15
       x = ERB.new(TMPL_eigen, nil, '-')
-      quiz = Is_same_eigenval_and_eigenvec.new(a1)
-      quiz.mthd = mthd
-      ans_inputs = quiz.ans_inputs
-      feedbk = quiz.feedbk
-      ans_forms = quiz.ans_forms
-#       eigen_val_num, dim = eigen_num_dim(a1)
-#       ans_inputs = eigen_ans_inputs(eigen_val_num, dim, input_size)
-#       feedbk = eigen_feedback(eigen_val_num, dim, mthd)
-#       ans_forms = eigen_forms(eigen_val_num, dim)
+      klass = Is_same_eigenval_and_eigenvec
+
     else
       return nil
     end
+    quiz = klass.new(a1, input_size: input_size)
+    quiz.mthd = mthd
+    ans_inputs = quiz.ans_inputs
+    feedbk = quiz.feedbk
+    ans_forms = quiz.ans_forms
+
     x.result(binding)
   end
 
@@ -342,19 +329,6 @@ EOS
     num = num.round / (60*60)
     "%.4d" % num
   end
-
-  def basis_chk(mthd)
-    case mthd
-    when /orthonormal/
-      "is_orthonormal_basis"
-    else
-      "is_basis"
-    end
-  end
-
-  def eigen_ans_arry(dim, idx)
-    "[" + n_join(dim, "ans#{idx}_%d") + "]"
-  end
  
   def plane_type_check(s, line_num)
     unless /\A\[[^\[\]]*?\]\z/ =~ s
@@ -472,6 +446,7 @@ class StackqBase
     @input_size = input_size
     @line_num = line_num
   end
+  attr_accessor :mthd
 
 end
 
@@ -607,7 +582,6 @@ class Is_basis_of_same_linear_space < StackqBase
     basis_type_check(@a1, @line_num)
     @dim = basis_dim(@a1)
   end
-  attr_accessor :mthd
 
   def basis_ans_form(dim)
     n_join(dim, "[[input:ans%d]]", " ")
@@ -677,7 +651,6 @@ include BasisUtil
     super
     @eigen_val_num, @dim = eigen_num_dim(@a1)
   end
-  attr_accessor :mthd
   attr_reader :eigen_val_num
 
   def basis_ans(n, dim, input_size, prefix="")
