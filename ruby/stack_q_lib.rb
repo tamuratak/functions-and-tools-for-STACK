@@ -251,14 +251,6 @@ EOS
     return true
   end
 
-  def cdata(s)
-    "<![CDATA[" + esq_cdata(s) + "]]>"
-  end
-  
-  def esq_cdata(s)
-    (s || "").gsub("]]>", "]]]]><![CDATA[>")
-  end
-
   def is_matrix_type(a)
     if /\Amatrix/ =~ a
       a = a.gsub(/\s+/, "")
