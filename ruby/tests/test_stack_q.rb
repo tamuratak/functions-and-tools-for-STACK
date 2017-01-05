@@ -79,12 +79,13 @@ class TestStackQ < Test::Unit::TestCase
   end
 
   def test_eigen
-    assert_equal( [1, 2], @stck.eigen_num_dim("[[1, [[1,2]]]]") )
-    assert_equal( [1, 2], @stck.eigen_num_dim("[[1, [[1,2], [1,1]]]]") )
-    assert_raise(RuntimeError){ @stck.eigen_num_dim("[ [1, [[1,2], [1]]] ]" ) }
-    assert_raise(RuntimeError){ @stck.eigen_num_dim("[ [1, [[1,2], [1,1]]], [2, [[1]]] ]" ) }
-    assert_equal( [2, 2], @stck.eigen_num_dim("[[1, [[1,2]]], [2, [[1,0]]]]") )
-    assert_equal( [2, 3], @stck.eigen_num_dim("[[1, [[1,2,1]]], [2, [[1,0,0]]]]") )
+    stck = STACK_Q::Is_same_eigenval_and_eigenvec.new("[[1, [[1,2]]]]")
+    assert_equal( [1, 2], stck.eigen_num_dim("[[1, [[1,2]]]]") )
+    assert_equal( [1, 2], stck.eigen_num_dim("[[1, [[1,2], [1,1]]]]") )
+    assert_raise(RuntimeError){ stck.eigen_num_dim("[ [1, [[1,2], [1]]] ]" ) }
+    assert_raise(RuntimeError){ stck.eigen_num_dim("[ [1, [[1,2], [1,1]]], [2, [[1]]] ]" ) }
+    assert_equal( [2, 2], stck.eigen_num_dim("[[1, [[1,2]]], [2, [[1,0]]]]") )
+    assert_equal( [2, 3], stck.eigen_num_dim("[[1, [[1,2,1]]], [2, [[1,0,0]]]]") )
   end
 
   def test_basis_type_check

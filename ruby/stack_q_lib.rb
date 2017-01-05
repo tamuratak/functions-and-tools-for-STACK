@@ -343,21 +343,6 @@ EOS
     "%.4d" % num
   end
 
-  def eigen_num_dim(s)
-    vecs = []
-    arry = s.scan(/\[(.*?), \[\s*((?:\[.*?\],?)+)\s*\]\s*\]/)
-    arry.each{|e|
-      vecs += e[1].scan(/\[.*?\]/).map{|s| s.split(",") }
-    }
-    vecs_sizes = vecs.map{|e| e.size }
-    unless vecs_sizes.uniq.size == 1
-      raise "the dims of eigen vectors are not the same"
-    end
-    dim = vecs_sizes[0]
-    eigen_val_num = arry.size
-    return *[eigen_val_num, dim]
-  end
-
   def basis_chk(mthd)
     case mthd
     when /orthonormal/
