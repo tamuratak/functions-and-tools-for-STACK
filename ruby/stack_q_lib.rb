@@ -58,14 +58,13 @@ include CDATAUtil
   def qname_0(qname, line_num)
     if @opt["sort-prefix"]
       ln = "%.2d" % line_num
-      qname_0 = @sort_prefix0 + "-" + ln + "-" + qname
+      @sort_prefix0 + "-" + ln + "-" + qname
     else
-      qname_0 = qname
+      qname
     end
   end
 
   def txt2xml_with_single_input(qname, qstr, a1, mthd, ext, line_num)
-    x = ERB.new(TMPL)
     qname_0 = qname_0(qname, line_num)
     input_size = @opt["form-size"] || 15
 
@@ -84,6 +83,7 @@ include CDATAUtil
       return nil
     end
 
+    x = ERB.new(TMPL)
     quiz = klass.new(a1, input_size: input_size, mthd: mthd, ext: ext)
     t_ans1 = quiz.t_ans1
     feedbk = quiz.feedbk
@@ -119,8 +119,7 @@ include CDATAUtil
     end
 
     x = ERB.new(tmpl, nil, '-')
-    quiz = klass.new(a1, input_size: input_size)
-    quiz.mthd = mthd
+    quiz = klass.new(a1, input_size: input_size, mthd: mthd, ext: ext)
     ans_inputs = quiz.ans_inputs
     feedbk = quiz.feedbk
     ans_forms = quiz.ans_forms
