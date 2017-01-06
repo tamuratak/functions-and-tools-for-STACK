@@ -104,13 +104,13 @@ include CDATAUtil
     case mthd
     when "eigen_multiplicity_eq"
       klass = Eigen_multiplicity_eq
-      tmpl = TMPL_multi
+      tmpl = TMPL_with_ith
     when "is_P_and_PAP"
       klass = Is_P_and_PAP
-      tmpl = TMPL_basis
+      tmpl = TMPL_with_multi_input
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       klass = Is_basis_of_same_linear_space
-      tmpl = TMPL_basis
+      tmpl = TMPL_with_multi_input
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       klass = Is_same_eigenval_and_eigenvec
       tmpl = TMPL_eigen

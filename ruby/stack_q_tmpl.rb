@@ -204,7 +204,7 @@ EOS
   </question>
 EOS
 
-  TMPL_basis = <<"EOS"
+  TMPL_with_multi_input = <<"EOS"
   <question type="stack">
     <name>
       <text><%=h qname_0  %></text>
@@ -281,7 +281,7 @@ EOS
   </question>
 EOS
 
-  TMPL_multi = <<"EOS"
+  TMPL_with_ith = <<"EOS"
   <question type="stack">
     <name>
       <text><%=h qname_0  %></text>
