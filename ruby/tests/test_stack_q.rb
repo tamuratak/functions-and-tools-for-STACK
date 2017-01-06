@@ -8,6 +8,7 @@ class TestStackQ < Test::Unit::TestCase
 
   def setup
     @stck = STACK_Q.new("")
+    @stckutil = STACK_Q::StackqUtil
   end
 
   def test_whole_xml
@@ -18,7 +19,7 @@ class TestStackQ < Test::Unit::TestCase
   end
 
   def test_one_input
-    @stck.one_input("matrix", "ans1", dims: [2,3])
+    @stckutil.one_input("matrix", "ans1", dims: [2,3])
   end
 
   def test_multi_input
@@ -27,16 +28,16 @@ class TestStackQ < Test::Unit::TestCase
             ["ans2", "matrix", [3,1]],
             ["ans3", "matrix", [3,1], 25]
            ]
-    @stck.multi_input(arry)
+    @stckutil.multi_input(arry)
   end
 
    def test_m
      assert_equal( true,
-                   @stck.is_matrix_type("matrix((),() )") )
+                   @stckutil.is_matrix_type("matrix((),() )") )
      assert_equal( true,
-                   @stck.is_matrix_type("matrix ((),() )") )
+                   @stckutil.is_matrix_type("matrix ((),() )") )
      assert_equal( false,
-                   @stck.is_matrix_type("matrix((),() ) + matrix()") )
+                   @stckutil.is_matrix_type("matrix((),() ) + matrix()") )
    end
 
   def test_e
@@ -45,17 +46,17 @@ class TestStackQ < Test::Unit::TestCase
 
   def test_does_satisfy_ex
     assert_equal( "does_hold(xxx) ",
-                  @stck.does_satisfy_ex("(xxx)") )
+                  @stckutil.does_satisfy_ex("(xxx)") )
     assert_equal( "does_hold(xxx) and does_hold(yyy) ",
-                  @stck.does_satisfy_ex("(xxx) and (yyy)") )
+                  @stckutil.does_satisfy_ex("(xxx) and (yyy)") )
     assert_equal( "does_hold(xxx) and not does_hold(yyy) ",
-                  @stck.does_satisfy_ex("(xxx) and (not yyy)") )
+                  @stckutil.does_satisfy_ex("(xxx) and (not yyy)") )
   end
 
   def test_matrix_x
-    assert_equal(3, @stck.basis_dim("[[1,1,1], [2,1,1], [3,1,1]]"))
-    assert_equal(3, @stck.basis_dim("[[1,1,1], [2,1,1]]"))
-    assert_equal(2, @stck.basis_dim("[[1,1], [2,1]]"))
+    assert_equal(3, @stckutil.basis_dim("[[1,1,1], [2,1,1], [3,1,1]]"))
+    assert_equal(3, @stckutil.basis_dim("[[1,1,1], [2,1,1]]"))
+    assert_equal(2, @stckutil.basis_dim("[[1,1], [2,1]]"))
 #    assert_equal( Kekka02,
 #                  STACK_Q.new("abs ** xyz ** [[1,1,0], [1,0,0]] ** is_basis_of_same_linear_space").txt2xml )
   end

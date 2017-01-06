@@ -171,8 +171,21 @@ class STACK_Q
     end
   end
 
+module CDATAUtil
+  def cdata(s)
+    "<![CDATA[" + esq_cdata(s) + "]]>"
+  end
+
+  def esq_cdata(s)
+    (s || "").gsub("]]>", "]]]]><![CDATA[>")
+  end
+end
+include CDATAUtil
+
 module StackqUtil
 include ERB::Util
+include CDATAUtil
+  module_function
 
   def does_satisfy_ex(ext)
     if /\A\(.*?\)\s*((and|or)\s*\(.*?\))*\z/ =~ ext
@@ -200,14 +213,6 @@ include ERB::Util
     else
       false
     end
-  end
-
-  def cdata(s)
-    "<![CDATA[" + esq_cdata(s) + "]]>"
-  end
-
-  def esq_cdata(s)
-    (s || "").gsub("]]>", "]]]]><![CDATA[>")
   end
 
   def does_hold_mac
@@ -315,7 +320,6 @@ HERE
   end
 
 end
-include StackqUtil
 
 class StackqBase
   include StackqUtil
