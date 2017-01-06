@@ -105,23 +105,28 @@ include CDATAUtil
     case mthd
     when "eigen_multiplicity_eq"
       klass = Eigen_multiplicity_eq
-      x = ERB.new(TMPL_multi, nil, '-')
+      tmpl = TMPL_multi
+#      x = ERB.new(TMPL_multi, nil, '-')
 
     when "is_P_and_PAP"
       klass = Is_P_and_PAP
-      x = ERB.new(TMPL_basis, nil, '-')
+      tmpl = TMPL_basis
+#      x = ERB.new(TMPL_basis, nil, '-')
 
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       klass = Is_basis_of_same_linear_space
-      x = ERB.new(TMPL_basis, nil, '-')
+      tmpl = TMPL_basis
+#      x = ERB.new(TMPL_basis, nil, '-')
 
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       klass = Is_same_eigenval_and_eigenvec
-      x = ERB.new(TMPL_eigen, nil, '-')
+      tmpl = TMPL_eigen
+#      x = ERB.new(TMPL_eigen, nil, '-')
 
     else
       return nil
     end
+    x = ERB.new(tmpl, nil, '-')
     quiz = klass.new(a1, input_size: input_size)
     quiz.mthd = mthd
     ans_inputs = quiz.ans_inputs
