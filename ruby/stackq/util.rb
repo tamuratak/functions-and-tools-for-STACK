@@ -13,25 +13,10 @@ module CDATAUtil
 end
 
 module StackqUtil
-include ERB::Util
-include CDATAUtil
-  module_function
+  include ERB::Util
+  include CDATAUtil
 
-  def does_satisfy_ex(ext)
-    if /\A\(.*?\)\s*((and|or)\s*\(.*?\))*\z/ =~ ext
-      ext.gsub(/\((.*?)\)\s*(and|or|\z)/){|s|
-        e1 = $1
-        e2 = $2
-        if /\Anot (.*)/ =~ e1
-          "not does_hold(" + $1 + ") " + e2
-        else
-          "does_hold(" + e1 + ") " + e2
-        end
-      }
-    else
-      raise "format invalid for does_satisfy"
-    end
-  end
+  module_function
 
   def is_matrix_type(a)
     if /\Amatrix/ =~ a
