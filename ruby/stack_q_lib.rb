@@ -2,6 +2,7 @@
 require 'erb'
 require 'stack_q_tmpl'
 require "stackq/base"
+require "stackq/is_P_and_PAP"
 
 class STACK_Q
 include CDATAUtil
@@ -172,33 +173,6 @@ include CDATAUtil
       raise "invalid answer type"
     end
   end
-
-class Is_P_and_PAP < StackqBase
-
-  def initialize(*args)
-    super
-    @dim = basis_dim(@a1)
-  end
-
-  def ans_inputs
-     multi_input([ ["ans1", "matrix", [@dim,@dim]],
-                   ["ans2", "matrix", [@dim,@dim]] ])
-  end
-
-  def feedbk
-    <<EOS.chomp
-<![CDATA[
-is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
-
-result: if is(rank(ans1) = length(ans1)) and is_diagonal(invert(ans1).k1.ans1) and is(k1.ans1 = ans1.ans2) then true else false;
-]]>
-EOS
-  end
-
-  def ans_forms
-    desc_varnames_forms([['\(P=\)', "ans1"], ['\(P^{-1}AP=\)', "ans2"]], nline: true)
-  end
-end
 
 class Eigen_multiplicity_eq < StackqBase
 
