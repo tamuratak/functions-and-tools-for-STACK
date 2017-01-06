@@ -9,10 +9,7 @@ class Eigen_multiplicity_eq < StackqBase
     @ans_num, @ans_dim = eigen_multiplicity_num_dim(@a1)
     @desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
   end
-
-  def eigen_val_num
-    @ans_num
-  end
+  attr_reader :ans_num
 
   def eigen_multiplicity_num_dim(s)
     vecs = []
