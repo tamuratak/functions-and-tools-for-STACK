@@ -8,6 +8,10 @@ require "stackq/basisutil"
 require "stackq/is_basis_of_same_linear_space"
 require "stackq/is_same_eigenval_and_eigenvec"
 require "stackq/is_same_linear_eq"
+require "stackq/algEquiv.rb"
+require "stackq/has_same_deriv"
+require "stackq/does_satisfy"
+require "stackq/is_same_diag"
 
 class STACK_Q
 include CDATAUtil
@@ -111,7 +115,6 @@ include CDATAUtil
       klass = Is_basis_of_same_linear_space
       x = ERB.new(TMPL_basis, nil, '-')
 
-
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       klass = Is_same_eigenval_and_eigenvec
       x = ERB.new(TMPL_eigen, nil, '-')
@@ -178,100 +181,5 @@ include CDATAUtil
       raise "invalid answer type"
     end
   end
-
-class AlgEquiv < StackqBase
-  def initialize(*args)
-    super
-  end
-
-  def t_ans1
-    cdata(@a1)
-  end
-
-  def feedbk
-    <<EOS.chomp
-<![CDATA[
-#{feedbk_alart}
-a1 : #{esq_cdata(@a1)};
-result : if does_hold( a1 = ans1 ) then 1 else false;
-]]>
-EOS
-  end
-
-  def stack_mthd
-    if @mthd == "CasEqualNotAsin"
-      "CasEqual"
-    else
-      @mthd
-    end
-  end
-
-  def forbidwords
-    if @mthd == "CasEqualNotAsin"
-      ",asin,acos,atan"
-    else
-      ""
-    end
-  end
-end
-
-class Has_same_deriv < StackqBase
-
-  def feedbk
-      <<EOS.chomp
-<![CDATA[
-#{feedbk_alart}
-a1 : #{esq_cdata(@a1)};
-a1 : diff(a1,x);
-ans1 : diff(ans1, x);
-result : if does_hold( a1 = ans1 ) then 1 else false;
-]]>
-EOS
-  end
-
-  def stack_mthd
-    "AlgEquiv"
-  end
-end
-
-class Does_satisfy < StackqBase
-
-  def feedbk
-      <<EOS.chomp
-<![CDATA[
-#{feedbk_alart}
-a1 : #{esq_cdata(@a1)};
-result : if #{esq_cdata(does_satisfy_ex(@ext))} then 1 else false;
-]]>
-EOS
-  end
-
-end
-
-class Is_same_diag < StackqBase
-
-  def feedbk
-      <<EOS.chomp
-<![CDATA[
-is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
-get_diag_element(m) := block([len, i],len : length(m),maplist(lambda([i], m[i,i]), makelist(i, i, len)));
-is_same_diag(a, x) := block([],is_diagonal(a) and is_diagonal(x) and does_hold( sort(get_diag_element(a)) = sort(get_diag_element(x)) ));
-#{does_hold_mac}
-
-a1 : #{esq_cdata(@a1)};
-result : if is_same_diag(a1, ans1) then 1 else false;
-]]>
-EOS
-  end
-
-  def input_size
-    15
-  end
-
-  def input_type
-    "matrix"
-  end
-
-end
 
 end
