@@ -30,14 +30,6 @@ module StackqUtil
     end
   end
 
-  def varnames_arry(desc_varnames, idx)
-    "[" + desc_varnames.map{|desc0, name0| varname(name0, idx) }.join(", ") + "]"
-  end
-
-  def varnames_matrix(desc_varnames, ans_num)
-    "[" + (1..ans_num).map{|idx| varnames_arry(desc_varnames, idx) }.join(",") + "]"
-  end
-
   def one_input(name, type, dims: nil, input_size: 15)
     if type == "matrix"
       cols, rows = dims
