@@ -30,15 +30,6 @@ class TestStackQ < Test::Unit::TestCase
     @stck.multi_input(arry)
   end
 
-#   def test_feedback
-#     assert_equal( Feedbk01.gsub("ZZZ", "abcd03"), @stck.feedback("AlgEquiv", "abcd03") )
-
-#     assert_equal( Feedbk02,
-#                   @stck.feedback('is_same_interval', 'abcd') )
-#     assert_equal( Feedbk02.gsub("abcd", "]]]]><![CDATA[>"),
-#                   @stck.feedback('is_same_interval', ']]>') )
-#   end
-
    def test_m
      assert_equal( true,
                    @stck.is_matrix_type("matrix((),() )") )
