@@ -1,7 +1,9 @@
+require "stackq/feedbkutil"
 
 class STACK_Q
 
 module BasisUtil
+  include FeedbkUtil
 
   def basis_feedback_lib_mac
 <<HERE.chomp
