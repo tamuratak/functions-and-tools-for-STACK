@@ -54,12 +54,14 @@ class STACK_Q
 
   def txt2xml_with_single_input(qname, qstr, a1, mthd, ext, line_num)
     x = ERB.new(TMPL)
-    input_size = @opt["form-size"] || 100
-    input_type = "algebraic"
     qname_0 = qname_0(qname, line_num)
+
     if is_matrix_type(a1)
-      input_size = @opt["form-size"] || 15
       input_type = "matrix"
+      input_size = @opt["form-size"] || 15
+    else
+      input_type = "algebraic"
+      input_size = @opt["form-size"] || 100
     end
 
     case mthd
