@@ -99,33 +99,25 @@ include CDATAUtil
   # inputs == student answer type + form size + etc
   def txt2xml_with_multi_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
-
     input_size = @opt["form-size"] || 15
 
     case mthd
     when "eigen_multiplicity_eq"
       klass = Eigen_multiplicity_eq
       tmpl = TMPL_multi
-#      x = ERB.new(TMPL_multi, nil, '-')
-
     when "is_P_and_PAP"
       klass = Is_P_and_PAP
       tmpl = TMPL_basis
-#      x = ERB.new(TMPL_basis, nil, '-')
-
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       klass = Is_basis_of_same_linear_space
       tmpl = TMPL_basis
-#      x = ERB.new(TMPL_basis, nil, '-')
-
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       klass = Is_same_eigenval_and_eigenvec
       tmpl = TMPL_eigen
-#      x = ERB.new(TMPL_eigen, nil, '-')
-
     else
       return nil
     end
+
     x = ERB.new(tmpl, nil, '-')
     quiz = klass.new(a1, input_size: input_size)
     quiz.mthd = mthd
