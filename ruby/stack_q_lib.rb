@@ -55,56 +55,30 @@ class STACK_Q
   def txt2xml_with_single_input(qname, qstr, a1, mthd, ext, line_num)
     x = ERB.new(TMPL)
     qname_0 = qname_0(qname, line_num)
-
-    if is_matrix_type(a1)
-      input_type = "matrix"
-      input_size = @opt["form-size"] || 15
-    else
-      input_type = "algebraic"
-      input_size = @opt["form-size"] || 100
-    end
+    input_size = @opt["form-size"] || 15
 
     case mthd
     when "AlgEquiv", "CasEqualNotAsin"
-      quiz = AlgEquiv.new(a1, input_size: input_size, mthd: mthd)
-      t_ans1 = quiz.t_ans1
-      feedbk = quiz.feedbk
-      stack_mthd = quiz.stack_mthd
-      forbidwords = quiz.forbidwords
-#      input_type = quiz.input_type
-#      input_size = quiz.input_size
+      klass = AlgEquiv
     when "is_same_linear_eq", "has_same_nullspace", "is_same_plane"
-      quiz = Is_same_linear_eq.new(a1, input_size: input_size, mthd: mthd)
-      t_ans1 = quiz.t_ans1
-      feedbk = quiz.feedbk
-      stack_mthd = quiz.stack_mthd
-      forbidwords = quiz.forbidwords
-      input_type = quiz.input_type
-      input_size = quiz.input_size
-    when "has_same_deriv", "does_satisfy"
-      stack_mthd = "CasEqual"
-      t_ans1 = cdata(a1)
-      feedbk = feedback(mthd, a1, ext)
-      case mthd
-      when "has_same_deriv"
-        stack_mthd = "AlgEquiv"
-      end
-    when "is_same_plane"
-      #        plane_type_check(a1, line_num)
-      stack_mthd = "CasEqual"
-      t_ans1 = cdata("transpose(matrix(" + a1 + "))")
-      feedbk = feedback(mthd, a1)
-      input_size = 15
-      input_type = "matrix"
+      klass = Is_same_linear_eq
+    when "has_same_deriv"
+      klass = Has_same_deriv
+    when "does_satisfy"
+      klass = Does_satisfy
     when "is_same_diag"
-      stack_mthd = "CasEqual"
-      t_ans1 = cdata(a1)
-      feedbk = feedback(mthd, a1)
-      input_size = 15
-      input_type = "matrix"
+      klass = Is_same_diag
     else
       return nil
     end
+
+    quiz = klass.new(a1, input_size: input_size, mthd: mthd, ext: ext)
+    t_ans1 = quiz.t_ans1
+    feedbk = quiz.feedbk
+    stack_mthd = quiz.stack_mthd
+    forbidwords = quiz.forbidwords
+    input_type = quiz.input_type
+    input_size = quiz.input_size
 
     x.result(binding)
   end
@@ -149,87 +123,6 @@ class STACK_Q
   def inline_tex(s)
     s.gsub(/([^\\]|\A)\$((\\\$|[^\$])*)\$/) { $1 + '\\(' + $2 + '\\)' }
   end
-
-  def does_satisfy_ex(ext)
-    if /\A\(.*?\)\s*((and|or)\s*\(.*?\))*\z/ =~ ext
-      ext.gsub(/\((.*?)\)\s*(and|or|\z)/){|s|
-        e1 = $1
-        e2 = $2
-        if /\Anot (.*)/ =~ e1
-          "not does_hold(" + $1 + ") " + e2
-        else
-          "does_hold(" + e1 + ") " + e2
-        end
-      }
-    else
-      raise "format invalid for does_satisfy"
-    end
-  end
-
-  def feedback(mthd, a1, ext="")
-    fun_num_list = ["sin", "cos", "tan", "asin", "acos", "atan", "exp", "log"].product((0..9).to_a).map(&:join).join(", ")
-    fdbk_alart = <<EOS.chomp
-listofops(x) := block([], if not atom(x) then cons( op(x), flatten(map(listofops, args(x))) ) else [] );
-xyalart_set : intersection({xy, yx}, setify( append(listofvars(ans1), listofops(ans1))   ));
-xyalart_elem : if not emptyp( xyalart_set ) then listify(xyalart_set)[1];
-xyalart : if not emptyp( xyalart_set ) then 1 else false;
-sinalart : if not emptyp( intersection({#{fun_num_list}}, setify(listofvars(ans1))) ) then 1 else false;
-fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
-fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
-fxalart : if not emptyp( fxalart_set ) then 1 else false;
-#{does_hold_mac}
-ans1 : ratsubst(fxy, fyx, ans1);
-EOS
-
-    case mthd
-    when "has_same_deriv"
-      <<EOS.chomp
-<![CDATA[
-#{fdbk_alart}
-a1 : #{esq_cdata(a1)};
-a1 : diff(a1,x);
-ans1 : diff(ans1, x);
-result : if does_hold( a1 = ans1 ) then 1 else false;
-]]>
-EOS
-    when "does_satisfy"
-      <<EOS.chomp
-<![CDATA[
-#{fdbk_alart}
-a1 : #{esq_cdata(a1)};
-result : if #{esq_cdata(does_satisfy_ex(ext))} then 1 else false;
-]]>
-EOS
-    when "is_same_interval"
-      <<EOS.chomp
-<![CDATA[
-myargs(xs) := block([as, zzz],as : if atom(xs) then xs else args(xs),if not chk_op(as, xs) then return(zzz),as);
-chk_op(as, xs) := block([op1, x],if not( atom(as) ) and not( atom(xs) ) then (if member(x, as) then (op1 : op(xs),return( member(op1, ["and", "or", "<", ">", ">=", "<="]) ))),true);
-edges(xs) := block([x],delete(x, flatten( scanmap(myargs, xs))));
-xs_in_interval(xs, cond) := block(map(lambda([x], charfun(cond)), xs));
-is_same_interval(c1, c2) := block([ret, xs1, xs2, v1, v2, x, m],ret : true,xs1 : edges(c1),xs2 : edges(c2),m : lmax( map(abs, append(xs1, xs2)) ),m : 2*min(max(m, 1), 100),ret : ret and is(xs_in_interval(xs1, c1) = xs_in_interval(xs1, c2)),ret : ret and is(xs_in_interval(xs2, c1) = xs_in_interval(xs2, c2)),if ret then (v1 : quad_qags(charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],v2 : quad_qags(charfun(c2)*charfun(c1), x, -m, m, 'epsrel=10^(-12) )[1],ret : ret and is(v1 = v2)),ret);
-
-a1 : #{esq_cdata(a1)};
-result : if is_same_interval(a1, ans1) then 1 else false;
-]]>
-EOS
-    when "is_same_diag"
-      <<EOS.chomp
-<![CDATA[
-is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
-get_diag_element(m) := block([len, i],len : length(m),maplist(lambda([i], m[i,i]), makelist(i, i, len)));
-is_same_diag(a, x) := block([],is_diagonal(a) and is_diagonal(x) and does_hold( sort(get_diag_element(a)) = sort(get_diag_element(x)) ));
-#{does_hold_mac}
-
-a1 : #{esq_cdata(a1)};
-result : if is_same_diag(a1, ans1) then 1 else false;
-]]>
-EOS
-      ret
-    else
-      ""
-    end
-  end
   
   def validate_maxima_exp(s, line_num = 1, l = "")
     tmp = s
@@ -251,18 +144,6 @@ EOS
     end
 
     return true
-  end
-
-  def is_matrix_type(a)
-    if /\Amatrix/ =~ a
-      a = a.gsub(/\s+/, "")
-      7.times{
-        a = a.gsub(/\([^\(\)]*\)/, "")
-      }
-      "matrix" == a
-    else
-      false
-    end
   end
 
   def sort_prefix
@@ -292,6 +173,34 @@ EOS
 
 module StackqUtil
 include ERB::Util
+
+  def does_satisfy_ex(ext)
+    if /\A\(.*?\)\s*((and|or)\s*\(.*?\))*\z/ =~ ext
+      ext.gsub(/\((.*?)\)\s*(and|or|\z)/){|s|
+        e1 = $1
+        e2 = $2
+        if /\Anot (.*)/ =~ e1
+          "not does_hold(" + $1 + ") " + e2
+        else
+          "does_hold(" + e1 + ") " + e2
+        end
+      }
+    else
+      raise "format invalid for does_satisfy"
+    end
+  end
+
+  def is_matrix_type(a)
+    if /\Amatrix/ =~ a
+      a = a.gsub(/\s+/, "")
+      7.times{
+        a = a.gsub(/\([^\(\)]*\)/, "")
+      }
+      "matrix" == a
+    else
+      false
+    end
+  end
 
   def cdata(s)
     "<![CDATA[" + esq_cdata(s) + "]]>"
@@ -411,11 +320,12 @@ include StackqUtil
 class StackqBase
   include StackqUtil
 
-  def initialize(a1=nil, input_size: 15, line_num: nil, mthd: mthd)
+  def initialize(a1=nil, input_size: 15, line_num: nil, mthd: nil, ext: nil)
     @a1 = a1
     @input_size = input_size
     @line_num = line_num
     @mthd = mthd
+    @ext = ext
   end
   attr_accessor :mthd
 
@@ -432,11 +342,19 @@ class StackqBase
   end
 
   def input_type
-    "algebraic"
+    if is_matrix_type(@a1)
+      "matrix"
+    else
+      "algebraic"
+    end
   end
 
   def input_size
-    100
+    if is_matrix_type(@a1)
+      15
+    else
+      100
+    end
   end
 end
 
@@ -837,6 +755,65 @@ EOS
       100
     end
   end
+end
+
+class Has_same_deriv < StackqBase
+
+  def feedbk
+      <<EOS.chomp
+<![CDATA[
+#{feedbk_alart}
+a1 : #{esq_cdata(@a1)};
+a1 : diff(a1,x);
+ans1 : diff(ans1, x);
+result : if does_hold( a1 = ans1 ) then 1 else false;
+]]>
+EOS
+  end
+
+  def stack_mthd
+    "AlgEquiv"
+  end
+end
+
+class Does_satisfy < StackqBase
+
+  def feedbk
+      <<EOS.chomp
+<![CDATA[
+#{feedbk_alart}
+a1 : #{esq_cdata(@a1)};
+result : if #{esq_cdata(does_satisfy_ex(@ext))} then 1 else false;
+]]>
+EOS
+  end
+
+end
+
+class Is_same_diag < StackqBase
+
+  def feedbk
+      <<EOS.chomp
+<![CDATA[
+is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
+get_diag_element(m) := block([len, i],len : length(m),maplist(lambda([i], m[i,i]), makelist(i, i, len)));
+is_same_diag(a, x) := block([],is_diagonal(a) and is_diagonal(x) and does_hold( sort(get_diag_element(a)) = sort(get_diag_element(x)) ));
+#{does_hold_mac}
+
+a1 : #{esq_cdata(@a1)};
+result : if is_same_diag(a1, ans1) then 1 else false;
+]]>
+EOS
+  end
+
+  def input_size
+    15
+  end
+
+  def input_type
+    "matrix"
+  end
+
 end
 
 end
