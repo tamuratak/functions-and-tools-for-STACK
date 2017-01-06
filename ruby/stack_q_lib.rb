@@ -95,7 +95,7 @@ include CDATAUtil
     x.result(binding)
   end
 
-  # we have to set (inputs + feedback + answer forms
+  # we have to set (inputs + feedback + answer forms)
   # inputs == student answer type + form size + etc
   def txt2xml_with_multi_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
