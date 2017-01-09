@@ -14,7 +14,7 @@ class STACK_Q
   </question>
 EOS
 
-  TMPL = <<"EOS"
+  TMPL_with_single_input = <<"EOS"
   <question type="stack">
     <name>
       <text><%=h qname_0  %></text>
