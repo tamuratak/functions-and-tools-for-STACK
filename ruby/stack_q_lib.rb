@@ -176,11 +176,4 @@ include CDATAUtil
     end
   end
 
-  def eq_type_check(s, line_num)
-    unless /\A\{[^\{\}]*?\}\z/ =~ s
-      @err_msg = "error at line: #{line_num}" + "\n" + "invalid answer type"
-      raise "invalid answer type"
-    end
-  end
-
 end

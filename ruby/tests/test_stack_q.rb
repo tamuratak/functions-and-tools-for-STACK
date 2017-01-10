@@ -105,11 +105,12 @@ class TestStackQ < Test::Unit::TestCase
   end
 
   def test_eq_type_check
+    stck = STACK_Q::Is_same_linear_eq.new("")
     assert_nothing_raised{
-      @stck.eq_type_check("{x,y,z}", 1)
+      stck.eq_type_check("{x,y,z}", 1)
     }
     assert_raise(RuntimeError) {
-      @stck.eq_type_check("[x,y]", 1)
+      stck.eq_type_check("[x,y]", 1)
     }
   end
 
