@@ -45,12 +45,13 @@ class TestStackQ < Test::Unit::TestCase
   end
 
   def test_does_satisfy_ex
+    stck = STACK_Q::Does_satisfy.new("")
     assert_equal( "does_hold(xxx) ",
-                  @stckutil.does_satisfy_ex("(xxx)") )
+                  stck.does_satisfy_ex("(xxx)") )
     assert_equal( "does_hold(xxx) and does_hold(yyy) ",
-                  @stckutil.does_satisfy_ex("(xxx) and (yyy)") )
+                  stck.does_satisfy_ex("(xxx) and (yyy)") )
     assert_equal( "does_hold(xxx) and not does_hold(yyy) ",
-                  @stckutil.does_satisfy_ex("(xxx) and (not yyy)") )
+                  stck.does_satisfy_ex("(xxx) and (not yyy)") )
   end
 
   def test_matrix_x

@@ -64,6 +64,8 @@ include CDATAUtil
     end
   end
 
+  # we have to set (inputs + feedback + answer forms)
+  # inputs == student answer type + form size + etc
   def txt2xml_with_single_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
     input_size = @opt["form-size"] || 15
@@ -83,7 +85,7 @@ include CDATAUtil
       return nil
     end
 
-    x = ERB.new(TMPL)
+    x = ERB.new(TMPL_with_single_input)
     quiz = klass.new(a1, input_size: input_size, mthd: mthd, ext: ext)
     t_ans1 = quiz.t_ans1
     feedbk = quiz.feedbk
@@ -97,6 +99,9 @@ include CDATAUtil
 
   # we have to set (inputs + feedback + answer forms)
   # inputs == student answer type + form size + etc
+  # In feedback
+  # k1 == teacher's input (which is not neccesarily teacher's correct answer itself)
+  # result == 1 when student's answer is correct. result == 0 otherwise.
   def txt2xml_with_multi_input(qname, qstr, a1, mthd, ext, line_num)
     qname_0 = qname_0(qname, line_num)
     input_size = @opt["form-size"] || 15
