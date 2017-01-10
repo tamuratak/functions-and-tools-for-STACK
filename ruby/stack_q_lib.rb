@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'erb'
-require 'stack_q_tmpl'
+require 'stackq/template'
 require "stackq/base"
 require "stackq/is_P_and_PAP"
 require "stackq/eigen_multiplicity_eq"
