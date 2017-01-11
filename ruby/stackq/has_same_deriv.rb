@@ -2,7 +2,7 @@ require "stackq/base"
 
 class STACK_Q
 
-class Has_same_deriv < StackqBase
+class Has_same_deriv < Stackq_with_single_input
 
   def feedbk
       <<EOS.chomp

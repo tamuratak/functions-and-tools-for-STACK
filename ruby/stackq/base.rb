@@ -14,35 +14,12 @@ class StackqBase
     @mthd = mthd
     @ext = ext
   end
-  attr_accessor :mthd
-
-  def t_ans1
-    cdata(@a1)
-  end
-
-  def stack_mthd
-    "CasEqual"
-  end
+  attr_reader :mthd
 
   def forbidwords
     ""
   end
 
-  def input_type
-    if is_matrix_type(@a1)
-      "matrix"
-    else
-      "algebraic"
-    end
-  end
-
-  def input_size
-    if is_matrix_type(@a1)
-      15
-    else
-      100
-    end
-  end
 end
 
 end

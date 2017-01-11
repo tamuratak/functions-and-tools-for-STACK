@@ -8,6 +8,10 @@ class Is_P_and_PAP < StackqBase
     @dim = basis_dim(@a1)
   end
 
+  def template
+    TMPL_with_multi_input
+  end
+
   def ans_inputs
      multi_input([ ["ans1", "matrix", [@dim,@dim]],
                    ["ans2", "matrix", [@dim,@dim]] ])

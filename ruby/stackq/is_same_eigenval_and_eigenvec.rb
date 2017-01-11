@@ -13,6 +13,10 @@ include BasisUtil
   end
   attr_reader :eigen_val_num
 
+  def template
+    TMPL_eigen
+  end
+
   def basis_ans(n, dim, input_size, prefix="")
     ret = ""
     (1..n).each do |i|

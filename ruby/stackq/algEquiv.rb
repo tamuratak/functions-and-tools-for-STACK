@@ -2,7 +2,7 @@ require "stackq/base"
 
 class STACK_Q
 
-class AlgEquiv < StackqBase
+class AlgEquiv < Stackq_with_single_input
   def initialize(*args)
     super
   end

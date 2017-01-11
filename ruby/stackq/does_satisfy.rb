@@ -2,7 +2,7 @@ require "stackq/base"
 
 class STACK_Q
 
-class Does_satisfy < StackqBase
+class Does_satisfy < Stackq_with_single_input
 
   def does_satisfy_ex(ext)
     if /\A\(.*?\)\s*((and|or)\s*\(.*?\))*\z/ =~ ext

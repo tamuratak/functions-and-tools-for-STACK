@@ -2,6 +2,7 @@
 require 'erb'
 require 'stackq/template'
 require "stackq/base"
+require "stackq/stackq_with_single_input"
 require "stackq/is_P_and_PAP"
 require "stackq/eigen_multiplicity_eq"
 require "stackq/basisutil"
@@ -85,8 +86,8 @@ include CDATAUtil
       return nil
     end
 
-    x = ERB.new(TMPL_with_single_input)
     quiz = klass.new(a1, input_size: input_size, mthd: mthd, ext: ext)
+    x = ERB.new(quiz.template)
     t_ans1 = quiz.t_ans1
     feedbk = quiz.feedbk
     stack_mthd = quiz.stack_mthd
@@ -109,22 +110,18 @@ include CDATAUtil
     case mthd
     when "eigen_multiplicity_eq"
       klass = Eigen_multiplicity_eq
-      tmpl = TMPL_with_ith
     when "is_P_and_PAP"
       klass = Is_P_and_PAP
-      tmpl = TMPL_with_multi_input
     when "is_basis_of_same_linear_space", "is_orthonormal_basis_of_same_linear_space"
       klass = Is_basis_of_same_linear_space
-      tmpl = TMPL_with_multi_input
     when "is_same_eigenval_and_eigenvec", "is_same_eigenval_and_orthonormal_eigenvec"
       klass = Is_same_eigenval_and_eigenvec
-      tmpl = TMPL_eigen
     else
       return nil
     end
 
-    x = ERB.new(tmpl, nil, '-')
     quiz = klass.new(a1, input_size: input_size, mthd: mthd, ext: ext)
+    x = ERB.new(quiz.template, nil, '-')
     ans_inputs = quiz.ans_inputs
     feedbk = quiz.feedbk
     ans_forms = quiz.ans_forms

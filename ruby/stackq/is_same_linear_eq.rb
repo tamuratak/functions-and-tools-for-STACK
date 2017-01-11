@@ -2,7 +2,7 @@ require "stackq/base"
 
 class STACK_Q
 
-class Is_same_linear_eq < StackqBase
+class Is_same_linear_eq < Stackq_with_single_input
   def initialize(*args)
     super
     eq_type_check(@a1, @line_num) if @mthd == "is_same_linear_eq"

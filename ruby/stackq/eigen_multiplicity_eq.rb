@@ -11,6 +11,10 @@ class Eigen_multiplicity_eq < StackqBase
   end
   attr_reader :ans_num
 
+  def template
+    TMPL_with_ith
+  end
+
   def eigen_multiplicity_num_dim(s)
     vecs = []
     arry = s.scan(/\[.*?\]/)

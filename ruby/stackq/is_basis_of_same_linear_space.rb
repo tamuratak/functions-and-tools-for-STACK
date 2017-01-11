@@ -12,6 +12,10 @@ class Is_basis_of_same_linear_space < StackqBase
     @dim = basis_dim(@a1)
   end
 
+  def template
+    TMPL_with_multi_input
+  end
+
   def basis_ans_form(dim)
     n_join(dim, "[[input:ans%d]]", " ")
   end
