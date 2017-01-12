@@ -22,8 +22,8 @@ class Is_P_and_PAP < StackqBase
     <<EOS.chomp
 <![CDATA[
 is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
-
-result: if is(rank(ans1) = length(ans1)) and is_diagonal(invert(ans1).k1.ans1) and is(k1.ans1 = ans1.ans2) then true else false;
+#{does_hold_mac}
+result: if is(rank(ans1) = length(ans1)) and is_diagonal(ans2) and does_hold(k1.ans1 = ans1.ans2) then true else false;
 ]]>
 EOS
   end
