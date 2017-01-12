@@ -5,8 +5,8 @@ module FeedbkUtil
 
   def does_hold_mac
     <<EOS.chomp
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 EOS
   end
