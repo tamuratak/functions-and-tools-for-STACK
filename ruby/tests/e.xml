@@ -79,8 +79,8 @@ sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : 12/13;
@@ -281,8 +281,8 @@ sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (2*x+y)/(2-x*y);
@@ -483,8 +483,8 @@ sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : (1*x^2)/(1 + x^2) - (1*x*(-1 + x^3))/(1 + x^2)^2;
@@ -1082,8 +1082,8 @@ sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([9, 1], [1, 1]);
@@ -1284,8 +1284,8 @@ sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : matrix([-(1/sqrt(5))], [1], [1/sqrt(5)]);
@@ -1513,8 +1513,8 @@ result : if does_hold(ans1 = a1) or does_hold(ans1 = - a1)  then 1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
@@ -1648,8 +1648,8 @@ result : if is_same_linear_space(k1, b1) and is_basis(b1) then true else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
@@ -1756,8 +1756,8 @@ sinalart : if not emptyp( intersection({sin0, sin1, sin2, sin3, sin4, sin5, sin6
 fxalart_set : intersection({x, y, s, t, fx, fy, fxx, fxy, fyx, fyy}, setify(listofops(ans1)));
 fxalart_elem : if not emptyp( fxalart_set ) then listify(fxalart_set)[1];
 fxalart : if not emptyp( fxalart_set ) then 1 else false;
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 ans1 : ratsubst(fxy, fyx, ans1);
 a1 : -3/(1 + 2*x);
@@ -2075,8 +2075,8 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 is_same_linear_space(a, x) := block([ret, a0, x0, am, xm, am_dim, i],ret : true,a0 : listify(radcan(a)),x0 : listify(radcan(x)),am : apply(matrix, a0),xm : apply(matrix, x0),ret: ret and is(rank(am) = rank(xm)),if ret then (am_dim : rank(am),for i:1 thru length(x0) do (m : apply(matrix, cons(x0[i], a0)),ret : ret and is(rank(m) = am_dim))),ret);
 is_basis(x) := block([xm],xm : apply(matrix, x),is( rank(xm) = length(x) ));
@@ -2380,8 +2380,8 @@ ith : if result then ith + 1 else ith;
       <autosimplify>1</autosimplify>
       <feedbackvariables>
         <text><![CDATA[
-stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize(ex) ) ) );
-does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or ratsimp(ex) );
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
 declare(n, integer);
 sans1 : stackqsimp([[eigenval_1, chofuku_1, jigen_1],[eigenval_2, chofuku_2, jigen_2],[eigenval_3, chofuku_3, jigen_3]]);
 ith : 0;
@@ -2537,8 +2537,10 @@ result : result and some(lambda([x], does_hold(sans0 = x)), k1);
       <feedbackvariables>
         <text><![CDATA[
 is_diagonal(m) := block([col_size, row_size],col_size : length(m),row_size : length(m[1]),is(col_size = row_size) and is( m = m * diagmatrix(col_size, 1)));
-
-result: if is(rank(ans1) = length(ans1)) and is_diagonal(invert(ans1).k1.ans1) and is(k1.ans1 = ans1.ans2) then true else false;
+stackqsimp(ex) := fullratsimp( radcan( factcomb( exponentialize( rectform(ex) ) ) ) );
+does_hold(ex) := is( stackqsimp(lhs(ex)-rhs(ex)=0) or zeromatrixp(stackqsimp(lhs(ex)-rhs(ex))) or ratsimp(rectform(ex)) );
+declare(n, integer);
+result: if is(rank(ans1) = length(ans1)) and is_diagonal(ans2) and does_hold(k1.ans1 = ans1.ans2) then true else false;
 ]]></text>
       </feedbackvariables>
       <node>
