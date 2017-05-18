@@ -64,7 +64,7 @@ EOS
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
-      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],min,max<%=h forbidwords %> </forbidwords>
+      <forbidwords>[[BASIC-ALGEBRA]],[[BASIC-CALCULUS]],[[BASIC-MATRIX]],logx,logy,min,max<%=h forbidwords %> </forbidwords>
       <allowwords>fx, fy, fxx, fxy, fyx, fyy</allowwords>
       <forbidfloat>1</forbidfloat>
       <requirelowestterms>0</requirelowestterms>
