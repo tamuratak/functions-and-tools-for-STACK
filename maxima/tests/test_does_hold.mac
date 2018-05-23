@@ -11,5 +11,6 @@ test_assert( does_hold( %e^(%i*%pi) = -1 ) );
 test_assert( does_hold( matrix([1,2],[3,4]) = matrix([1,2],[3,4]) ) );
 test_assert( does_hold( %e^1-%e^(-1) = 2*sinh(1) ) );
 test_assert( does_hold( x^(1/2) = sqrt(x) ) );
+test_assert( not does_hold( (-1)*e^(acos(x))/sqrt(1+x^2) = (-1)*e^(acos(x))/sqrt(1-x^2) ) );
 
 test_assert( does_hold( 2*%pi*(sin((2)^(1/2))-2^(1/2)*cos((2)^(1/2))) = -2*%pi*(sqrt(2)*cos(sqrt(2))-sin(sqrt(2))) ) );
