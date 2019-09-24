@@ -117,7 +117,7 @@ EOS
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -165,7 +165,7 @@ EOS
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
