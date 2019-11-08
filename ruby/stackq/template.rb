@@ -86,7 +86,7 @@ EOS
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -110,7 +110,7 @@ EOS
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -134,7 +134,7 @@ EOS
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -158,7 +158,7 @@ EOS
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -182,7 +182,7 @@ EOS
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -259,7 +259,7 @@ EOS
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -336,7 +336,7 @@ EOS
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -360,7 +360,7 @@ EOS
         <sans>ith</sans>
         <tans>0</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -441,7 +441,7 @@ EOS
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -465,7 +465,7 @@ EOS
         <sans>ith</sans>
         <tans>0</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
