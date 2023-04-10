@@ -3,8 +3,8 @@ require "stackq/base"
 class STACK_Q
 
 class AlgEquiv < Stackq_with_single_input
-  def initialize(*args)
-    super
+  def initialize(*args, **kwargs)
+    super(*args, **kwargs)
   end
 
   def t_ans1

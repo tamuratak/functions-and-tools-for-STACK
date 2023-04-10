@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
 f = File.expand_path(__FILE__)
