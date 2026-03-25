@@ -4,8 +4,8 @@ class STACK_Q
 
 class Is_P_and_PAP < StackqBase
 
-  def initialize(*args)
-    super
+  def initialize(*args, **kwargs)
+    super(*args, **kwargs)
     @dim = basis_dim(@a1)
   end
 

@@ -28,7 +28,7 @@ include CDATAUtil
     else
       tans = "1" # dummy
     end
-    ERB.new(<<HERE, nil, '-').result(binding)
+    ERB.new(<<HERE, trim_mode: '-').result(binding)
     <input>
       <name><%= name %></name>
       <type><%= type %></type>
@@ -77,7 +77,7 @@ HERE
   end
 
   def desc_varnames_forms(desc_varnames, idx: nil, nline: nil)
-    ERB.new(<<HERE, nil, '-').result(binding).chop
+    ERB.new(<<HERE, trim_mode: '-').result(binding).chop
 <p>
 <%     desc_varnames.each do |desc0, name0| -%>
 <%=h desc0  %> [[input:<%= varname(name0, idx) %>]] &nbsp;&nbsp;&nbsp;<% if nline %><br><% end %>

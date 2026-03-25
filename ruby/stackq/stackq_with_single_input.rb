@@ -24,7 +24,7 @@ class Stackq_with_single_input < StackqBase
     if is_matrix_type(@a1)
       15
     else
-      100
+      50
     end
   end
 

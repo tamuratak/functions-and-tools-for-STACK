@@ -7,8 +7,8 @@ class STACK_Q
 class Is_same_eigenval_and_eigenvec < StackqBase
 include BasisUtil
 
-  def initialize(*args)
-    super
+  def initialize(*args, **kwargs)
+    super(*args, **kwargs)
     @eigen_val_num, @dim = eigen_num_dim(@a1)
   end
   attr_reader :eigen_val_num
@@ -47,7 +47,7 @@ include BasisUtil
   def feedbk
     ans_vals = n_join(@eigen_val_num, "ans_val%d") # ans_val == ans_eigenval
     large_Ns = n_join(@dim, "N", ", ")
-    ERB.new(<<HERE, nil, '-').result(binding).chomp
+    ERB.new(<<HERE, trim_mode: '-').result(binding).chomp
 <![CDATA[
 <%= basis_feedback_lib_mac() %>
 ith : 0;
@@ -82,7 +82,7 @@ HERE
       ans = n_join(@dim, "[[input:ans#{idx}_%d]]", " ")
       valid = "[[validation:ans_val#{idx}]] "
       valid += n_join(@dim, "[[validation:ans#{idx}_%d]]", " ")
-      ret << ERB.new(<<HERE, nil, '-').result(binding)
+      ret << ERB.new(<<HERE, trim_mode: '-').result(binding)
 <p> 固有値 [[input:ans_val<%= idx %>]] それに対する固有ベクトルは次のベクトルの1次結合である <%= ans %></p>
 <div><%= valid %></div><br><br>
 HERE

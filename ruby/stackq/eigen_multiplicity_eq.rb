@@ -4,8 +4,8 @@ class STACK_Q
 
 class Eigen_multiplicity_eq < StackqBase
 
-  def initialize(*args)
-    super
+  def initialize(*args, **kwargs)
+    super(*args, **kwargs)
     @ans_num, @ans_dim = eigen_multiplicity_num_dim(@a1)
     @desc_varnames = [["固有値", "eigenval"], ["重複度", "chofuku"], ["固有空間の次元", "jigen"]]
   end
@@ -53,7 +53,7 @@ class Eigen_multiplicity_eq < StackqBase
   end
 
   def feedbk
-    ERB.new(<<HERE, nil, '-').result(binding).chomp
+    ERB.new(<<HERE, trim_mode: '-').result(binding).chomp
 <![CDATA[
 #{does_hold_mac}
 sans1 : stackqsimp(<%= varnames_matrix(@desc_varnames, @ans_num) %>);
@@ -69,7 +69,7 @@ HERE
   end
 
   def ans_forms
-    ERB.new(<<HERE, nil, '-').result(binding)
+    ERB.new(<<HERE, trim_mode: '-').result(binding)
 <% (1..@ans_num).each do |idx| %>
 <%= desc_varnames_forms(@desc_varnames, idx: idx) %>
 <% end -%>

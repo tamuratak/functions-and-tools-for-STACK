@@ -121,7 +121,7 @@ include CDATAUtil
     end
 
     quiz = klass.new(a1, input_size: input_size, mthd: mthd, ext: ext)
-    x = ERB.new(quiz.template, nil, '-')
+    x = ERB.new(quiz.template, trim_mode: '-')
     ans_inputs = quiz.ans_inputs
     feedbk = quiz.feedbk
     ans_forms = quiz.ans_forms

@@ -6,8 +6,8 @@ class STACK_Q
 class Is_basis_of_same_linear_space < StackqBase
   include BasisUtil
 
-  def initialize(*args)
-    super
+  def initialize(*args, **kwargs)
+    super(*args, **kwargs)
     basis_type_check(@a1, @line_num)
     @dim = basis_dim(@a1)
   end
@@ -44,7 +44,7 @@ class Is_basis_of_same_linear_space < StackqBase
       else
         raise
       end
-    ERB.new(<<HERE, nil, '-').result(binding).chomp
+    ERB.new(<<HERE, trim_mode: '-').result(binding).chomp
 <![CDATA[
 <%= basis_feedback_lib_mac() %>
 b1 : delete([<%= large_Ns %>], [<%= b1 %>]);
@@ -54,7 +54,7 @@ HERE
   end
 
   def ans_forms
-    ret = ERB.new(<<HERE, nil, '-').result(binding).chomp
+    ret = ERB.new(<<HERE, trim_mode: '-').result(binding).chomp
 <p> <%= basis_ans_form(@dim) %></p>
 <div><%= basis_validation_form(@dim) %></div>
 HERE

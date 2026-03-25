@@ -3,8 +3,8 @@ require "stackq/base"
 class STACK_Q
 
 class Is_same_linear_eq < Stackq_with_single_input
-  def initialize(*args)
-    super
+  def initialize(*args, **kwargs)
+    super(*args, **kwargs)
     eq_type_check(@a1, @line_num) if @mthd == "is_same_linear_eq"
   end
 
@@ -82,7 +82,7 @@ EOS
     when "is_same_plane"
       15
     else
-      100
+      super
     end
   end
 end
