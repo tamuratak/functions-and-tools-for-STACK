@@ -52,7 +52,7 @@
       <name>ans1</name>
       <type>algebraic</type>
       <tans><![CDATA[12/13]]></tans>
-      <boxsize>100</boxsize>
+      <boxsize>50</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -94,7 +94,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -118,14 +118,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -142,7 +142,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -166,14 +166,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -190,7 +190,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -255,7 +255,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <name>ans1</name>
       <type>algebraic</type>
       <tans><![CDATA[(2*x+y)/(2-x*y)]]></tans>
-      <boxsize>100</boxsize>
+      <boxsize>50</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -297,7 +297,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -321,14 +321,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -345,7 +345,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -369,14 +369,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -393,7 +393,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -458,7 +458,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
       <name>ans1</name>
       <type>algebraic</type>
       <tans><![CDATA[(1*x^2)/(1 + x^2) - (1*x*(-1 + x^3))/(1 + x^2)^2]]></tans>
-      <boxsize>100</boxsize>
+      <boxsize>50</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -500,7 +500,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -524,14 +524,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -548,7 +548,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -572,14 +572,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -596,7 +596,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -699,7 +699,7 @@ result : if is_same_plane(a1, ans1) then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -723,14 +723,14 @@ result : if is_same_plane(a1, ans1) then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -747,7 +747,7 @@ result : if is_same_plane(a1, ans1) then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -771,14 +771,14 @@ result : if is_same_plane(a1, ans1) then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -795,7 +795,7 @@ result : if is_same_plane(a1, ans1) then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -860,7 +860,7 @@ result : if is_same_plane(a1, ans1) then 1 else false;
       <name>ans1</name>
       <type>algebraic</type>
       <tans><![CDATA[{-1 - 3*y + z = 2*x}]]></tans>
-      <boxsize>100</boxsize>
+      <boxsize>50</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -897,7 +897,7 @@ result : if is_same_linear_eq(a1, ans1) then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -921,14 +921,14 @@ result : if is_same_linear_eq(a1, ans1) then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -945,7 +945,7 @@ result : if is_same_linear_eq(a1, ans1) then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -969,14 +969,14 @@ result : if is_same_linear_eq(a1, ans1) then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -993,7 +993,7 @@ result : if is_same_linear_eq(a1, ans1) then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1100,7 +1100,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1124,14 +1124,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1148,7 +1148,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1172,14 +1172,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1196,7 +1196,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1303,7 +1303,7 @@ result : if does_hold(ans1 = a1) or does_hold(ans1 = - a1)  then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1327,14 +1327,14 @@ result : if does_hold(ans1 = a1) or does_hold(ans1 = - a1)  then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1351,7 +1351,7 @@ result : if does_hold(ans1 = a1) or does_hold(ans1 = - a1)  then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1375,14 +1375,14 @@ result : if does_hold(ans1 = a1) or does_hold(ans1 = - a1)  then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1399,7 +1399,7 @@ result : if does_hold(ans1 = a1) or does_hold(ans1 = - a1)  then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1535,7 +1535,7 @@ result : if is_same_linear_space(k1, b1) and is_basis(b1) then true else false;
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1671,7 +1671,7 @@ result : if is_same_linear_space(k1, b1) and is_orthonormal_basis(b1) then true 
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1736,7 +1736,7 @@ result : if is_same_linear_space(k1, b1) and is_orthonormal_basis(b1) then true 
       <name>ans1</name>
       <type>algebraic</type>
       <tans><![CDATA[-3/(1 + 2*x)]]></tans>
-      <boxsize>100</boxsize>
+      <boxsize>50</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
       <syntaxhint></syntaxhint>
@@ -1780,7 +1780,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>result</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1804,14 +1804,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>xyalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @xyalart_elem@ を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*y などを xy と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@xyalart_elem@} を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1828,7 +1828,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>sinalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -1852,14 +1852,14 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>fxalart</sans>
         <tans>1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-4-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の @fxalart_elem@(...) を確認して下さい。</p><p><br></p>]]></text>
+          <text><![CDATA[<p></p><p>【ヒント】x*(x+y) や fx*(x+y) などを x(x+y) や fx(x+y) と*なしで入力していませんか。<br>【要確認】あなたの解答の中の {@fxalart_elem@}(...) を確認して下さい。</p><p><br></p>]]></text>
         </truefeedback>
         <falsescoremode>-</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -1876,7 +1876,7 @@ result : if does_hold( a1 = ans1 ) then 1 else false;
         <sans>1</sans>
         <tans>2</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -2109,7 +2109,7 @@ ith : if result then ith + 1 else ith;
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -2133,7 +2133,7 @@ ith : if result then ith + 1 else ith;
         <sans>ith</sans>
         <tans>0</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -2413,7 +2413,7 @@ result : result and some(lambda([x], does_hold(sans0 = x)), k1);
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
@@ -2437,7 +2437,7 @@ result : result and some(lambda([x], does_hold(sans0 = x)), k1);
         <sans>ith</sans>
         <tans>0</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>+</truescoremode>
         <truescore>0.0000000</truescore>
         <truepenalty></truepenalty>
@@ -2560,7 +2560,7 @@ result: if is(rank(ans1) = length(ans1)) and is_diagonal(ans2) and does_hold(k1.
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>

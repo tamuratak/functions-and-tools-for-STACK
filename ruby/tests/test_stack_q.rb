@@ -326,7 +326,7 @@ result : if is_same_linear_space(k1, b1) and is_basis(b1) then true else false;
         <sans>result</sans>
         <tans>true</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>

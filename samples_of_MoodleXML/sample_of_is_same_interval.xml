@@ -88,7 +88,7 @@ a1 : if is_same_interval(a1, ans1) then ans1 else false;]]></text>
         <sans>ans1</sans>
         <tans>a1</tans>
         <testoptions></testoptions>
-        <quiet>0</quiet>
+        <quiet>1</quiet>
         <truescoremode>=</truescoremode>
         <truescore>1.0000000</truescore>
         <truepenalty></truepenalty>
